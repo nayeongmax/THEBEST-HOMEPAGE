@@ -158,13 +158,13 @@
         </div>
     </section>
 
-    <!-- ===== 5. EXPOSURE CALCULATOR (예상 노출 계산기) ===== -->
+    <!-- ===== 5. EXPOSURE CALCULATOR (3초진단 마케팅 노출 계산기) ===== -->
     <section class="calc-section" id="exposure-calc">
         <div class="container">
             <div class="section-header">
-                <span class="section-tag animate-on-scroll">EXPOSURE CALCULATOR</span>
-                <h2 class="section-title animate-on-scroll"><span class="gradient-text">3초</span> 마케팅 진단</h2>
-                <p class="section-desc animate-on-scroll">서비스와 수량을 선택하면 예상 효과를 바로 확인할 수 있습니다</p>
+                <span class="section-tag animate-on-scroll">MARKETING CALCULATOR</span>
+                <h2 class="section-title animate-on-scroll"><span class="gradient-text">3초진단</span> 마케팅 노출 계산기</h2>
+                <p class="section-desc animate-on-scroll">서비스·수량·매출·예산을 입력하면 예상 효과를 바로 확인할 수 있습니다</p>
             </div>
             <div class="calc-card animate-on-scroll">
                 <div class="calc-inputs-row">
@@ -195,6 +195,25 @@
                 </div>
                 <div class="calc-results-grid" id="expResult">
                     <!-- Dynamically generated per service -->
+                </div>
+            </div>
+            <div class="calc-divider animate-on-scroll"></div>
+            <div class="roi-card animate-on-scroll">
+                <div class="roi-inputs-row">
+                    <div class="roi-field">
+                        <label>현재 월 매출</label>
+                        <div class="roi-input-wrap"><input type="number" id="roiRevenue" value="10000000" min="0" step="1000000" oninput="calcROI()"><span class="roi-unit">원</span></div>
+                    </div>
+                    <div class="roi-field">
+                        <label>마케팅 월 예산</label>
+                        <div class="roi-input-wrap"><input type="number" id="roiBudget" value="1000000" min="0" step="100000" oninput="calcROI()"><span class="roi-unit">원</span></div>
+                    </div>
+                </div>
+                <div class="roi-results-grid" id="roiResults">
+                    <div class="roi-result-card"><span class="roi-result-label">예상 월 매출</span><span class="roi-result-value" id="roiExpected">13,000,000원</span><span class="roi-result-desc" id="roiExpectedDesc">마케팅 후 예상되는 월 매출입니다</span></div>
+                    <div class="roi-result-card"><span class="roi-result-label">추가 매출</span><span class="roi-result-value" id="roiExtra">+3,000,000원</span><span class="roi-result-desc" id="roiExtraDesc">현재보다 300만원 더 벌 수 있습니다</span></div>
+                    <div class="roi-result-card"><span class="roi-result-label">마케팅 비용</span><span class="roi-result-value" id="roiBudgetDisplay">1,000,000원</span><span class="roi-result-desc">매월 투자하는 마케팅 비용입니다</span></div>
+                    <div class="roi-result-card accent"><span class="roi-result-label">투자 대비 수익</span><span class="roi-result-value" id="roiPercent">2.0배</span><span class="roi-result-desc" id="roiPercentDesc">100만원 투자 시 약 200만원 수익 예상</span></div>
                 </div>
             </div>
             <p class="calc-disclaimer animate-on-scroll">* 최근 제휴 업체 마케팅 작업 후 평균 데이터 기준</p>
@@ -238,32 +257,39 @@
         </div>
     </section>
 
-    <!-- ===== 7. ROI CALCULATOR ===== -->
-    <section class="roi-section" id="roi-calc">
+    <!-- ===== 7. REVIEWS ===== -->
+    <section class="reviews" id="reviews">
         <div class="container">
             <div class="section-header">
-                <span class="section-tag animate-on-scroll">MARKETING PREVIEW</span>
-                <h2 class="section-title animate-on-scroll">마케팅 <span class="gradient-text">효과 미리 보기</span></h2>
-                <p class="section-desc animate-on-scroll">현재 매출과 마케팅 비용을 입력하면<br>예상 매출과 수익을 바로 확인할 수 있습니다</p>
+                <span class="section-tag animate-on-scroll">REVIEWS</span>
+                <h2 class="section-title animate-on-scroll">고객님들의 <span class="gradient-text">생생한 후기</span></h2>
             </div>
-            <div class="roi-card animate-on-scroll">
-                <div class="roi-inputs-row">
-                    <div class="roi-field">
-                        <label>현재 월 매출</label>
-                        <div class="roi-input-wrap"><input type="number" id="roiRevenue" value="10000000" min="0" step="1000000" oninput="calcROI()"><span class="roi-unit">원</span></div>
-                    </div>
-                    <div class="roi-field">
-                        <label>마케팅 월 예산</label>
-                        <div class="roi-input-wrap"><input type="number" id="roiBudget" value="1000000" min="0" step="100000" oninput="calcROI()"><span class="roi-unit">원</span></div>
-                    </div>
-                </div>
-                <div class="roi-results-grid" id="roiResults">
-                    <div class="roi-result-card"><span class="roi-result-label">예상 월 매출</span><span class="roi-result-value" id="roiExpected">13,000,000원</span><span class="roi-result-desc" id="roiExpectedDesc">마케팅 후 예상되는 월 매출입니다</span></div>
-                    <div class="roi-result-card"><span class="roi-result-label">추가 매출</span><span class="roi-result-value" id="roiExtra">+3,000,000원</span><span class="roi-result-desc" id="roiExtraDesc">현재보다 300만원 더 벌 수 있습니다</span></div>
-                    <div class="roi-result-card"><span class="roi-result-label">마케팅 비용</span><span class="roi-result-value" id="roiBudgetDisplay">1,000,000원</span><span class="roi-result-desc">매월 투자하는 마케팅 비용입니다</span></div>
-                    <div class="roi-result-card accent"><span class="roi-result-label">투자 대비 수익</span><span class="roi-result-value" id="roiPercent">2.0배</span><span class="roi-result-desc" id="roiPercentDesc">100만원 투자 시 약 200만원 수익 예상</span></div>
-                </div>
-            </div>
+        </div>
+        <div class="reviews-marquee">
+            <div class="reviews-column reviews-col-1" data-direction="up"><div class="reviews-scroll-inner">
+                <div class="review-card"><div class="review-stars">&#9733;&#9733;&#9733;&#9733;&#9733;</div><p class="review-text">"체험단 진행 후 예약이 2배 늘었어요. 블로그 상위노출 덕분에 신규 고객이 계속 들어옵니다."</p><div class="review-author"><div class="author-avatar">김</div><div><strong>김** 대표님</strong><span>강남 카페</span></div></div></div>
+                <div class="review-card"><div class="review-stars">&#9733;&#9733;&#9733;&#9733;&#9733;</div><p class="review-text">"유튜브 조회수가 확실히 올랐습니다."</p><div class="review-author"><div class="author-avatar">박</div><div><strong>박** 대표님</strong><span>교육</span></div></div></div>
+                <div class="review-card"><div class="review-stars">&#9733;&#9733;&#9733;&#9733;&#9733;</div><p class="review-text">"인스타 릴스 퀄리티가 높고 반응도 좋아요. 팔로워가 한 달만에 3배 늘었습니다."</p><div class="review-author"><div class="author-avatar">최</div><div><strong>최** 원장님</strong><span>뷰티</span></div></div></div>
+                <div class="review-card"><div class="review-stars">&#9733;&#9733;&#9733;&#9733;&#9733;</div><p class="review-text">"카페 활성화 2주만에 회원 수 급증!"</p><div class="review-author"><div class="author-avatar">정</div><div><strong>정** 대표님</strong><span>패션</span></div></div></div>
+                <div class="review-card"><div class="review-stars">&#9733;&#9733;&#9733;&#9733;&#9733;</div><p class="review-text">"매출이 정체돼있었는데 블로그 체험단 시작하고 3주 만에 문의가 쏟아졌어요. 진작 할 걸 그랬습니다."</p><div class="review-author"><div class="author-avatar">한</div><div><strong>한** 원장님</strong><span>피부과</span></div></div></div>
+                <div class="review-card"><div class="review-stars">&#9733;&#9733;&#9733;&#9733;&#9733;</div><p class="review-text">"숏폼 제작 트렌디하고 반응 좋아요!"</p><div class="review-author"><div class="author-avatar">강</div><div><strong>강** 사장님</strong><span>요식업</span></div></div></div>
+            </div></div>
+            <div class="reviews-column reviews-col-2" data-direction="down"><div class="reviews-scroll-inner">
+                <div class="review-card"><div class="review-stars">&#9733;&#9733;&#9733;&#9733;&#9733;</div><p class="review-text">"블로그 대행 3개월째 꾸준히 상위노출 유지 중이에요. 키워드 잡는 실력이 확실합니다."</p><div class="review-author"><div class="author-avatar">오</div><div><strong>오** 대표님</strong><span>인테리어</span></div></div></div>
+                <div class="review-card"><div class="review-stars">&#9733;&#9733;&#9733;&#9733;&#9733;</div><p class="review-text">"언론 홍보 효과 최고입니다."</p><div class="review-author"><div class="author-avatar">서</div><div><strong>서** 이사님</strong><span>IT</span></div></div></div>
+                <div class="review-card"><div class="review-stars">&#9733;&#9733;&#9733;&#9733;&#9733;</div><p class="review-text">"카페 + 블로그 시너지가 대단하네요. 문의 3배 늘었고, 예약률도 같이 올라갔습니다."</p><div class="review-author"><div class="author-avatar">윤</div><div><strong>윤** 대표님</strong><span>카페</span></div></div></div>
+                <div class="review-card"><div class="review-stars">&#9733;&#9733;&#9733;&#9733;&#9733;</div><p class="review-text">"다른 업체에서 효과 못 봤는데 더베스트는 확실히 다릅니다."</p><div class="review-author"><div class="author-avatar">임</div><div><strong>임** 원장님</strong><span>학원</span></div></div></div>
+                <div class="review-card"><div class="review-stars">&#9733;&#9733;&#9733;&#9733;&#9733;</div><p class="review-text">"인스타 피드 운영 맡겼더니 브랜드 이미지가 확 달라졌어요."</p><div class="review-author"><div class="author-avatar">민</div><div><strong>민** 대표님</strong><span>의류</span></div></div></div>
+                <div class="review-card"><div class="review-stars">&#9733;&#9733;&#9733;&#9733;&#9733;</div><p class="review-text">"홈페이지 퀄리티가 정말 좋습니다!"</p><div class="review-author"><div class="author-avatar">송</div><div><strong>송** 원장님</strong><span>의료</span></div></div></div>
+            </div></div>
+            <div class="reviews-column reviews-col-3" data-direction="up"><div class="reviews-scroll-inner">
+                <div class="review-card"><div class="review-stars">&#9733;&#9733;&#9733;&#9733;&#9733;</div><p class="review-text">"쇼핑몰 사이트 제작부터 마케팅까지 원스톱으로 진행했는데 매출이 200% 올랐습니다."</p><div class="review-author"><div class="author-avatar">조</div><div><strong>조** 대표님</strong><span>쇼핑몰</span></div></div></div>
+                <div class="review-card"><div class="review-stars">&#9733;&#9733;&#9733;&#9733;&#9733;</div><p class="review-text">"결과 보고서가 체계적입니다."</p><div class="review-author"><div class="author-avatar">배</div><div><strong>배** 이사님</strong><span>프랜차이즈</span></div></div></div>
+                <div class="review-card"><div class="review-stars">&#9733;&#9733;&#9733;&#9733;&#9733;</div><p class="review-text">"언론홍보 + 블로그 조합으로 브랜드 인지도가 확 올라갔어요. 검색하면 바로 나옵니다."</p><div class="review-author"><div class="author-avatar">류</div><div><strong>류** 대표님</strong><span>스타트업</span></div></div></div>
+                <div class="review-card"><div class="review-stars">&#9733;&#9733;&#9733;&#9733;&#9733;</div><p class="review-text">"카페활성화로 광고 수익이 생겼습니다."</p><div class="review-author"><div class="author-avatar">신</div><div><strong>신** 대표님</strong><span>마케팅</span></div></div></div>
+                <div class="review-card"><div class="review-stars">&#9733;&#9733;&#9733;&#9733;&#9733;</div><p class="review-text">"블로그 노출이 올라가면서 전화 문의가 매일 들어와요. 확실히 체험단 효과가 있습니다."</p><div class="review-author"><div class="author-avatar">이</div><div><strong>이** 대표님</strong><span>쇼핑몰</span></div></div></div>
+                <div class="review-card"><div class="review-stars">&#9733;&#9733;&#9733;&#9733;&#9733;</div><p class="review-text">"인스타 팔로워 2배! 피드도 예쁩니다."</p><div class="review-author"><div class="author-avatar">장</div><div><strong>장** 대표님</strong><span>뷰티</span></div></div></div>
+            </div></div>
         </div>
     </section>
 
@@ -340,42 +366,6 @@
                 <div class="whyus-item animate-on-scroll"><div class="whyus-check"><svg viewBox="0 0 24 24" fill="none" width="20" height="20"><path d="M5 13l4 4L19 7" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/></svg></div><div><h4>결과 리포트 제공</h4><p>모든 작업 내역과 성과를 체계적인 보고서로 제공합니다</p></div></div>
                 <div class="whyus-item animate-on-scroll"><div class="whyus-check"><svg viewBox="0 0 24 24" fill="none" width="20" height="20"><path d="M5 13l4 4L19 7" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/></svg></div><div><h4>합리적인 비용 구조</h4><p>불필요한 비용 없이, 효과에 집중하는 합리적인 요금제를 운영합니다</p></div></div>
             </div>
-        </div>
-    </section>
-
-    <!-- ===== 11. REVIEWS ===== -->
-    <section class="reviews" id="reviews">
-        <div class="container">
-            <div class="section-header">
-                <span class="section-tag animate-on-scroll">REVIEWS</span>
-                <h2 class="section-title animate-on-scroll">고객님들의 <span class="gradient-text">생생한 후기</span></h2>
-            </div>
-        </div>
-        <div class="reviews-marquee">
-            <div class="reviews-column reviews-col-1" data-direction="up"><div class="reviews-scroll-inner">
-                <div class="review-card"><div class="review-stars">&#9733;&#9733;&#9733;&#9733;&#9733;</div><p class="review-text">"체험단 진행 후 예약이 2배 늘었어요. 블로그 상위노출 덕분에 신규 고객이 계속 들어옵니다."</p><div class="review-author"><div class="author-avatar">김</div><div><strong>김** 대표님</strong><span>강남 카페</span></div></div></div>
-                <div class="review-card"><div class="review-stars">&#9733;&#9733;&#9733;&#9733;&#9733;</div><p class="review-text">"유튜브 조회수가 확실히 올랐습니다."</p><div class="review-author"><div class="author-avatar">박</div><div><strong>박** 대표님</strong><span>교육</span></div></div></div>
-                <div class="review-card"><div class="review-stars">&#9733;&#9733;&#9733;&#9733;&#9733;</div><p class="review-text">"인스타 릴스 퀄리티가 높고 반응도 좋아요. 팔로워가 한 달만에 3배 늘었습니다."</p><div class="review-author"><div class="author-avatar">최</div><div><strong>최** 원장님</strong><span>뷰티</span></div></div></div>
-                <div class="review-card"><div class="review-stars">&#9733;&#9733;&#9733;&#9733;&#9733;</div><p class="review-text">"카페 활성화 2주만에 회원 수 급증!"</p><div class="review-author"><div class="author-avatar">정</div><div><strong>정** 대표님</strong><span>패션</span></div></div></div>
-                <div class="review-card"><div class="review-stars">&#9733;&#9733;&#9733;&#9733;&#9733;</div><p class="review-text">"매출이 정체돼있었는데 블로그 체험단 시작하고 3주 만에 문의가 쏟아졌어요. 진작 할 걸 그랬습니다."</p><div class="review-author"><div class="author-avatar">한</div><div><strong>한** 원장님</strong><span>피부과</span></div></div></div>
-                <div class="review-card"><div class="review-stars">&#9733;&#9733;&#9733;&#9733;&#9733;</div><p class="review-text">"숏폼 제작 트렌디하고 반응 좋아요!"</p><div class="review-author"><div class="author-avatar">강</div><div><strong>강** 사장님</strong><span>요식업</span></div></div></div>
-            </div></div>
-            <div class="reviews-column reviews-col-2" data-direction="down"><div class="reviews-scroll-inner">
-                <div class="review-card"><div class="review-stars">&#9733;&#9733;&#9733;&#9733;&#9733;</div><p class="review-text">"블로그 대행 3개월째 꾸준히 상위노출 유지 중이에요. 키워드 잡는 실력이 확실합니다."</p><div class="review-author"><div class="author-avatar">오</div><div><strong>오** 대표님</strong><span>인테리어</span></div></div></div>
-                <div class="review-card"><div class="review-stars">&#9733;&#9733;&#9733;&#9733;&#9733;</div><p class="review-text">"언론 홍보 효과 최고입니다."</p><div class="review-author"><div class="author-avatar">서</div><div><strong>서** 이사님</strong><span>IT</span></div></div></div>
-                <div class="review-card"><div class="review-stars">&#9733;&#9733;&#9733;&#9733;&#9733;</div><p class="review-text">"카페 + 블로그 시너지가 대단하네요. 문의 3배 늘었고, 예약률도 같이 올라갔습니다."</p><div class="review-author"><div class="author-avatar">윤</div><div><strong>윤** 대표님</strong><span>카페</span></div></div></div>
-                <div class="review-card"><div class="review-stars">&#9733;&#9733;&#9733;&#9733;&#9733;</div><p class="review-text">"다른 업체에서 효과 못 봤는데 더베스트는 확실히 다릅니다."</p><div class="review-author"><div class="author-avatar">임</div><div><strong>임** 원장님</strong><span>학원</span></div></div></div>
-                <div class="review-card"><div class="review-stars">&#9733;&#9733;&#9733;&#9733;&#9733;</div><p class="review-text">"인스타 피드 운영 맡겼더니 브랜드 이미지가 확 달라졌어요."</p><div class="review-author"><div class="author-avatar">민</div><div><strong>민** 대표님</strong><span>의류</span></div></div></div>
-                <div class="review-card"><div class="review-stars">&#9733;&#9733;&#9733;&#9733;&#9733;</div><p class="review-text">"홈페이지 퀄리티가 정말 좋습니다!"</p><div class="review-author"><div class="author-avatar">송</div><div><strong>송** 원장님</strong><span>의료</span></div></div></div>
-            </div></div>
-            <div class="reviews-column reviews-col-3" data-direction="up"><div class="reviews-scroll-inner">
-                <div class="review-card"><div class="review-stars">&#9733;&#9733;&#9733;&#9733;&#9733;</div><p class="review-text">"쇼핑몰 사이트 제작부터 마케팅까지 원스톱으로 진행했는데 매출이 200% 올랐습니다."</p><div class="review-author"><div class="author-avatar">조</div><div><strong>조** 대표님</strong><span>쇼핑몰</span></div></div></div>
-                <div class="review-card"><div class="review-stars">&#9733;&#9733;&#9733;&#9733;&#9733;</div><p class="review-text">"결과 보고서가 체계적입니다."</p><div class="review-author"><div class="author-avatar">배</div><div><strong>배** 이사님</strong><span>프랜차이즈</span></div></div></div>
-                <div class="review-card"><div class="review-stars">&#9733;&#9733;&#9733;&#9733;&#9733;</div><p class="review-text">"언론홍보 + 블로그 조합으로 브랜드 인지도가 확 올라갔어요. 검색하면 바로 나옵니다."</p><div class="review-author"><div class="author-avatar">류</div><div><strong>류** 대표님</strong><span>스타트업</span></div></div></div>
-                <div class="review-card"><div class="review-stars">&#9733;&#9733;&#9733;&#9733;&#9733;</div><p class="review-text">"카페활성화로 광고 수익이 생겼습니다."</p><div class="review-author"><div class="author-avatar">신</div><div><strong>신** 대표님</strong><span>마케팅</span></div></div></div>
-                <div class="review-card"><div class="review-stars">&#9733;&#9733;&#9733;&#9733;&#9733;</div><p class="review-text">"블로그 노출이 올라가면서 전화 문의가 매일 들어와요. 확실히 체험단 효과가 있습니다."</p><div class="review-author"><div class="author-avatar">이</div><div><strong>이** 대표님</strong><span>쇼핑몰</span></div></div></div>
-                <div class="review-card"><div class="review-stars">&#9733;&#9733;&#9733;&#9733;&#9733;</div><p class="review-text">"인스타 팔로워 2배! 피드도 예쁩니다."</p><div class="review-author"><div class="author-avatar">장</div><div><strong>장** 대표님</strong><span>뷰티</span></div></div></div>
-            </div></div>
         </div>
     </section>
 
