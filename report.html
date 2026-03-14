@@ -752,6 +752,10 @@
             mobileMenu.addEventListener('click', () => navLinks.classList.toggle('active'));
         }
 
+        // Admin password for report creation
+        const ADMIN_PASSWORD = 'thebest2026';
+        let adminAuthenticated = false;
+
         // Tab switching
         function switchTab(tab) {
             const tabView = document.getElementById('tabView');
@@ -764,11 +768,18 @@
                 tabView.classList.add('active');
                 tabCreate.classList.remove('active');
                 createSection.classList.remove('active');
-                // Show access section only if report view isn't already showing
                 if (!reportView.classList.contains('active')) {
                     accessSection.style.display = '';
                 }
             } else {
+                if (!adminAuthenticated) {
+                    const pw = prompt('관리자 비밀번호를 입력하세요:');
+                    if (pw !== ADMIN_PASSWORD) {
+                        alert('비밀번호가 올바르지 않습니다.');
+                        return;
+                    }
+                    adminAuthenticated = true;
+                }
                 tabCreate.classList.add('active');
                 tabView.classList.remove('active');
                 accessSection.style.display = 'none';

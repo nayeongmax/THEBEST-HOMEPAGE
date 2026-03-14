@@ -120,6 +120,22 @@ function createParticles() {
 
 createParticles();
 
+// ===== Reviews Infinite Scroll: Clone cards for seamless loop =====
+document.querySelectorAll('.reviews-scroll-inner').forEach(inner => {
+    const cards = inner.innerHTML;
+    inner.innerHTML = cards + cards;
+});
+
+// Pause animation on hover
+document.querySelectorAll('.reviews-column').forEach(col => {
+    col.addEventListener('mouseenter', () => {
+        col.querySelector('.reviews-scroll-inner').style.animationPlayState = 'paused';
+    });
+    col.addEventListener('mouseleave', () => {
+        col.querySelector('.reviews-scroll-inner').style.animationPlayState = 'running';
+    });
+});
+
 // ===== Smooth scroll for anchor links =====
 document.querySelectorAll('a[href^="#"]').forEach(anchor => {
     anchor.addEventListener('click', function (e) {
