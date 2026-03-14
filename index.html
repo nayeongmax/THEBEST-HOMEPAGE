@@ -194,12 +194,7 @@
                     </div>
                 </div>
                 <div class="calc-results-grid" id="expResult">
-                    <div class="calc-result-item"><span class="calc-result-label">예상 월 노출수</span><span class="calc-result-value" id="expViews">8,000 ~ 30,000</span></div>
-                    <div class="calc-result-item"><span class="calc-result-label">예상 유입 클릭</span><span class="calc-result-value" id="expClicks">800 ~ 3,000</span></div>
-                    <div class="calc-result-item"><span class="calc-result-label">예상 콘텐츠 생성</span><span class="calc-result-value" id="expContent">30개 리뷰 콘텐츠</span></div>
-                    <div class="calc-result-item"><span class="calc-result-label">예상 브랜드 노출</span><span class="calc-result-value" id="expBrand">20,000 ~ 80,000</span></div>
-                    <div class="calc-result-item"><span class="calc-result-label">예상 문의 증가</span><span class="calc-result-value" id="expInquiry">+10 ~ 40건</span></div>
-                    <div class="calc-result-item highlight"><span class="calc-result-label">예상 검색 상승</span><span class="calc-result-value" id="expSearch">80% ~ 320%</span></div>
+                    <!-- Dynamically generated per service -->
                 </div>
             </div>
             <p class="calc-disclaimer animate-on-scroll">* 최근 제휴 업체 마케팅 작업 후 평균 데이터 기준</p>
@@ -260,10 +255,6 @@
                     <div class="roi-field">
                         <label>마케팅 월 예산</label>
                         <div class="roi-input-wrap"><input type="number" id="roiBudget" value="1000000" min="0" step="100000" oninput="calcROI()"><span class="roi-unit">원</span></div>
-                    </div>
-                    <div class="roi-field roi-field-full">
-                        <label>마케팅 후 예상 매출 증가 <strong id="roiRateDisplay">30%</strong></label>
-                        <input type="range" id="roiRate" min="10" max="200" value="30" class="roi-slider">
                     </div>
                 </div>
                 <div class="roi-results-grid" id="roiResults">
@@ -458,40 +449,151 @@
 
     <script src="main.js"></script>
     <script>
-    // Exposure Calculator
+    // Exposure Calculator - per-service custom metrics
     const expData = {
-        cafe:        { perUnit: [500, 2000],  clickRate: 0.1, searchMin: 50, searchMax: 200, contentLabel: '커뮤니티 콘텐츠', brandRate: [1.5, 3], inquiryMin: 0.3, inquiryMax: 1.2 },
-        blogManage:  { perUnit: [1000, 4000], clickRate: 0.12, searchMin: 100, searchMax: 400, contentLabel: '블로그 콘텐츠', brandRate: [2, 5], inquiryMin: 0.5, inquiryMax: 2 },
-        blogReview:  { perUnit: [800, 3000],  clickRate: 0.1, searchMin: 80, searchMax: 320, contentLabel: '리뷰 콘텐츠', brandRate: [2, 4], inquiryMin: 0.4, inquiryMax: 1.5 },
-        youtube:     { perUnit: [3000, 20000],clickRate: 0.05, searchMin: 100, searchMax: 400, contentLabel: '영상 콘텐츠', brandRate: [5, 15], inquiryMin: 0.3, inquiryMax: 1 },
-        insta:       { perUnit: [1500, 5000], clickRate: 0.08, searchMin: 60, searchMax: 250, contentLabel: '인스타 콘텐츠', brandRate: [2, 6], inquiryMin: 0.3, inquiryMax: 1.2 },
-        platform:    { perUnit: [600, 2500],  clickRate: 0.09, searchMin: 40, searchMax: 180, contentLabel: '플랫폼 콘텐츠', brandRate: [1, 3], inquiryMin: 0.2, inquiryMax: 0.8 },
-        shortform:   { perUnit: [5000, 30000],clickRate: 0.04, searchMin: 70, searchMax: 300, contentLabel: '숏폼 영상', brandRate: [8, 25], inquiryMin: 0.2, inquiryMax: 0.8 },
-        longform:    { perUnit: [2000, 15000],clickRate: 0.06, searchMin: 80, searchMax: 350, contentLabel: '롱폼 영상', brandRate: [4, 12], inquiryMin: 0.3, inquiryMax: 1 },
-        press:       { perUnit: [2000, 8000], clickRate: 0.07, searchMin: 60, searchMax: 200, contentLabel: '언론 기사', brandRate: [3, 8], inquiryMin: 0.2, inquiryMax: 0.6 },
-        site:        { perUnit: [500, 3000],  clickRate: 0.15, searchMin: 30, searchMax: 150, contentLabel: '웹페이지', brandRate: [1, 4], inquiryMin: 0.5, inquiryMax: 2 }
+        cafe: {
+            labels: ['예상 월 노출수', '예상 유입 클릭', '예상 댓글/참여', '예상 커뮤니티 게시글', '예상 문의 증가', '예상 검색 상승'],
+            calc: function(q) {
+                return [
+                    f(500*q) + ' ~ ' + f(2000*q),
+                    f(50*q) + ' ~ ' + f(200*q),
+                    f(30*q) + ' ~ ' + f(120*q),
+                    q + '개 커뮤니티 콘텐츠',
+                    '+' + Math.max(1,Math.round(0.3*q)) + ' ~ ' + Math.round(1.2*q) + '건',
+                    Math.round(50*q/30) + '% ~ ' + Math.round(200*q/30) + '%'
+                ];
+            }
+        },
+        blogManage: {
+            labels: ['예상 월 노출수', '예상 유입 클릭', '예상 키워드 순위 상승', '예상 블로그 콘텐츠', '예상 문의 증가', '예상 검색 상승'],
+            calc: function(q) {
+                return [
+                    f(1000*q) + ' ~ ' + f(4000*q),
+                    f(120*q) + ' ~ ' + f(480*q),
+                    '상위 ' + Math.max(1,Math.round(30/q*10)) + '위 ~ ' + Math.max(1,Math.round(10/q*10)) + '위',
+                    q + '개 블로그 콘텐츠',
+                    '+' + Math.max(1,Math.round(0.5*q)) + ' ~ ' + Math.round(2*q) + '건',
+                    Math.round(100*q/30) + '% ~ ' + Math.round(400*q/30) + '%'
+                ];
+            }
+        },
+        blogReview: {
+            labels: ['예상 월 노출수', '예상 유입 클릭', '예상 리뷰 콘텐츠', '예상 브랜드 신뢰도', '예상 문의 증가', '예상 검색 상승'],
+            calc: function(q) {
+                return [
+                    f(800*q) + ' ~ ' + f(3000*q),
+                    f(80*q) + ' ~ ' + f(300*q),
+                    q + '개 리뷰 콘텐츠',
+                    '신뢰도 ' + Math.round(2*q) + '% ~ ' + Math.round(4*q) + '% 상승',
+                    '+' + Math.max(1,Math.round(0.4*q)) + ' ~ ' + Math.round(1.5*q) + '건',
+                    Math.round(80*q/30) + '% ~ ' + Math.round(320*q/30) + '%'
+                ];
+            }
+        },
+        youtube: {
+            labels: ['예상 조회수', '예상 구독자 증가', '예상 시청시간(분)', '예상 좋아요/공유', '예상 문의 증가', '예상 검색 상승'],
+            calc: function(q) {
+                return [
+                    f(3000*q) + ' ~ ' + f(20000*q),
+                    '+' + f(50*q) + ' ~ ' + f(300*q) + '명',
+                    f(500*q) + ' ~ ' + f(3000*q) + '분',
+                    f(150*q) + ' ~ ' + f(1000*q),
+                    '+' + Math.max(1,Math.round(0.3*q)) + ' ~ ' + Math.round(1*q) + '건',
+                    Math.round(100*q/30) + '% ~ ' + Math.round(400*q/30) + '%'
+                ];
+            }
+        },
+        insta: {
+            labels: ['예상 노출수', '예상 팔로워 증가', '예상 좋아요/저장', '예상 인스타 콘텐츠', '예상 문의 증가', '예상 참여율'],
+            calc: function(q) {
+                return [
+                    f(1500*q) + ' ~ ' + f(5000*q),
+                    '+' + f(30*q) + ' ~ ' + f(150*q) + '명',
+                    f(100*q) + ' ~ ' + f(400*q),
+                    q + '개 인스타 콘텐츠',
+                    '+' + Math.max(1,Math.round(0.3*q)) + ' ~ ' + Math.round(1.2*q) + '건',
+                    Math.round(2*q)/10 + '% ~ ' + Math.round(6*q)/10 + '%'
+                ];
+            }
+        },
+        platform: {
+            labels: ['예상 월 노출수', '예상 유입 클릭', '예상 플랫폼 순위 상승', '예상 플랫폼 콘텐츠', '예상 문의 증가', '예상 검색 상승'],
+            calc: function(q) {
+                return [
+                    f(600*q) + ' ~ ' + f(2500*q),
+                    f(54*q) + ' ~ ' + f(225*q),
+                    '상위 ' + Math.max(1,Math.round(50/q*10)) + '위 ~ ' + Math.max(1,Math.round(20/q*10)) + '위',
+                    q + '개 플랫폼 콘텐츠',
+                    '+' + Math.max(1,Math.round(0.2*q)) + ' ~ ' + Math.round(0.8*q) + '건',
+                    Math.round(40*q/30) + '% ~ ' + Math.round(180*q/30) + '%'
+                ];
+            }
+        },
+        shortform: {
+            labels: ['예상 조회수', '예상 좋아요/공유', '예상 팔로워 증가', '예상 숏폼 영상', '예상 바이럴 도달', '예상 참여율'],
+            calc: function(q) {
+                return [
+                    f(5000*q) + ' ~ ' + f(30000*q),
+                    f(200*q) + ' ~ ' + f(1500*q),
+                    '+' + f(80*q) + ' ~ ' + f(500*q) + '명',
+                    q + '개 숏폼 영상',
+                    f(8000*q) + ' ~ ' + f(50000*q),
+                    Math.round(4*q)/10 + '% ~ ' + Math.round(25*q)/10 + '%'
+                ];
+            }
+        },
+        longform: {
+            labels: ['예상 조회수', '예상 구독자 증가', '예상 시청시간(분)', '예상 롱폼 영상', '예상 문의 증가', '예상 검색 상승'],
+            calc: function(q) {
+                return [
+                    f(2000*q) + ' ~ ' + f(15000*q),
+                    '+' + f(30*q) + ' ~ ' + f(200*q) + '명',
+                    f(800*q) + ' ~ ' + f(5000*q) + '분',
+                    q + '개 롱폼 영상',
+                    '+' + Math.max(1,Math.round(0.3*q)) + ' ~ ' + Math.round(1*q) + '건',
+                    Math.round(80*q/30) + '% ~ ' + Math.round(350*q/30) + '%'
+                ];
+            }
+        },
+        press: {
+            labels: ['예상 기사 노출수', '예상 유입 클릭', '예상 언론 기사', '예상 브랜드 신뢰도', '예상 포털 검색 등록', '예상 검색 상승'],
+            calc: function(q) {
+                return [
+                    f(2000*q) + ' ~ ' + f(8000*q),
+                    f(140*q) + ' ~ ' + f(560*q),
+                    q + '개 언론 기사',
+                    '신뢰도 ' + Math.round(3*q) + '% ~ ' + Math.round(8*q) + '% 상승',
+                    '+' + Math.max(1,Math.round(0.2*q)) + ' ~ ' + Math.round(0.6*q) + '건',
+                    Math.round(60*q/30) + '% ~ ' + Math.round(200*q/30) + '%'
+                ];
+            }
+        },
+        site: {
+            labels: ['예상 방문자수', '예상 유입 클릭', '예상 페이지 체류시간', '예상 웹페이지 제작', '예상 문의 증가', '예상 전환율'],
+            calc: function(q) {
+                return [
+                    f(500*q) + ' ~ ' + f(3000*q),
+                    f(75*q) + ' ~ ' + f(450*q),
+                    '평균 ' + Math.round(1.5*q)/q + '분 ~ ' + Math.round(3*q)/q + '분',
+                    q + '개 웹페이지',
+                    '+' + Math.max(1,Math.round(0.5*q)) + ' ~ ' + Math.round(2*q) + '건',
+                    Math.round(1.5*q)/10 + '% ~ ' + Math.round(4*q)/10 + '%'
+                ];
+            }
+        }
     };
+    function f(n) { return n.toLocaleString(); }
     function updateExposure() {
         const svc = document.getElementById('expServiceSelect').value;
         const qty = parseInt(document.querySelector('.calc-qty.active').dataset.qty);
         const d = expData[svc];
-        const minV = (d.perUnit[0] * qty).toLocaleString();
-        const maxV = (d.perUnit[1] * qty).toLocaleString();
-        const cMin = Math.round(d.perUnit[0] * qty * d.clickRate).toLocaleString();
-        const cMax = Math.round(d.perUnit[1] * qty * d.clickRate).toLocaleString();
-        const sMin = Math.round(d.searchMin * qty / 30);
-        const sMax = Math.round(d.searchMax * qty / 30);
-        const contentCount = qty + '개 ' + d.contentLabel;
-        const brandMin = Math.round(d.brandRate[0] * qty * 100).toLocaleString();
-        const brandMax = Math.round(d.brandRate[1] * qty * 100).toLocaleString();
-        const inqMin = Math.max(1, Math.round(d.inquiryMin * qty));
-        const inqMax = Math.round(d.inquiryMax * qty);
-        document.getElementById('expViews').textContent = minV + ' ~ ' + maxV;
-        document.getElementById('expClicks').textContent = cMin + ' ~ ' + cMax;
-        document.getElementById('expContent').textContent = contentCount;
-        document.getElementById('expBrand').textContent = brandMin + ' ~ ' + brandMax;
-        document.getElementById('expInquiry').textContent = '+' + inqMin + ' ~ ' + inqMax + '건';
-        document.getElementById('expSearch').textContent = sMin + '% ~ ' + sMax + '%';
+        const values = d.calc(qty);
+        const container = document.getElementById('expResult');
+        container.innerHTML = d.labels.map(function(label, i) {
+            return '<div class="calc-result-item' + (i === 5 ? ' highlight' : '') + '">' +
+                '<span class="calc-result-label">' + label + '</span>' +
+                '<span class="calc-result-value">' + values[i] + '</span></div>';
+        }).join('');
     }
     document.getElementById('expServiceSelect').addEventListener('change', updateExposure);
     document.querySelectorAll('.calc-qty').forEach(b => {
@@ -503,17 +605,21 @@
     });
     updateExposure();
 
-    // ROI Calculator
-    const roiSlider = document.getElementById('roiRate');
-    const roiDisplay = document.getElementById('roiRateDisplay');
-    roiSlider.addEventListener('input', function() {
-        roiDisplay.textContent = this.value + '%';
-        calcROI();
-    });
+    // ROI Calculator - auto-calculate from revenue + budget only
     function calcROI() {
         const rev = parseInt(document.getElementById('roiRevenue').value) || 0;
         const budget = parseInt(document.getElementById('roiBudget').value) || 0;
-        const rate = parseInt(roiSlider.value) / 100;
+        // Auto growth rate: based on budget-to-revenue ratio (higher budget = higher growth)
+        var ratio = rev > 0 ? budget / rev : 0;
+        var rate;
+        if (ratio <= 0) { rate = 0; }
+        else if (ratio <= 0.03) { rate = 0.15; }
+        else if (ratio <= 0.05) { rate = 0.2; }
+        else if (ratio <= 0.1) { rate = 0.3; }
+        else if (ratio <= 0.15) { rate = 0.45; }
+        else if (ratio <= 0.2) { rate = 0.6; }
+        else if (ratio <= 0.3) { rate = 0.8; }
+        else { rate = Math.min(2, 0.8 + (ratio - 0.3) * 2); }
         const expected = Math.round(rev * (1 + rate));
         const extra = expected - rev;
         const roiMultiple = budget > 0 ? (extra / budget) : 0;
