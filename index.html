@@ -243,9 +243,9 @@
     <section class="roi-section" id="roi-calc">
         <div class="container">
             <div class="section-header">
-                <span class="section-tag animate-on-scroll">ROI CALCULATOR</span>
-                <h2 class="section-title animate-on-scroll">마케팅 <span class="gradient-text">ROI 계산기</span></h2>
-                <p class="section-desc animate-on-scroll">슬라이더를 조절하면 예상 수익이 자동 계산됩니다</p>
+                <span class="section-tag animate-on-scroll">MARKETING PREVIEW</span>
+                <h2 class="section-title animate-on-scroll">마케팅 <span class="gradient-text">효과 미리 보기</span></h2>
+                <p class="section-desc animate-on-scroll">현재 매출과 마케팅 비용을 입력하면<br>예상 매출과 수익을 바로 확인할 수 있습니다</p>
             </div>
             <div class="roi-card animate-on-scroll">
                 <div class="roi-inputs">
@@ -258,14 +258,15 @@
                         <div class="roi-input-wrap"><input type="number" id="roiBudget" value="1000000" min="0" step="100000" oninput="calcROI()"><span class="roi-unit">원</span></div>
                     </div>
                     <div class="roi-field">
-                        <label>예상 매출 상승률 <strong id="roiRateDisplay">30%</strong></label>
+                        <label>마케팅 후 예상 매출 증가 <strong id="roiRateDisplay">30%</strong></label>
                         <input type="range" id="roiRate" min="10" max="200" value="30" class="roi-slider">
                     </div>
                 </div>
                 <div class="roi-results" id="roiResults">
-                    <div class="roi-result-card"><span class="roi-result-label">예상 월 매출</span><span class="roi-result-value" id="roiExpected">13,000,000원</span></div>
-                    <div class="roi-result-card accent"><span class="roi-result-label">예상 ROI</span><span class="roi-result-value" id="roiPercent">200%</span></div>
-                    <div class="roi-result-card"><span class="roi-result-label">추가 매출</span><span class="roi-result-value" id="roiExtra">3,000,000원</span></div>
+                    <div class="roi-result-card"><span class="roi-result-label">예상 월 매출</span><span class="roi-result-value" id="roiExpected">13,000,000원</span><span class="roi-result-desc" id="roiExpectedDesc">마케팅 후 예상되는 월 매출입니다</span></div>
+                    <div class="roi-result-card"><span class="roi-result-label">추가 매출</span><span class="roi-result-value" id="roiExtra">+3,000,000원</span><span class="roi-result-desc" id="roiExtraDesc">현재보다 300만원 더 벌 수 있습니다</span></div>
+                    <div class="roi-result-card"><span class="roi-result-label">마케팅 비용</span><span class="roi-result-value" id="roiBudgetDisplay">1,000,000원</span><span class="roi-result-desc">매월 투자하는 마케팅 비용입니다</span></div>
+                    <div class="roi-result-card accent"><span class="roi-result-label">투자 대비 수익</span><span class="roi-result-value" id="roiPercent">2.0배</span><span class="roi-result-desc" id="roiPercentDesc">100만원 투자 시 약 200만원 수익 예상</span></div>
                 </div>
             </div>
         </div>
@@ -511,10 +512,16 @@
         const rate = parseInt(roiSlider.value) / 100;
         const expected = Math.round(rev * (1 + rate));
         const extra = expected - rev;
-        const roi = budget > 0 ? Math.round((extra - budget) / budget * 100) : 0;
+        const roiMultiple = budget > 0 ? (extra / budget) : 0;
         document.getElementById('roiExpected').textContent = expected.toLocaleString() + '원';
-        document.getElementById('roiExtra').textContent = extra.toLocaleString() + '원';
-        document.getElementById('roiPercent').textContent = roi + '%';
+        document.getElementById('roiExpectedDesc').textContent = '마케팅 후 예상되는 월 매출입니다';
+        document.getElementById('roiExtra').textContent = '+' + extra.toLocaleString() + '원';
+        document.getElementById('roiExtraDesc').textContent = '현재보다 ' + (extra >= 10000 ? Math.round(extra / 10000).toLocaleString() + '만' : extra.toLocaleString()) + '원 더 벌 수 있습니다';
+        document.getElementById('roiBudgetDisplay').textContent = budget.toLocaleString() + '원';
+        document.getElementById('roiPercent').textContent = roiMultiple.toFixed(1) + '배';
+        const budgetMan = budget >= 10000 ? Math.round(budget / 10000) + '만' : budget.toLocaleString();
+        const profitMan = extra >= 10000 ? Math.round(extra / 10000) + '만' : extra.toLocaleString();
+        document.getElementById('roiPercentDesc').textContent = budgetMan + '원 투자 시 약 ' + profitMan + '원 수익 예상';
     }
     calcROI();
     </script>
