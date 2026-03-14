@@ -12,6 +12,37 @@
         .report-page { padding: 120px 0 80px; min-height: 100vh; }
         .report-page-header { text-align: center; margin-bottom: 56px; }
 
+        /* Tab Toggle */
+        .report-tab-toggle {
+            display: flex;
+            justify-content: center;
+            gap: 0;
+            margin-bottom: 40px;
+        }
+        .report-tab-btn {
+            padding: 14px 36px;
+            font-size: 0.95rem;
+            font-weight: 600;
+            font-family: var(--font);
+            border: 1px solid var(--border);
+            background: var(--bg-card);
+            color: var(--text-light);
+            cursor: pointer;
+            transition: var(--transition);
+        }
+        .report-tab-btn:first-child {
+            border-radius: var(--radius-sm) 0 0 var(--radius-sm);
+            border-right: none;
+        }
+        .report-tab-btn:last-child {
+            border-radius: 0 var(--radius-sm) var(--radius-sm) 0;
+        }
+        .report-tab-btn.active {
+            background: linear-gradient(135deg, var(--primary), var(--accent));
+            color: #fff;
+            border-color: var(--primary);
+        }
+
         /* Access Form */
         .access-section { max-width: 480px; margin: 0 auto; }
         .access-card {
@@ -46,6 +77,143 @@
         .access-form input:focus {
             border-color: var(--primary);
             box-shadow: 0 0 0 3px rgba(200,149,108,0.1);
+        }
+
+        /* Report Creation Form */
+        .report-create-section { display: none; max-width: 800px; margin: 0 auto; }
+        .report-create-section.active { display: block; }
+        .create-card {
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: var(--radius);
+            padding: 40px;
+            box-shadow: var(--shadow);
+        }
+        .create-card h2 {
+            font-size: 1.3rem;
+            margin-bottom: 28px;
+            text-align: center;
+        }
+        .form-group {
+            margin-bottom: 20px;
+        }
+        .form-group label {
+            display: block;
+            font-size: 0.85rem;
+            font-weight: 600;
+            color: var(--text-light);
+            margin-bottom: 8px;
+        }
+        .form-group input,
+        .form-group textarea,
+        .form-group select {
+            width: 100%;
+            padding: 12px 16px;
+            border: 1px solid var(--border);
+            border-radius: var(--radius-sm);
+            font-size: 0.9rem;
+            font-family: var(--font);
+            background: var(--bg);
+            outline: none;
+            transition: var(--transition);
+            box-sizing: border-box;
+        }
+        .form-group input:focus,
+        .form-group textarea:focus,
+        .form-group select:focus {
+            border-color: var(--primary);
+            box-shadow: 0 0 0 3px rgba(200,149,108,0.1);
+        }
+        .form-group textarea {
+            resize: vertical;
+            min-height: 80px;
+        }
+        .form-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 16px;
+        }
+        .form-row-3 {
+            display: grid;
+            grid-template-columns: 1fr 1fr 1fr;
+            gap: 16px;
+        }
+        .date-range {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        .date-range input {
+            flex: 1;
+        }
+        .date-range span {
+            font-size: 0.9rem;
+            color: var(--text-muted);
+            font-weight: 500;
+        }
+        .create-table-section {
+            margin-top: 28px;
+            margin-bottom: 24px;
+        }
+        .create-table-section h3 {
+            font-size: 1rem;
+            margin-bottom: 16px;
+        }
+        .create-table-section .table-wrapper {
+            max-height: none;
+        }
+        .create-table-section .work-table input,
+        .create-table-section .work-table select {
+            padding: 8px 10px;
+            border: 1px solid var(--border);
+            border-radius: 4px;
+            font-size: 0.82rem;
+            font-family: var(--font);
+            background: var(--bg);
+            outline: none;
+            width: 100%;
+            box-sizing: border-box;
+        }
+        .create-table-section .work-table input:focus,
+        .create-table-section .work-table select:focus {
+            border-color: var(--primary);
+        }
+        .btn-add-row {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            margin-top: 12px;
+            padding: 10px 20px;
+            background: var(--bg);
+            border: 1px dashed var(--border);
+            border-radius: var(--radius-sm);
+            font-size: 0.85rem;
+            font-family: var(--font);
+            color: var(--text-light);
+            cursor: pointer;
+            transition: var(--transition);
+        }
+        .btn-add-row:hover {
+            border-color: var(--primary);
+            color: var(--primary);
+        }
+        .btn-remove-row {
+            background: none;
+            border: none;
+            color: var(--text-muted);
+            cursor: pointer;
+            font-size: 1.1rem;
+            padding: 4px 8px;
+            transition: var(--transition);
+        }
+        .btn-remove-row:hover {
+            color: #e74c3c;
+        }
+        .create-actions {
+            display: flex;
+            gap: 12px;
+            justify-content: center;
+            margin-top: 32px;
         }
 
         /* Report View */
@@ -162,6 +330,7 @@
             border-radius: 100px;
             font-size: 0.75rem;
             font-weight: 600;
+            white-space: nowrap;
         }
         .type-post { background: rgba(200,149,108,0.15); color: var(--primary-dark); }
         .type-comment { background: rgba(139,111,78,0.12); color: var(--accent); }
@@ -290,6 +459,9 @@
             .info-pairs { grid-template-columns: 1fr; }
             .chart-grid { grid-template-columns: 1fr; }
             .access-card { padding: 32px 20px; }
+            .form-row, .form-row-3 { grid-template-columns: 1fr; }
+            .create-card { padding: 24px 16px; }
+            .report-tab-btn { padding: 12px 20px; font-size: 0.85rem; }
         }
     </style>
 </head>
@@ -305,7 +477,7 @@
                 <li><a href="index.html#services">서비스</a></li>
                 <li><a href="index.html#reviews">고객후기</a></li>
                 <li><a href="report.html">결과보고서</a></li>
-                <li><a href="estimate.html" class="nav-cta">견적서 작성</a></li>
+                <li><a href="estimate.html" class="nav-cta">AI 맞춤견적서</a></li>
             </ul>
             <button class="mobile-menu" id="mobileMenu" aria-label="메뉴 열기">
                 <span></span><span></span><span></span>
@@ -321,7 +493,13 @@
                 <p class="section-desc">광고주님의 작업 진행 현황과 결과를 확인하세요</p>
             </div>
 
-            <!-- Access Form -->
+            <!-- Tab Toggle -->
+            <div class="report-tab-toggle">
+                <button class="report-tab-btn active" id="tabView" onclick="switchTab('view')">보고서 조회</button>
+                <button class="report-tab-btn" id="tabCreate" onclick="switchTab('create')">보고서 작성</button>
+            </div>
+
+            <!-- Access Form (View Tab) -->
             <div class="access-section" id="accessSection">
                 <div class="access-card">
                     <div class="access-icon">
@@ -443,12 +621,12 @@
                                 <span class="ip-value">게시글 320 / 댓글 320</span>
                             </div>
                             <div class="info-pair">
-                                <span class="ip-label">카페 C팀</span>
-                                <span class="ip-value">작업시작일: 2026-01-06</span>
+                                <span class="ip-label">담당팀</span>
+                                <span class="ip-value">카페 C팀</span>
                             </div>
                             <div class="info-pair">
-                                <span class="ip-label">작업종료</span>
-                                <span class="ip-value">작업종료일: 2026-02-06</span>
+                                <span class="ip-label">작업기간</span>
+                                <span class="ip-value">2026-01-06 ~ 2026-02-06</span>
                             </div>
                         </div>
 
@@ -475,6 +653,85 @@
                     </div>
                 </div>
             </div>
+
+            <!-- Report Creation Form (Create Tab) -->
+            <div class="report-create-section" id="createSection">
+                <div class="create-card">
+                    <h2>보고서 작성</h2>
+                    <form id="createForm">
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label>카페명</label>
+                                <input type="text" id="createCafeName" placeholder="카페명을 입력하세요" required>
+                            </div>
+                            <div class="form-group">
+                                <label>담당팀</label>
+                                <input type="text" id="createTeam" placeholder="예: 카페 C팀" required>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label>작업기간</label>
+                            <div class="date-range">
+                                <input type="date" id="createStartDate" required>
+                                <span>~</span>
+                                <input type="date" id="createEndDate" required>
+                            </div>
+                        </div>
+
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label>위드워크 - 게시글수</label>
+                                <input type="number" id="createPostCount" placeholder="게시글 수" min="0" required>
+                            </div>
+                            <div class="form-group">
+                                <label>위드워크 - 댓글수</label>
+                                <input type="number" id="createCommentCount" placeholder="댓글 수" min="0" required>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label>추가 서비스 내용</label>
+                            <textarea id="createBonusContent" placeholder="추가 서비스 내용을 입력하세요 (줄바꿈으로 구분)"></textarea>
+                        </div>
+
+                        <div class="form-group">
+                            <label>업체 비밀번호 설정</label>
+                            <input type="text" id="createPassword" placeholder="업체에서 보고서 조회 시 사용할 비밀번호" required>
+                        </div>
+
+                        <!-- Dynamic Table -->
+                        <div class="create-table-section">
+                            <h3>작업 내역 테이블</h3>
+                            <div class="table-wrapper">
+                                <table class="work-table" id="createTable">
+                                    <thead>
+                                        <tr>
+                                            <th style="width:60px;">순번</th>
+                                            <th style="width:110px;">날짜</th>
+                                            <th style="width:90px;">분류</th>
+                                            <th>URL</th>
+                                            <th style="width:120px;">비고</th>
+                                            <th style="width:50px;"></th>
+                                        </tr>
+                                    </thead>
+                                    <tbody id="createTableBody">
+                                    </tbody>
+                                </table>
+                            </div>
+                            <button type="button" class="btn-add-row" onclick="addCreateRow()">
+                                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+                                행 추가
+                            </button>
+                        </div>
+
+                        <div class="create-actions">
+                            <button type="submit" class="btn btn-primary" style="padding: 14px 48px;">보고서 저장</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+
         </div>
     </main>
 
@@ -493,6 +750,31 @@
         const navLinks = document.getElementById('navLinks');
         if (mobileMenu) {
             mobileMenu.addEventListener('click', () => navLinks.classList.toggle('active'));
+        }
+
+        // Tab switching
+        function switchTab(tab) {
+            const tabView = document.getElementById('tabView');
+            const tabCreate = document.getElementById('tabCreate');
+            const accessSection = document.getElementById('accessSection');
+            const reportView = document.getElementById('reportView');
+            const createSection = document.getElementById('createSection');
+
+            if (tab === 'view') {
+                tabView.classList.add('active');
+                tabCreate.classList.remove('active');
+                createSection.classList.remove('active');
+                // Show access section only if report view isn't already showing
+                if (!reportView.classList.contains('active')) {
+                    accessSection.style.display = '';
+                }
+            } else {
+                tabCreate.classList.add('active');
+                tabView.classList.remove('active');
+                accessSection.style.display = 'none';
+                reportView.classList.remove('active');
+                createSection.classList.add('active');
+            }
         }
 
         // Access form
@@ -548,6 +830,55 @@
                 fill.style.strokeDashoffset = '0';
             }, 500);
         }
+
+        // === Report Creation Form Logic ===
+        let createRowCount = 0;
+
+        function addCreateRow() {
+            createRowCount++;
+            const tbody = document.getElementById('createTableBody');
+            const tr = document.createElement('tr');
+            tr.id = 'createRow-' + createRowCount;
+            tr.innerHTML = `
+                <td>${createRowCount}</td>
+                <td><input type="date" name="rowDate"></td>
+                <td>
+                    <select name="rowType">
+                        <option value="게시글">게시글</option>
+                        <option value="댓글">댓글</option>
+                    </select>
+                </td>
+                <td><input type="url" name="rowUrl" placeholder="URL 입력"></td>
+                <td><input type="text" name="rowNote" placeholder="비고"></td>
+                <td><button type="button" class="btn-remove-row" onclick="removeCreateRow('createRow-${createRowCount}')">&times;</button></td>
+            `;
+            tbody.appendChild(tr);
+        }
+
+        function removeCreateRow(rowId) {
+            const row = document.getElementById(rowId);
+            if (row) {
+                row.remove();
+                renumberCreateRows();
+            }
+        }
+
+        function renumberCreateRows() {
+            const tbody = document.getElementById('createTableBody');
+            const rows = tbody.querySelectorAll('tr');
+            rows.forEach((row, index) => {
+                row.querySelector('td:first-child').textContent = index + 1;
+            });
+        }
+
+        // Add initial row
+        addCreateRow();
+
+        // Create form submission
+        document.getElementById('createForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            alert('보고서가 저장되었습니다. (데모 모드 - 실제 저장 기능은 백엔드 연동이 필요합니다)');
+        });
     </script>
 </body>
 </html>
