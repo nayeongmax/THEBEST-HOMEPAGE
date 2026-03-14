@@ -497,36 +497,215 @@ renderServiceTiers();
 
 // ===== PDF Download =====
 function downloadPDF() {
-    const card = document.getElementById('previewCard');
-    const company = document.getElementById('companyName').value || '견적서';
-    const today = new Date().toISOString().slice(0, 10);
+    const company = document.getElementById('companyName').value || '-';
+    const manager = document.getElementById('contactName') ? document.getElementById('contactName').value || '-' : '-';
+    const phone = document.getElementById('phone') ? document.getElementById('phone').value || '-' : '-';
+    const email = document.getElementById('email') ? document.getElementById('email').value || '-' : '-';
+    const industry = document.getElementById('industry').value || '-';
+    const today = new Date().toLocaleDateString('ko-KR');
+    const todayFile = new Date().toISOString().slice(0, 10);
 
-    const opt = {
-        margin: [10, 10, 10, 10],
-        filename: `AI맞춤견적서_${company}_${today}.pdf`,
-        image: { type: 'jpeg', quality: 0.98 },
-        html2canvas: { scale: 2, useCORS: true, backgroundColor: '#ffffff' },
-        jsPDF: { unit: 'mm', format: 'a4', orientation: 'portrait' }
-    };
+    const selected = getSelectedServices();
+    const total = selected.reduce((sum, s) => sum + s.price, 0);
 
-    // Clone and style for PDF
-    const clone = card.cloneNode(true);
-    clone.style.width = '600px';
-    clone.style.padding = '40px';
-    clone.style.background = '#fff';
-    clone.style.border = '2px solid #2D2A26';
-    clone.style.borderRadius = '0';
-    clone.style.boxShadow = 'none';
-    clone.style.fontFamily = '"Noto Sans KR", sans-serif';
+    // AI analysis data
+    const radarData = industryRadarData[industry] || industryRadarData['기타'];
+    const imgUrl = industryImages[industry] || industryImages['기타'];
+    const boost = Math.min(selected.length * 2, 10);
+    const boostedAfter = radarData.after.map(v => Math.min(v + boost, 100));
+    const displayAfter = selected.length > 0 ? boostedAfter : radarData.after;
+    const avgBefore = Math.round(radarData.before.reduce((a, b) => a + b, 0) / 5);
+    const avgAfter = Math.round(displayAfter.reduce((a, b) => a + b, 0) / 5);
+    const improvement = avgAfter - avgBefore;
 
+    // Build services HTML
+    let servicesHTML = '';
+    selected.forEach((s, idx) => {
+        servicesHTML += `
+            <div style="margin-bottom:20px;padding:18px 20px;background:#FFFAF5;border:1px solid #F0E6DA;border-radius:8px;">
+                <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:8px;">
+                    <div style="font-size:15px;font-weight:700;color:#2D2A26;">${idx + 1}. ${s.name} <span style="font-size:12px;font-weight:500;color:#C8956C;background:#FFF3E8;padding:2px 8px;border-radius:4px;margin-left:6px;">${s.tierName}</span></div>
+                    <div style="font-size:15px;font-weight:700;color:#C8956C;">${s.price.toLocaleString()}원</div>
+                </div>
+                <div style="font-size:12px;color:#8A8580;margin-bottom:12px;padding-left:4px;">${s.desc}</div>
+                <div style="border-top:1px dashed #E8E2DB;padding-top:10px;">
+                    <div style="font-size:11px;font-weight:600;color:#6B6560;margin-bottom:6px;">작업 사항</div>
+                    ${s.workItems.map(w => `<div style="font-size:11px;color:#6B6560;padding:2px 0 2px 12px;position:relative;"><span style="position:absolute;left:0;color:#C8956C;">&#8226;</span>${w}</div>`).join('')}
+                </div>
+            </div>
+        `;
+    });
+
+    if (selected.length === 0) {
+        servicesHTML = '<div style="padding:30px;text-align:center;color:#AEA9A4;font-size:13px;">선택된 서비스가 없습니다</div>';
+    }
+
+    // Build score bars HTML
+    let scoreBarsHTML = '';
+    if (industry && industry !== '-') {
+        const labels = radarData.labels;
+        labels.forEach((label, i) => {
+            scoreBarsHTML += `
+                <div style="margin-bottom:10px;">
+                    <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:4px;">
+                        <span style="font-size:12px;font-weight:600;color:#6B6560;">${label}</span>
+                        <span style="font-size:11px;color:#8A8580;">${radarData.before[i]}점 → <strong style="color:#C8956C;">${displayAfter[i]}점</strong></span>
+                    </div>
+                    <div style="display:flex;gap:4px;">
+                        <div style="flex:1;height:8px;background:#EDEDED;border-radius:4px;overflow:hidden;">
+                            <div style="width:${radarData.before[i]}%;height:100%;background:#B0B0B0;border-radius:4px;"></div>
+                        </div>
+                        <div style="flex:1;height:8px;background:#EDEDED;border-radius:4px;overflow:hidden;">
+                            <div style="width:${displayAfter[i]}%;height:100%;background:#C8956C;border-radius:4px;"></div>
+                        </div>
+                    </div>
+                </div>
+            `;
+        });
+    }
+
+    // Full PDF HTML
+    const pdfHTML = `
+    <div style="font-family:'Noto Sans KR',sans-serif;color:#2D2A26;width:660px;margin:0 auto;background:#fff;">
+
+        <!-- HEADER -->
+        <div style="background:linear-gradient(135deg,#2D2A26 0%,#3D3A36 100%);padding:32px 36px;display:flex;justify-content:space-between;align-items:center;">
+            <div>
+                <div style="font-size:24px;font-weight:800;color:#C8956C;letter-spacing:1px;">THE BEST</div>
+                <div style="font-size:10px;color:#AEA9A4;margin-top:2px;">더베스트마케팅</div>
+            </div>
+            <div style="text-align:right;">
+                <div style="font-size:20px;font-weight:700;color:#fff;">AI 맞춤견적서</div>
+                <div style="font-size:11px;color:#AEA9A4;margin-top:4px;">AI-Powered Custom Estimate</div>
+            </div>
+        </div>
+
+        <!-- DECORATIVE LINE -->
+        <div style="height:3px;background:linear-gradient(90deg,#C8956C,#E8C9A0,#C8956C);"></div>
+
+        <!-- BASIC INFO -->
+        <div style="padding:28px 36px 20px 36px;">
+            <div style="font-size:16px;font-weight:700;color:#2D2A26;margin-bottom:16px;padding-bottom:8px;border-bottom:2px solid #C8956C;display:inline-block;">기본 정보</div>
+            <table style="width:100%;border-collapse:collapse;font-size:13px;">
+                <tr>
+                    <td style="padding:10px 14px;background:#FAF6F1;border:1px solid #F0E6DA;font-weight:600;color:#6B6560;width:18%;">업체명</td>
+                    <td style="padding:10px 14px;border:1px solid #F0E6DA;width:32%;">${company}</td>
+                    <td style="padding:10px 14px;background:#FAF6F1;border:1px solid #F0E6DA;font-weight:600;color:#6B6560;width:18%;">담당자</td>
+                    <td style="padding:10px 14px;border:1px solid #F0E6DA;width:32%;">${manager}</td>
+                </tr>
+                <tr>
+                    <td style="padding:10px 14px;background:#FAF6F1;border:1px solid #F0E6DA;font-weight:600;color:#6B6560;">연락처</td>
+                    <td style="padding:10px 14px;border:1px solid #F0E6DA;">${phone}</td>
+                    <td style="padding:10px 14px;background:#FAF6F1;border:1px solid #F0E6DA;font-weight:600;color:#6B6560;">이메일</td>
+                    <td style="padding:10px 14px;border:1px solid #F0E6DA;">${email}</td>
+                </tr>
+                <tr>
+                    <td style="padding:10px 14px;background:#FAF6F1;border:1px solid #F0E6DA;font-weight:600;color:#6B6560;">업종</td>
+                    <td style="padding:10px 14px;border:1px solid #F0E6DA;">${industry}</td>
+                    <td style="padding:10px 14px;background:#FAF6F1;border:1px solid #F0E6DA;font-weight:600;color:#6B6560;">견적일자</td>
+                    <td style="padding:10px 14px;border:1px solid #F0E6DA;">${today}</td>
+                </tr>
+            </table>
+        </div>
+
+        <!-- SERVICES & ESTIMATE -->
+        <div style="padding:8px 36px 20px 36px;">
+            <div style="font-size:16px;font-weight:700;color:#2D2A26;margin-bottom:16px;padding-bottom:8px;border-bottom:2px solid #C8956C;display:inline-block;">서비스 &amp; 견적</div>
+            ${servicesHTML}
+        </div>
+
+        <!-- TOTAL AMOUNT -->
+        <div style="margin:0 36px 24px 36px;background:linear-gradient(135deg,#2D2A26 0%,#3D3A36 100%);border-radius:10px;padding:22px 28px;display:flex;justify-content:space-between;align-items:center;">
+            <div>
+                <div style="font-size:14px;font-weight:600;color:#AEA9A4;">총 견적금액</div>
+                <div style="font-size:10px;color:#8A8580;margin-top:2px;">VAT 별도</div>
+            </div>
+            <div style="font-size:26px;font-weight:800;color:#C8956C;">${total.toLocaleString()}원</div>
+        </div>
+
+        ${industry && industry !== '-' ? `
+        <!-- AI ANALYSIS SECTION -->
+        <div style="padding:8px 36px 24px 36px;">
+            <div style="font-size:16px;font-weight:700;color:#2D2A26;margin-bottom:16px;padding-bottom:8px;border-bottom:2px solid #C8956C;display:inline-block;">AI 분석 결과</div>
+
+            <!-- Industry Image -->
+            <div style="margin-bottom:20px;border-radius:10px;overflow:hidden;border:1px solid #F0E6DA;">
+                <img src="${imgUrl}" alt="${industry}" style="width:100%;height:180px;object-fit:cover;display:block;" crossorigin="anonymous">
+                <div style="padding:10px 16px;background:#FAF6F1;font-size:13px;font-weight:600;color:#6B6560;">${industry} 업종 마케팅 분석</div>
+            </div>
+
+            <!-- Score Comparison -->
+            <div style="display:flex;gap:16px;margin-bottom:20px;">
+                <div style="flex:1;text-align:center;padding:20px;background:#F8F5F0;border-radius:10px;border:1px solid #E8E2DB;">
+                    <div style="font-size:11px;font-weight:600;color:#8A8580;margin-bottom:8px;">마케팅 미진행</div>
+                    <div style="font-size:36px;font-weight:800;color:#999;">${avgBefore}<span style="font-size:14px;font-weight:500;">점</span></div>
+                    <div style="font-size:11px;color:#B0B0B0;margin-top:4px;background:#EDEDED;padding:2px 10px;border-radius:10px;display:inline-block;">개선 필요</div>
+                </div>
+                <div style="flex:0 0 auto;display:flex;flex-direction:column;align-items:center;justify-content:center;">
+                    <div style="font-size:24px;color:#C8956C;">&#10145;</div>
+                    <div style="font-size:12px;font-weight:700;color:#C8956C;margin-top:4px;">+${improvement}점</div>
+                </div>
+                <div style="flex:1;text-align:center;padding:20px;background:#FFFAF5;border-radius:10px;border:1px solid #F0E6DA;">
+                    <div style="font-size:11px;font-weight:600;color:#C8956C;margin-bottom:8px;">마케팅 진행 후</div>
+                    <div style="font-size:36px;font-weight:800;color:#C8956C;">${avgAfter}<span style="font-size:14px;font-weight:500;">점</span></div>
+                    <div style="font-size:11px;color:#fff;margin-top:4px;background:#C8956C;padding:2px 10px;border-radius:10px;display:inline-block;">우수</div>
+                </div>
+            </div>
+
+            <!-- Detail Bars -->
+            <div style="padding:18px 20px;background:#FFFAF5;border:1px solid #F0E6DA;border-radius:8px;">
+                <div style="font-size:12px;font-weight:600;color:#6B6560;margin-bottom:12px;">항목별 상세 분석</div>
+                <div style="display:flex;gap:8px;margin-bottom:10px;">
+                    <div style="display:flex;align-items:center;gap:4px;font-size:10px;color:#8A8580;">
+                        <span style="display:inline-block;width:12px;height:6px;background:#B0B0B0;border-radius:3px;"></span>미진행
+                    </div>
+                    <div style="display:flex;align-items:center;gap:4px;font-size:10px;color:#8A8580;">
+                        <span style="display:inline-block;width:12px;height:6px;background:#C8956C;border-radius:3px;"></span>진행 후
+                    </div>
+                </div>
+                ${scoreBarsHTML}
+            </div>
+        </div>
+        ` : ''}
+
+        <!-- FOOTER -->
+        <div style="background:#2D2A26;padding:24px 36px;margin-top:12px;">
+            <div style="display:flex;justify-content:space-between;align-items:center;">
+                <div>
+                    <div style="font-size:14px;font-weight:700;color:#C8956C;letter-spacing:1px;">THE BEST</div>
+                    <div style="font-size:10px;color:#AEA9A4;margin-top:2px;">더베스트마케팅</div>
+                </div>
+                <div style="text-align:right;font-size:10px;color:#8A8580;line-height:1.7;">
+                    <div>Tel. 010-1234-5678 | Email. thebest@marketing.com</div>
+                    <div>본 견적서는 발행일로부터 30일간 유효합니다.</div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+    `;
+
+    // Create hidden container
     const wrapper = document.createElement('div');
     wrapper.style.position = 'fixed';
     wrapper.style.top = '-9999px';
     wrapper.style.left = '-9999px';
-    wrapper.appendChild(clone);
+    wrapper.style.width = '660px';
+    wrapper.innerHTML = pdfHTML;
     document.body.appendChild(wrapper);
 
-    html2pdf().set(opt).from(clone).save().then(() => {
+    const pdfContent = wrapper.firstElementChild;
+
+    const opt = {
+        margin: [8, 8, 8, 8],
+        filename: `AI맞춤견적서_${company !== '-' ? company : '견적서'}_${todayFile}.pdf`,
+        image: { type: 'jpeg', quality: 0.95 },
+        html2canvas: { scale: 2, useCORS: true, backgroundColor: '#ffffff', logging: false },
+        jsPDF: { unit: 'mm', format: 'a4', orientation: 'portrait' },
+        pagebreak: { mode: ['avoid-all', 'css', 'legacy'] }
+    };
+
+    html2pdf().set(opt).from(pdfContent).save().then(() => {
         document.body.removeChild(wrapper);
     });
 }
