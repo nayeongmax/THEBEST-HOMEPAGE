@@ -11,6 +11,10 @@
     <style>
         /* Blue theme overrides for report content */
         .report-page {
+            --primary: #3B82F6;
+            --primary-dark: #1D4ED8;
+            --primary-light: #60A5FA;
+            --bg-warm: #EFF6FF;
             --rpt-primary: #3B82F6;
             --rpt-primary-dark: #1D4ED8;
             --rpt-primary-light: #60A5FA;
@@ -18,6 +22,22 @@
             --rpt-focus-shadow: rgba(59,130,246,0.1);
         }
         .report-page { padding: 120px 0 80px; min-height: 100vh; }
+        .report-page .gradient-text { background: linear-gradient(135deg, #3B82F6, #60A5FA); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; }
+        .report-page .btn-primary { background: linear-gradient(135deg, #3B82F6, #1D4ED8); border: none; }
+        .report-page .btn-primary:hover { background: linear-gradient(135deg, #2563EB, #1E40AF); }
+        .report-page .access-icon { background: linear-gradient(135deg, #3B82F6, #60A5FA); }
+        .report-page .access-form input:focus { border-color: #3B82F6; box-shadow: 0 0 0 3px rgba(59,130,246,0.1); }
+        .report-page .rpt-section { border-color: #E2E8F0; }
+        .report-page .rpt-section-header { border-bottom-color: #E2E8F0; }
+        .report-page .info-pair { background: #EFF6FF; }
+        .report-page .kpi-card { background: #F8FAFC; border: 1px solid #E2E8F0; }
+        .report-page .radar-legend-dot { background: rgba(59,130,246,0.8) !important; }
+        .report-page .type-post { background: rgba(59,130,246,0.1); color: #3B82F6; }
+        .report-page .type-comment { background: rgba(100,116,139,0.1); color: #64748B; }
+        .report-page .ai-analysis-box { background: #EFF6FF; border-left: 4px solid #3B82F6; }
+        .report-page .compare-bar-track { background: #F1F5F9; }
+        .report-page .content-bar-track { background: #F1F5F9; }
+        .report-page .kw-bar { background: #F1F5F9; }
         .report-page-header { text-align: center; margin-bottom: 56px; }
 
         /* Tab Toggle */
@@ -57,7 +77,7 @@
             margin-top: -30px;
             margin-bottom: 32px;
         }
-        .admin-pw-hint strong { color: var(--primary); }
+        .admin-pw-hint strong { color: var(--rpt-primary); }
 
         /* Access Form */
         .access-section { max-width: 480px; margin: 0 auto; }
@@ -644,13 +664,8 @@
                                 <thead>
                                     <tr>
                                         <th style="width:45px;">순번</th>
-                                        <th style="width:65px;">날짜</th>
-                                        <th style="width:65px;">분류</th>
+                                        <th style="width:110px;">날짜</th>
                                         <th>URL</th>
-                                        <th style="width:60px;">조회수</th>
-                                        <th style="width:50px;">댓글</th>
-                                        <th style="width:65px; white-space:nowrap;">좋아요</th>
-                                        <th style="width:55px;">상태</th>
                                     </tr>
                                 </thead>
                                 <tbody id="reportTableBody"></tbody>
@@ -798,7 +813,7 @@
                                     구글시트 데이터 붙여넣기
                                 </button>
                                 <div id="sheetPasteArea" style="display:none;">
-                                    <textarea id="sheetPasteInput" rows="6" style="width:100%; padding:12px; border:1px solid var(--border); border-radius:var(--radius-sm); font-size:0.82rem; font-family:var(--font); background:var(--bg); margin-bottom:8px; box-sizing:border-box;" placeholder="구글시트에서 복사한 데이터를 여기에 붙여넣으세요.&#10;탭으로 구분된 열: 날짜, 분류, URL, 조회수, 댓글, 좋아요&#10;예: 2026-01-06&#9;게시글&#9;https://example.com&#9;1200&#9;15&#9;85"></textarea>
+                                    <textarea id="sheetPasteInput" rows="6" style="width:100%; padding:12px; border:1px solid var(--border); border-radius:var(--radius-sm); font-size:0.82rem; font-family:var(--font); background:var(--bg); margin-bottom:8px; box-sizing:border-box;" placeholder="구글시트에서 복사한 데이터를 여기에 붙여넣으세요.&#10;탭으로 구분된 열: 날짜, URL&#10;예: 2026-01-06&#9;https://example.com"></textarea>
                                     <button type="button" class="btn btn-primary" style="padding:8px 20px; font-size:0.82rem;" onclick="parseSheetData()">데이터 적용</button>
                                     <button type="button" class="btn-add-row" style="margin-top:0; margin-left:8px;" onclick="toggleSheetPaste()">취소</button>
                                 </div>
@@ -808,12 +823,8 @@
                                     <thead>
                                         <tr>
                                             <th style="width:45px;">순번</th>
-                                            <th style="width:95px;">날짜</th>
-                                            <th style="width:70px;">분류</th>
+                                            <th style="width:110px;">날짜</th>
                                             <th>URL</th>
-                                            <th style="width:60px;">조회수</th>
-                                            <th style="width:50px;">댓글</th>
-                                            <th style="width:65px; white-space:nowrap;">좋아요</th>
                                             <th style="width:35px;"></th>
                                         </tr>
                                     </thead>
@@ -1150,21 +1161,11 @@
                           '1/8','1/8','1/8','1/8','1/8','1/8'];
 
             for (let i = 0; i < 40; i++) {
-                const type = i % 3 === 2 ? '댓글' : '게시글';
-                const typeClass = type === '게시글' ? 'type-post' : 'type-comment';
                 const urlNum = 6811 + i;
-                const views = type === '게시글' ? Math.floor(2000 + Math.random() * 6000) : '-';
-                const comments = type === '게시글' ? Math.floor(5 + Math.random() * 50) : '-';
-                const likes = type === '게시글' ? Math.floor(20 + Math.random() * 300) : '-';
                 data.push(`<tr>
                     <td>${num++}</td>
                     <td>${dates[i]}</td>
-                    <td><span class="type-badge ${typeClass}">${type}</span></td>
                     <td><a href="#" target="_blank">https://cafe.naver.com/mia2897/${urlNum}</a></td>
-                    <td class="work-stats-num">${typeof views === 'number' ? views.toLocaleString() : views}</td>
-                    <td class="work-stats-num">${typeof comments === 'number' ? comments : comments}</td>
-                    <td class="work-stats-num">${typeof likes === 'number' ? likes : likes}</td>
-                    <td><span class="type-badge type-post">완료</span></td>
                 </tr>`);
             }
             tbody.innerHTML = data.join('');
@@ -1181,11 +1182,7 @@
             tr.innerHTML = `
                 <td>${createRowCount}</td>
                 <td><input type="date" name="rowDate"></td>
-                <td><select name="rowType"><option value="게시글">게시글</option><option value="댓글">댓글</option></select></td>
                 <td><input type="url" name="rowUrl" placeholder="URL 입력"></td>
-                <td><input type="number" name="rowViews" placeholder="조회" min="0"></td>
-                <td><input type="number" name="rowComments" placeholder="댓글" min="0"></td>
-                <td><input type="number" name="rowLikes" placeholder="좋아요" min="0"></td>
                 <td><button type="button" class="btn-remove-row" onclick="removeCreateRow('createRow-${createRowCount}')">&times;</button></td>
             `;
             tbody.appendChild(tr);
@@ -1354,30 +1351,18 @@
 
             lines.forEach(line => {
                 const cols = line.split('\t');
-                if (cols.length < 2) return; // skip lines with insufficient data
+                if (cols.length < 1 || !cols[0].trim()) return;
 
                 addCreateRow();
                 const row = document.getElementById('createRow-' + createRowCount);
                 if (!row) return;
 
                 const dateInput = row.querySelector('input[name="rowDate"]');
-                const typeSelect = row.querySelector('select[name="rowType"]');
                 const urlInput = row.querySelector('input[name="rowUrl"]');
-                const viewsInput = row.querySelector('input[name="rowViews"]');
-                const commentsInput = row.querySelector('input[name="rowComments"]');
-                const likesInput = row.querySelector('input[name="rowLikes"]');
 
-                // Expected columns: 날짜, 분류, URL, 조회수, 댓글, 좋아요
+                // Expected columns: 날짜, URL
                 if (cols[0] && dateInput) dateInput.value = cols[0].trim();
-                if (cols[1] && typeSelect) {
-                    const typeVal = cols[1].trim();
-                    if (typeVal === '댓글') typeSelect.value = '댓글';
-                    else typeSelect.value = '게시글';
-                }
-                if (cols[2] && urlInput) urlInput.value = cols[2].trim();
-                if (cols[3] && viewsInput) viewsInput.value = parseInt(cols[3].trim()) || '';
-                if (cols[4] && commentsInput) commentsInput.value = parseInt(cols[4].trim()) || '';
-                if (cols[5] && likesInput) likesInput.value = parseInt(cols[5].trim()) || '';
+                if (cols[1] && urlInput) urlInput.value = cols[1].trim();
             });
 
             // Hide paste area after parsing
@@ -1390,35 +1375,22 @@
         function autoAnalyze() {
             const rows = document.getElementById('createTableBody').querySelectorAll('tr');
             const urls = [];
-            let postCount = 0, commentCount = 0;
-            let totalViews = 0, totalComments = 0, totalLikes = 0;
 
             rows.forEach(row => {
-                const type = row.querySelector('select[name="rowType"]');
                 const url = row.querySelector('input[name="rowUrl"]');
-                const views = row.querySelector('input[name="rowViews"]');
-                const comments = row.querySelector('input[name="rowComments"]');
-                const likes = row.querySelector('input[name="rowLikes"]');
-
-                if (type && type.value === '게시글') postCount++;
-                if (type && type.value === '댓글') commentCount++;
                 if (url && url.value) urls.push(url.value);
-                if (views && views.value) totalViews += parseInt(views.value) || 0;
-                if (comments && comments.value) totalComments += parseInt(comments.value) || 0;
-                if (likes && likes.value) totalLikes += parseInt(likes.value) || 0;
             });
 
             if (urls.length === 0) {
-                alert('작업 내역에 URL을 먼저 입력해주세요.\n입력된 URL과 조회수/댓글/좋아요 데이터를 기반으로 자동 분석합니다.');
+                alert('작업 내역에 URL을 먼저 입력해주세요.');
                 return;
             }
 
-            // If no view data, generate realistic estimates
-            if (totalViews === 0) {
-                totalViews = urls.length * (2000 + Math.floor(Math.random() * 4000));
-                totalComments = Math.floor(urls.length * (5 + Math.random() * 30));
-                totalLikes = Math.floor(urls.length * (20 + Math.random() * 200));
-            }
+            const postCount = urls.length;
+            // Generate realistic estimates based on URL count
+            const totalViews = urls.length * (2000 + Math.floor(Math.random() * 4000));
+            const totalComments = Math.floor(urls.length * (5 + Math.random() * 30));
+            const totalLikes = Math.floor(urls.length * (20 + Math.random() * 200));
 
             const avgViews = Math.round(totalViews / Math.max(postCount, 1));
             const avgLikes = Math.round(totalLikes / Math.max(postCount, 1));
