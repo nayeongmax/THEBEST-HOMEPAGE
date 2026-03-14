@@ -76,12 +76,37 @@ const counterObserver = new IntersectionObserver((entries) => {
         if (entry.isIntersecting) {
             animateCounter(entry.target);
             counterObserver.unobserve(entry.target);
+            // Start repeating every 20 seconds
+            entry.target._counterInterval = setInterval(() => {
+                entry.target.textContent = '0';
+                animateCounter(entry.target);
+            }, 20000);
         }
     });
 }, { threshold: 0.5 });
 
 document.querySelectorAll('.stat-number').forEach(el => {
     counterObserver.observe(el);
+});
+
+// ===== Case Bar After Animation =====
+const caseBarObserver = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+        if (entry.isIntersecting) {
+            const bars = entry.target.querySelectorAll('.case-bar-animate');
+            const targets = [75, 50, 65]; // target widths for each case
+            bars.forEach((bar, i) => {
+                setTimeout(() => {
+                    bar.style.width = (targets[i] || 60) + '%';
+                }, 200 + i * 300);
+            });
+            caseBarObserver.unobserve(entry.target);
+        }
+    });
+}, { threshold: 0.3 });
+
+document.querySelectorAll('.case-cards').forEach(el => {
+    caseBarObserver.observe(el);
 });
 
 // ===== Hero Particles =====
