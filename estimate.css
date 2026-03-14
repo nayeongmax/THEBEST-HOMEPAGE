@@ -216,6 +216,16 @@
     cursor: pointer;
     transition: var(--transition);
     text-align: center;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    height: 100%;
+    min-height: 120px;
+}
+
+.tier-option {
+    height: 100%;
 }
 
 .tier-option-card:hover {

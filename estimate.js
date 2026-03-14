@@ -701,57 +701,49 @@ function downloadPDF() {
         </div>
     `);
 
-    // === Render each slide to canvas, then build PDF page-by-page ===
+    // === Render slides into a single wrapper for html2pdf ===
     const slideW = 960;
     const slideH = 540;
 
+    // Build a single container with all pages stacked, each with exact page height
     const wrapper = document.createElement('div');
-    wrapper.style.cssText = 'position:fixed;top:-9999px;left:-9999px;';
+    wrapper.style.cssText = `position:fixed;top:-9999px;left:-9999px;width:${slideW}px;font-family:'Noto Sans KR',sans-serif;color:#2D2A26;`;
+
     const styleTag = document.createElement('style');
-    styleTag.textContent = `.pdf-slide{width:${slideW}px;height:${slideH}px;background:#fff;position:relative;overflow:hidden;box-sizing:border-box;font-family:'Noto Sans KR',sans-serif;color:#2D2A26;}`;
+    styleTag.textContent = `
+        .pdf-slide {
+            width: ${slideW}px;
+            height: ${slideH}px;
+            background: #fff;
+            position: relative;
+            overflow: hidden;
+            box-sizing: border-box;
+            page-break-after: always;
+            page-break-inside: avoid;
+        }
+        .pdf-slide:last-child {
+            page-break-after: auto;
+        }
+    `;
     wrapper.appendChild(styleTag);
     wrapper.insertAdjacentHTML('beforeend', pages.join(''));
     document.body.appendChild(wrapper);
 
-    const slides = wrapper.querySelectorAll('.pdf-slide');
-    const scale = 2;
+    const opt = {
+        margin: 0,
+        filename: `AI맞춤견적서_${company !== '-' ? company : '견적서'}_${todayFile}.pdf`,
+        image: { type: 'jpeg', quality: 0.92 },
+        html2canvas: { scale: 2, useCORS: true, backgroundColor: '#ffffff', logging: false, width: slideW },
+        jsPDF: { unit: 'px', format: [slideW, slideH], orientation: 'landscape', hotfixes: ['px_scaling'] },
+        pagebreak: { mode: ['css'], avoid: ['.pdf-slide'] }
+    };
 
-    // Sequentially render each slide, then combine into single PDF
-    async function buildPDF() {
-        const canvases = [];
-        for (const slide of slides) {
-            const c = await html2canvas(slide, {
-                scale, useCORS: true, backgroundColor: '#ffffff', logging: false,
-                width: slideW, height: slideH
-            });
-            canvases.push(c);
-        }
-
-        // A4 landscape in mm: 297 x 210
-        const pdfW = 297, pdfH = 210;
-
-        // Access jsPDF from the html2pdf bundle globals
-        const JsPDF = (window.jspdf && window.jspdf.jsPDF) || window.jsPDF;
-        if (!JsPDF) {
-            // Fallback: render first page with html2pdf normally
-            alert('PDF 생성에 실패했습니다. 페이지를 새로고침 후 다시 시도해주세요.');
-            document.body.removeChild(wrapper);
-            return;
-        }
-
-        const pdf = new JsPDF({ orientation: 'landscape', unit: 'mm', format: 'a4' });
-
-        canvases.forEach((canvas, idx) => {
-            if (idx > 0) pdf.addPage();
-            const imgData = canvas.toDataURL('image/jpeg', 0.92);
-            pdf.addImage(imgData, 'JPEG', 0, 0, pdfW, pdfH, undefined, 'FAST');
-        });
-
-        pdf.save(`AI맞춤견적서_${company !== '-' ? company : '견적서'}_${todayFile}.pdf`);
+    html2pdf().set(opt).from(wrapper).save().then(() => {
         document.body.removeChild(wrapper);
-    }
-
-    buildPDF();
+    }).catch(() => {
+        document.body.removeChild(wrapper);
+        alert('PDF 생성에 실패했습니다. 페이지를 새로고침 후 다시 시도해주세요.');
+    });
 }
 
 // ===== Form Submit =====
