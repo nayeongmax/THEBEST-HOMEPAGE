@@ -828,6 +828,45 @@ img { max-width: 100%; display: block; }
     margin-top: 0;
 }
 
+.calc-select {
+    width: 100%;
+    padding: 14px 18px;
+    background: rgba(255,255,255,0.05);
+    border: 1px solid rgba(200,169,106,0.2);
+    border-radius: var(--radius-sm);
+    font-size: 0.95rem;
+    font-weight: 600;
+    color: #FFFFFF;
+    font-family: var(--font);
+    cursor: pointer;
+    outline: none;
+    appearance: none;
+    -webkit-appearance: none;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8'%3E%3Cpath d='M1 1l5 5 5-5' stroke='%23C8A96A' stroke-width='2' fill='none'/%3E%3C/svg%3E");
+    background-repeat: no-repeat;
+    background-position: right 16px center;
+    transition: var(--transition);
+}
+
+.calc-select:focus {
+    border-color: var(--primary);
+    box-shadow: 0 0 0 3px rgba(200,169,106,0.15);
+}
+
+.calc-select option {
+    background: var(--dark);
+    color: #FFFFFF;
+    padding: 12px;
+}
+
+.calc-disclaimer {
+    text-align: center;
+    font-size: 0.82rem;
+    color: rgba(255,255,255,0.4);
+    margin-top: 20px;
+    font-style: italic;
+}
+
 .calc-radio-group {
     display: flex;
     gap: 10px;
@@ -1013,6 +1052,18 @@ img { max-width: 100%; display: block; }
     font-size: 0.85rem;
     color: var(--text-muted);
     margin-bottom: 28px;
+}
+
+.package-includes-row {
+    font-size: 0.88rem;
+    font-weight: 600;
+    color: var(--text);
+    margin-bottom: 20px;
+    white-space: nowrap;
+}
+
+.package-card.featured .package-includes-row {
+    color: var(--primary-light);
 }
 
 .package-includes {
@@ -1329,7 +1380,20 @@ img { max-width: 100%; display: block; }
 .process-timeline {
     display: grid;
     grid-template-columns: repeat(4, 1fr);
-    gap: 24px;
+    gap: 0;
+    position: relative;
+}
+
+.process-timeline::before {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 40px;
+    right: 40px;
+    height: 2px;
+    background: linear-gradient(90deg, rgba(200,169,106,0.1), rgba(200,169,106,0.4), rgba(200,169,106,0.4), rgba(200,169,106,0.1));
+    transform: translateY(-50%);
+    z-index: 0;
 }
 
 .process-step {
@@ -1339,20 +1403,11 @@ img { max-width: 100%; display: block; }
     background: rgba(255,255,255,0.03);
     border: 1px solid rgba(200,169,106,0.12);
     border-radius: var(--radius-sm);
+    margin: 0 8px;
+    z-index: 1;
 }
 
 .process-step::after {
-    content: '';
-    position: absolute;
-    top: 50%;
-    right: -12px;
-    width: 24px;
-    height: 2px;
-    background: rgba(200,169,106,0.3);
-    transform: translateY(-50%);
-}
-
-.process-step:last-child::after {
     display: none;
 }
 
@@ -1485,11 +1540,22 @@ img { max-width: 100%; display: block; }
     border-radius: var(--radius);
     padding: 28px;
     transition: var(--transition);
+    min-height: 200px;
+    display: flex;
+    flex-direction: column;
 }
 
 .review-card:hover {
     box-shadow: var(--shadow-hover);
     border-color: var(--primary-light);
+}
+
+.review-text {
+    font-size: 0.92rem;
+    color: var(--text);
+    line-height: 1.7;
+    margin-bottom: 20px;
+    flex: 1;
 }
 
 .review-stars {
@@ -1499,12 +1565,7 @@ img { max-width: 100%; display: block; }
     margin-bottom: 12px;
 }
 
-.review-text {
-    font-size: 0.92rem;
-    color: var(--text);
-    line-height: 1.7;
-    margin-bottom: 20px;
-}
+/* review-text styles consolidated above */
 
 .review-author {
     display: flex;
@@ -2152,7 +2213,7 @@ img { max-width: 100%; display: block; }
     .roi-card { grid-template-columns: 1fr; }
     .icon-cards-grid { grid-template-columns: repeat(2, 1fr); }
     .process-timeline { grid-template-columns: repeat(2, 1fr); }
-    .process-step::after { display: none; }
+    .process-timeline::before { display: none; }
     .case-cards { grid-template-columns: repeat(2, 1fr); }
     .case-cards .case-card:last-child { grid-column: span 2; }
     .effect-cards { grid-template-columns: 1fr 1fr; }
@@ -2203,6 +2264,7 @@ img { max-width: 100%; display: block; }
     .case-cards { grid-template-columns: 1fr; }
     .case-cards .case-card:last-child { grid-column: auto; }
     .process-timeline { grid-template-columns: 1fr; }
+    .process-timeline::before { display: none; }
     .reviews-marquee { grid-template-columns: 1fr; }
     .reviews-col-2, .reviews-col-3 { display: none; }
 
