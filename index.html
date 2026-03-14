@@ -1,2 +1,615 @@
-<html>Hello</html> 
-<!-- test -->
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>더베스트마케팅 | THE BEST Marketing</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;600;700;800;900&family=Poppins:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="navbar" id="navbar">
+        <div class="nav-container">
+            <a href="#home" class="logo">
+                <span class="logo-the">THE</span> <span class="logo-best">BEST</span>
+            </a>
+            <ul class="nav-links" id="navLinks">
+                <li><a href="#home">홈</a></li>
+                <li><a href="#services">서비스</a></li>
+                <li><a href="#portfolio">포트폴리오</a></li>
+                <li><a href="#reviews">고객후기</a></li>
+                <li><a href="#report">결과보고서</a></li>
+                <li><a href="estimate.html" class="nav-cta">견적서 작성</a></li>
+            </ul>
+            <button class="mobile-menu" id="mobileMenu" aria-label="메뉴 열기">
+                <span></span><span></span><span></span>
+            </button>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="hero" id="home">
+        <div class="hero-particles" id="heroParticles"></div>
+        <div class="hero-content">
+            <div class="hero-badge animate-fade-up">
+                <span class="badge-dot"></span> 대한민국 No.1 마케팅 파트너
+            </div>
+            <h1 class="hero-title animate-fade-up delay-1">
+                당신의 비즈니스를<br>
+                <span class="gradient-text">최고의 결과</span>로<br>
+                만들어 드립니다
+            </h1>
+            <p class="hero-subtitle animate-fade-up delay-2">
+                카페활성화 · 블로그 · 유튜브 · 인스타그램 · 영상제작 · 사이트제작<br>
+                모든 마케팅을 한 곳에서, 더베스트마케팅
+            </p>
+            <div class="hero-buttons animate-fade-up delay-3">
+                <a href="#services" class="btn btn-primary">서비스 알아보기</a>
+                <a href="estimate.html" class="btn btn-outline">무료 견적 받기</a>
+            </div>
+            <div class="hero-stats animate-fade-up delay-4">
+                <div class="stat-item">
+                    <span class="stat-number" data-count="2500">0</span><span class="stat-plus">+</span>
+                    <span class="stat-label">누적 고객사</span>
+                </div>
+                <div class="stat-divider"></div>
+                <div class="stat-item">
+                    <span class="stat-number" data-count="98">0</span><span class="stat-plus">%</span>
+                    <span class="stat-label">고객 만족도</span>
+                </div>
+                <div class="stat-divider"></div>
+                <div class="stat-item">
+                    <span class="stat-number" data-count="15000">0</span><span class="stat-plus">+</span>
+                    <span class="stat-label">완료 프로젝트</span>
+                </div>
+            </div>
+        </div>
+        <div class="hero-scroll">
+            <div class="scroll-indicator">
+                <span></span>
+            </div>
+        </div>
+    </section>
+
+    <!-- Marquee Banner -->
+    <div class="marquee-section">
+        <div class="marquee-track">
+            <div class="marquee-content">
+                <span>카페활성화</span><span class="marquee-dot">&#9830;</span>
+                <span>블로그체험단</span><span class="marquee-dot">&#9830;</span>
+                <span>블로그대행</span><span class="marquee-dot">&#9830;</span>
+                <span>유튜브대행</span><span class="marquee-dot">&#9830;</span>
+                <span>인스타대행</span><span class="marquee-dot">&#9830;</span>
+                <span>롱폼제작</span><span class="marquee-dot">&#9830;</span>
+                <span>숏폼제작</span><span class="marquee-dot">&#9830;</span>
+                <span>사이트제작</span><span class="marquee-dot">&#9830;</span>
+                <span>언론홍보</span><span class="marquee-dot">&#9830;</span>
+                <span>카페활성화</span><span class="marquee-dot">&#9830;</span>
+                <span>블로그체험단</span><span class="marquee-dot">&#9830;</span>
+                <span>블로그대행</span><span class="marquee-dot">&#9830;</span>
+                <span>유튜브대행</span><span class="marquee-dot">&#9830;</span>
+                <span>인스타대행</span><span class="marquee-dot">&#9830;</span>
+                <span>롱폼제작</span><span class="marquee-dot">&#9830;</span>
+                <span>숏폼제작</span><span class="marquee-dot">&#9830;</span>
+                <span>사이트제작</span><span class="marquee-dot">&#9830;</span>
+                <span>언론홍보</span><span class="marquee-dot">&#9830;</span>
+            </div>
+        </div>
+    </div>
+
+    <!-- Services Section -->
+    <section class="services" id="services">
+        <div class="container">
+            <div class="section-header">
+                <span class="section-tag animate-on-scroll">OUR SERVICES</span>
+                <h2 class="section-title animate-on-scroll">
+                    비즈니스 성장을 위한<br><span class="gradient-text">올인원 마케팅 솔루션</span>
+                </h2>
+                <p class="section-desc animate-on-scroll">맞춤형 마케팅 전략으로 고객님의 비즈니스를 한 단계 끌어올립니다</p>
+            </div>
+            <div class="services-grid">
+                <div class="service-card animate-on-scroll" data-delay="0">
+                    <div class="service-icon">
+                        <svg viewBox="0 0 48 48" fill="none"><circle cx="24" cy="24" r="20" stroke="currentColor" stroke-width="2"/><path d="M16 24l4 4 8-8" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/><path d="M24 8v4M24 36v4M8 24h4M36 24h4" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
+                    </div>
+                    <h3>카페 활성화</h3>
+                    <p>네이버 카페 게시글·댓글 작성으로 카페 활성화 및 상위노출을 도와드립니다. 실제 활동 계정으로 자연스러운 활성화를 진행합니다.</p>
+                    <div class="service-tags">
+                        <span>게시글 작성</span><span>댓글 작성</span><span>상위노출</span>
+                    </div>
+                    <a href="estimate.html" class="service-link">견적 문의 &rarr;</a>
+                </div>
+                <div class="service-card animate-on-scroll" data-delay="100">
+                    <div class="service-icon">
+                        <svg viewBox="0 0 48 48" fill="none"><rect x="8" y="6" width="32" height="36" rx="4" stroke="currentColor" stroke-width="2"/><path d="M16 16h16M16 24h12M16 32h8" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
+                    </div>
+                    <h3>블로그 체험단</h3>
+                    <p>실제 체험 후기를 통한 자연스러운 바이럴 마케팅. 타겟 키워드 상위노출로 검색 유입을 극대화합니다.</p>
+                    <div class="service-tags">
+                        <span>체험 후기</span><span>키워드 최적화</span><span>상위노출</span>
+                    </div>
+                    <a href="estimate.html" class="service-link">견적 문의 &rarr;</a>
+                </div>
+                <div class="service-card animate-on-scroll" data-delay="200">
+                    <div class="service-icon">
+                        <svg viewBox="0 0 48 48" fill="none"><path d="M12 8h24a4 4 0 014 4v24a4 4 0 01-4 4H12a4 4 0 01-4-4V12a4 4 0 014-4z" stroke="currentColor" stroke-width="2"/><path d="M16 20l6 6 10-10" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                    </div>
+                    <h3>블로그 대행</h3>
+                    <p>전문 작가진이 고품질 블로그 콘텐츠를 제작합니다. SEO 최적화된 포스팅으로 검색 노출을 극대화합니다.</p>
+                    <div class="service-tags">
+                        <span>콘텐츠 제작</span><span>SEO 최적화</span><span>정기 발행</span>
+                    </div>
+                    <a href="estimate.html" class="service-link">견적 문의 &rarr;</a>
+                </div>
+                <div class="service-card animate-on-scroll" data-delay="300">
+                    <div class="service-icon">
+                        <svg viewBox="0 0 48 48" fill="none"><rect x="6" y="10" width="36" height="24" rx="4" stroke="currentColor" stroke-width="2"/><polygon points="20,16 32,22 20,28" fill="currentColor"/><path d="M14 38h20" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
+                    </div>
+                    <h3>유튜브 대행 & 활성화</h3>
+                    <p>채널 기획부터 영상 제작, 편집, 업로드까지. 구독자·조회수 활성화로 채널 성장을 가속화합니다.</p>
+                    <div class="service-tags">
+                        <span>채널 관리</span><span>영상 제작</span><span>구독자 확보</span>
+                    </div>
+                    <a href="estimate.html" class="service-link">견적 문의 &rarr;</a>
+                </div>
+                <div class="service-card animate-on-scroll" data-delay="400">
+                    <div class="service-icon">
+                        <svg viewBox="0 0 48 48" fill="none"><rect x="10" y="6" width="28" height="36" rx="6" stroke="currentColor" stroke-width="2"/><circle cx="24" cy="24" r="8" stroke="currentColor" stroke-width="2"/><circle cx="24" cy="24" r="3" fill="currentColor"/><circle cx="33" cy="13" r="2" fill="currentColor"/></svg>
+                    </div>
+                    <h3>인스타그램 대행 & 활성화</h3>
+                    <p>감성적인 피드 디자인과 전략적 해시태그 운영. 팔로워 확보부터 브랜딩까지 종합 관리합니다.</p>
+                    <div class="service-tags">
+                        <span>피드 관리</span><span>팔로워 확보</span><span>브랜딩</span>
+                    </div>
+                    <a href="estimate.html" class="service-link">견적 문의 &rarr;</a>
+                </div>
+                <div class="service-card animate-on-scroll" data-delay="500">
+                    <div class="service-icon">
+                        <svg viewBox="0 0 48 48" fill="none"><rect x="4" y="10" width="40" height="24" rx="3" stroke="currentColor" stroke-width="2"/><path d="M4 18h40" stroke="currentColor" stroke-width="2"/><path d="M18 38l-2-4M30 38l2-4" stroke="currentColor" stroke-width="2" stroke-linecap="round"/><path d="M14 38h20" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
+                    </div>
+                    <h3>롱폼 영상 제작</h3>
+                    <p>기업 홍보, 제품 소개, 인터뷰 등 전문 영상을 기획·촬영·편집합니다. 고퀄리티 영상으로 브랜드 가치를 높입니다.</p>
+                    <div class="service-tags">
+                        <span>기획/촬영</span><span>편집/CG</span><span>홍보 영상</span>
+                    </div>
+                    <a href="estimate.html" class="service-link">견적 문의 &rarr;</a>
+                </div>
+                <div class="service-card animate-on-scroll" data-delay="600">
+                    <div class="service-icon">
+                        <svg viewBox="0 0 48 48" fill="none"><rect x="12" y="6" width="24" height="36" rx="4" stroke="currentColor" stroke-width="2"/><polygon points="19,18 33,24 19,30" fill="currentColor"/></svg>
+                    </div>
+                    <h3>숏폼 영상 제작</h3>
+                    <p>릴스·숏츠·틱톡에 최적화된 숏폼 콘텐츠. 트렌디한 편집으로 MZ세대를 사로잡습니다.</p>
+                    <div class="service-tags">
+                        <span>릴스/숏츠</span><span>틱톡</span><span>트렌드 편집</span>
+                    </div>
+                    <a href="estimate.html" class="service-link">견적 문의 &rarr;</a>
+                </div>
+                <div class="service-card animate-on-scroll" data-delay="700">
+                    <div class="service-icon">
+                        <svg viewBox="0 0 48 48" fill="none"><path d="M8 12a4 4 0 014-4h24a4 4 0 014 4v24a4 4 0 01-4 4H12a4 4 0 01-4-4V12z" stroke="currentColor" stroke-width="2"/><path d="M8 16h32M16 8v8" stroke="currentColor" stroke-width="2"/><rect x="14" y="22" width="8" height="6" rx="1" stroke="currentColor" stroke-width="1.5"/><rect x="26" y="22" width="8" height="6" rx="1" stroke="currentColor" stroke-width="1.5"/><rect x="14" y="32" width="8" height="4" rx="1" stroke="currentColor" stroke-width="1.5"/></svg>
+                    </div>
+                    <h3>사이트 제작</h3>
+                    <p>반응형 웹사이트, 랜딩페이지, 쇼핑몰까지. 비즈니스에 최적화된 웹사이트를 구축합니다.</p>
+                    <div class="service-tags">
+                        <span>반응형 웹</span><span>랜딩페이지</span><span>쇼핑몰</span>
+                    </div>
+                    <a href="estimate.html" class="service-link">견적 문의 &rarr;</a>
+                </div>
+                <div class="service-card animate-on-scroll" data-delay="800">
+                    <div class="service-icon">
+                        <svg viewBox="0 0 48 48" fill="none"><path d="M8 12h32v24H8z" stroke="currentColor" stroke-width="2"/><path d="M8 12l16 12 16-12" stroke="currentColor" stroke-width="2"/><circle cx="36" cy="10" r="6" fill="#C8956C" stroke="currentColor" stroke-width="2"/><path d="M36 7v3h3" stroke="white" stroke-width="1.5" stroke-linecap="round"/></svg>
+                    </div>
+                    <h3>언론 홍보</h3>
+                    <p>주요 언론사 기사 배포 및 보도자료 작성. 브랜드 신뢰도를 높이는 PR 전략을 제안합니다.</p>
+                    <div class="service-tags">
+                        <span>보도자료</span><span>기사 배포</span><span>PR 전략</span>
+                    </div>
+                    <a href="estimate.html" class="service-link">견적 문의 &rarr;</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Portfolio / Process Section -->
+    <section class="process-section" id="portfolio">
+        <div class="container">
+            <div class="section-header">
+                <span class="section-tag animate-on-scroll">HOW WE WORK</span>
+                <h2 class="section-title animate-on-scroll">
+                    체계적인 프로세스로<br><span class="gradient-text">확실한 결과</span>를 만듭니다
+                </h2>
+            </div>
+            <div class="process-timeline">
+                <div class="process-step animate-on-scroll" data-delay="0">
+                    <div class="step-number">01</div>
+                    <div class="step-content">
+                        <h3>상담 & 분석</h3>
+                        <p>업종·상품·타겟 분석을 통해 최적의 마케팅 전략을 수립합니다.</p>
+                    </div>
+                </div>
+                <div class="process-step animate-on-scroll" data-delay="150">
+                    <div class="step-number">02</div>
+                    <div class="step-content">
+                        <h3>맞춤 견적</h3>
+                        <p>분석 결과를 바탕으로 합리적인 맞춤형 견적서를 제공합니다.</p>
+                    </div>
+                </div>
+                <div class="process-step animate-on-scroll" data-delay="300">
+                    <div class="step-number">03</div>
+                    <div class="step-content">
+                        <h3>작업 진행</h3>
+                        <p>전문 팀이 체계적으로 작업을 진행하며, 중간 보고를 드립니다.</p>
+                    </div>
+                </div>
+                <div class="process-step animate-on-scroll" data-delay="450">
+                    <div class="step-number">04</div>
+                    <div class="step-content">
+                        <h3>결과 보고</h3>
+                        <p>상세한 결과 보고서를 제공하며, 데이터 기반으로 성과를 분석합니다.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Reviews Section -->
+    <section class="reviews" id="reviews">
+        <div class="container">
+            <div class="section-header">
+                <span class="section-tag animate-on-scroll">REVIEWS</span>
+                <h2 class="section-title animate-on-scroll">
+                    고객님들의<br><span class="gradient-text">생생한 후기</span>
+                </h2>
+                <p class="section-desc animate-on-scroll">더베스트마케팅과 함께한 고객님들의 이야기</p>
+            </div>
+        </div>
+        <div class="reviews-marquee-wrapper">
+            <div class="reviews-column reviews-col-1">
+                <div class="review-card">
+                    <div class="review-stars">&#9733;&#9733;&#9733;&#9733;&#9733;</div>
+                    <p class="review-text">"카페 활성화 맡겼는데 2주만에 눈에 띄게 활성화됐어요. 게시글도 자연스럽고 댓글 퀄리티도 좋습니다. 강력 추천합니다!"</p>
+                    <div class="review-author">
+                        <div class="author-avatar">김</div>
+                        <div>
+                            <strong>김** 대표님</strong>
+                            <span>뷰티 업종 · 카페활성화</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="review-card">
+                    <div class="review-stars">&#9733;&#9733;&#9733;&#9733;&#9733;</div>
+                    <p class="review-text">"블로그 체험단 진행했는데 실제 후기 느낌이 자연스러워서 좋았어요. 키워드 상위노출도 잘 되었습니다."</p>
+                    <div class="review-author">
+                        <div class="author-avatar">이</div>
+                        <div>
+                            <strong>이** 사장님</strong>
+                            <span>맛집 업종 · 블로그체험단</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="review-card">
+                    <div class="review-stars">&#9733;&#9733;&#9733;&#9733;&#9733;</div>
+                    <p class="review-text">"유튜브 채널 운영 맡겼는데 조회수가 확실히 올랐습니다. 영상 퀄리티도 만족스럽고 소통도 잘 됩니다."</p>
+                    <div class="review-author">
+                        <div class="author-avatar">박</div>
+                        <div>
+                            <strong>박** 대표님</strong>
+                            <span>교육 업종 · 유튜브대행</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="review-card">
+                    <div class="review-stars">&#9733;&#9733;&#9733;&#9733;&#9733;</div>
+                    <p class="review-text">"인스타그램 운영 대행 시작한 지 한 달 만에 팔로워 2배 증가! 피드 디자인도 예쁘고 해시태그 전략이 좋네요."</p>
+                    <div class="review-author">
+                        <div class="author-avatar">최</div>
+                        <div>
+                            <strong>최** 원장님</strong>
+                            <span>병원 업종 · 인스타대행</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="review-card">
+                    <div class="review-stars">&#9733;&#9733;&#9733;&#9733;&#9733;</div>
+                    <p class="review-text">"숏폼 영상 제작 퀄리티가 놀랍습니다. 트렌디한 편집에 조회수도 잘 나오고 있어요. 다음 달도 계속 진행합니다!"</p>
+                    <div class="review-author">
+                        <div class="author-avatar">정</div>
+                        <div>
+                            <strong>정** 대표님</strong>
+                            <span>패션 업종 · 숏폼제작</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="review-card">
+                    <div class="review-stars">&#9733;&#9733;&#9733;&#9733;&#9733;</div>
+                    <p class="review-text">"사이트 제작 깔끔하게 잘 해주셨어요. 모바일에서도 잘 보이고 디자인도 세련됐습니다. 감사합니다!"</p>
+                    <div class="review-author">
+                        <div class="author-avatar">한</div>
+                        <div>
+                            <strong>한** 사장님</strong>
+                            <span>쇼핑몰 · 사이트제작</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="reviews-column reviews-col-2">
+                <div class="review-card">
+                    <div class="review-stars">&#9733;&#9733;&#9733;&#9733;&#9733;</div>
+                    <p class="review-text">"블로그 대행 맡긴 지 3개월째인데 꾸준히 상위노출 되고 있어요. 글 퀄리티도 높고 매출도 확실히 늘었습니다!"</p>
+                    <div class="review-author">
+                        <div class="author-avatar">오</div>
+                        <div>
+                            <strong>오** 대표님</strong>
+                            <span>인테리어 · 블로그대행</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="review-card">
+                    <div class="review-stars">&#9733;&#9733;&#9733;&#9733;&#9733;</div>
+                    <p class="review-text">"언론 홍보 효과 최고입니다. 주요 언론사에 기사 나가니까 고객분들이 신뢰감을 많이 가지세요."</p>
+                    <div class="review-author">
+                        <div class="author-avatar">서</div>
+                        <div>
+                            <strong>서** 이사님</strong>
+                            <span>IT 업종 · 언론홍보</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="review-card">
+                    <div class="review-stars">&#9733;&#9733;&#9733;&#9733;&#9733;</div>
+                    <p class="review-text">"카페 활성화 + 블로그 체험단 같이 맡겼는데 시너지가 대단하네요. 문의량이 3배 이상 늘었어요!"</p>
+                    <div class="review-author">
+                        <div class="author-avatar">윤</div>
+                        <div>
+                            <strong>윤** 대표님</strong>
+                            <span>카페 업종 · 패키지</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="review-card">
+                    <div class="review-stars">&#9733;&#9733;&#9733;&#9733;&#9733;</div>
+                    <p class="review-text">"롱폼 홍보 영상 제작 맡겼는데 기대 이상이에요. 스토리텔링이 좋고 퀄리티가 높아서 고객 반응이 좋습니다."</p>
+                    <div class="review-author">
+                        <div class="author-avatar">장</div>
+                        <div>
+                            <strong>장** 대표님</strong>
+                            <span>제조업 · 롱폼제작</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="review-card">
+                    <div class="review-stars">&#9733;&#9733;&#9733;&#9733;&#9733;</div>
+                    <p class="review-text">"다른 업체에서 효과를 못 봐서 반신반의했는데, 더베스트는 확실히 다르네요. 결과 보고서도 투명하게 공유해줍니다."</p>
+                    <div class="review-author">
+                        <div class="author-avatar">임</div>
+                        <div>
+                            <strong>임** 원장님</strong>
+                            <span>학원 업종 · 카페활성화</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="review-card">
+                    <div class="review-stars">&#9733;&#9733;&#9733;&#9733;&#9733;</div>
+                    <p class="review-text">"유튜브 숏츠 제작 맡겼는데 트렌드에 맞는 편집이라 반응이 좋아요. 앞으로도 쭉 같이 하고 싶습니다."</p>
+                    <div class="review-author">
+                        <div class="author-avatar">강</div>
+                        <div>
+                            <strong>강** 사장님</strong>
+                            <span>요식업 · 숏폼제작</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="reviews-column reviews-col-3">
+                <div class="review-card">
+                    <div class="review-stars">&#9733;&#9733;&#9733;&#9733;&#9733;</div>
+                    <p class="review-text">"쇼핑몰 사이트 제작부터 마케팅까지 원스톱으로 해결! 매출이 이전 대비 200% 성장했습니다."</p>
+                    <div class="review-author">
+                        <div class="author-avatar">조</div>
+                        <div>
+                            <strong>조** 대표님</strong>
+                            <span>쇼핑몰 · 올인원 패키지</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="review-card">
+                    <div class="review-stars">&#9733;&#9733;&#9733;&#9733;&#9733;</div>
+                    <p class="review-text">"인스타 릴스 콘텐츠 퀄리티가 확실히 좋아요. 팔로워도 자연스럽게 늘고 있고 브랜딩에 도움이 많이 됩니다."</p>
+                    <div class="review-author">
+                        <div class="author-avatar">신</div>
+                        <div>
+                            <strong>신** 대표님</strong>
+                            <span>뷰티 · 인스타활성화</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="review-card">
+                    <div class="review-stars">&#9733;&#9733;&#9733;&#9733;&#9733;</div>
+                    <p class="review-text">"결과 보고서가 체계적이라 좋습니다. 어떤 작업을 했는지 투명하게 보여주니 신뢰가 갑니다."</p>
+                    <div class="review-author">
+                        <div class="author-avatar">배</div>
+                        <div>
+                            <strong>배** 이사님</strong>
+                            <span>프랜차이즈 · 블로그대행</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="review-card">
+                    <div class="review-stars">&#9733;&#9733;&#9733;&#9733;&#9733;</div>
+                    <p class="review-text">"언론홍보 + 블로그 같이 맡겼더니 브랜드 인지도가 확 올라갔어요. 비용 대비 효과 최고입니다."</p>
+                    <div class="review-author">
+                        <div class="author-avatar">류</div>
+                        <div>
+                            <strong>류** 대표님</strong>
+                            <span>스타트업 · 언론홍보</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="review-card">
+                    <div class="review-stars">&#9733;&#9733;&#9733;&#9733;&#9733;</div>
+                    <p class="review-text">"3개월째 카페 활성화 진행 중인데 꾸준히 관리 잘 해주시고 문의도 많이 들어옵니다. 대만족!"</p>
+                    <div class="review-author">
+                        <div class="author-avatar">황</div>
+                        <div>
+                            <strong>황** 사장님</strong>
+                            <span>부동산 · 카페활성화</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="review-card">
+                    <div class="review-stars">&#9733;&#9733;&#9733;&#9733;&#9733;</div>
+                    <p class="review-text">"홈페이지 리뉴얼 맡겼는데 퀄리티가 대행사급이에요. 가격도 합리적이고 소통도 빠릅니다!"</p>
+                    <div class="review-author">
+                        <div class="author-avatar">송</div>
+                        <div>
+                            <strong>송** 원장님</strong>
+                            <span>의료 · 사이트제작</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Report Preview Section -->
+    <section class="report-section" id="report">
+        <div class="container">
+            <div class="section-header">
+                <span class="section-tag animate-on-scroll">REPORT</span>
+                <h2 class="section-title animate-on-scroll">
+                    투명한<br><span class="gradient-text">결과 보고서</span>
+                </h2>
+                <p class="section-desc animate-on-scroll">작업 진행 상황과 결과를 실시간으로 확인하세요</p>
+            </div>
+            <div class="report-preview animate-on-scroll">
+                <div class="report-card">
+                    <div class="report-header-bar">
+                        <div class="report-dots">
+                            <span></span><span></span><span></span>
+                        </div>
+                        <span class="report-title-bar">카페활성화 작업보고서 (고객보관용)</span>
+                    </div>
+                    <div class="report-body">
+                        <div class="report-info-grid">
+                            <div class="report-info-item">
+                                <span class="report-label">카페명</span>
+                                <span class="report-value">PREMIUM</span>
+                            </div>
+                            <div class="report-info-item">
+                                <span class="report-label">위드워크</span>
+                                <span class="report-value">게시글 320 / 댓글 320</span>
+                            </div>
+                            <div class="report-info-item">
+                                <span class="report-label">작업시작일</span>
+                                <span class="report-value">2026-01-06</span>
+                            </div>
+                            <div class="report-info-item">
+                                <span class="report-label">작업종료일</span>
+                                <span class="report-value">2026-02-06</span>
+                            </div>
+                        </div>
+                        <div class="report-service-box">
+                            <p>추가 게시글 120개 이상 (300,000원 상당)</p>
+                            <p>추가 댓글 100개 이상 (50,000원 상당)</p>
+                        </div>
+                        <table class="report-table">
+                            <thead>
+                                <tr>
+                                    <th>순번</th>
+                                    <th>날짜</th>
+                                    <th>분류</th>
+                                    <th>URL</th>
+                                    <th>비고</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr><td>1</td><td>1/6</td><td>게시글</td><td class="url-cell">https://cafe.naver.com/...</td><td></td></tr>
+                                <tr><td>2</td><td>1/6</td><td>게시글</td><td class="url-cell">https://cafe.naver.com/...</td><td></td></tr>
+                                <tr><td>3</td><td>1/6</td><td>게시글</td><td class="url-cell">https://cafe.naver.com/...</td><td></td></tr>
+                                <tr><td>4</td><td>1/6</td><td>게시글</td><td class="url-cell">https://cafe.naver.com/...</td><td></td></tr>
+                                <tr><td>5</td><td>1/6</td><td>게시글</td><td class="url-cell">https://cafe.naver.com/...</td><td></td></tr>
+                                <tr><td>6</td><td>1/6</td><td>댓글</td><td class="url-cell">https://cafe.naver.com/...</td><td></td></tr>
+                                <tr><td>7</td><td>1/6</td><td>댓글</td><td class="url-cell">https://cafe.naver.com/...</td><td></td></tr>
+                                <tr><td>8</td><td>1/7</td><td>게시글</td><td class="url-cell">https://cafe.naver.com/...</td><td></td></tr>
+                            </tbody>
+                        </table>
+                        <div class="report-fade-overlay"></div>
+                    </div>
+                </div>
+                <div class="report-cta">
+                    <p>광고주 전용 결과 보고서를 통해 모든 작업 내역을 투명하게 확인하세요</p>
+                    <a href="report.html" class="btn btn-primary">결과보고서 확인하기</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- CTA Section -->
+    <section class="cta-section">
+        <div class="container">
+            <div class="cta-content animate-on-scroll">
+                <h2>지금 바로 <span class="gradient-text">무료 상담</span> 받아보세요</h2>
+                <p>비즈니스 성장의 시작, 더베스트마케팅이 함께합니다</p>
+                <div class="cta-buttons">
+                    <a href="estimate.html" class="btn btn-primary btn-lg">무료 견적 받기</a>
+                    <a href="https://open.kakao.com/" class="btn btn-kakao btn-lg" target="_blank" rel="noopener">카카오톡 상담</a>
+                </div>
+                <div class="cta-contact">
+                    <div class="contact-item">
+                        <svg viewBox="0 0 24 24" fill="none" width="20" height="20"><path d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z" stroke="currentColor" stroke-width="2"/></svg>
+                        <span>010-XXXX-XXXX</span>
+                    </div>
+                    <div class="contact-item">
+                        <svg viewBox="0 0 24 24" fill="none" width="20" height="20"><path d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" stroke="currentColor" stroke-width="2"/></svg>
+                        <span>thebest@marketing.com</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-brand">
+                    <span class="logo"><span class="logo-the">THE</span> <span class="logo-best">BEST</span></span>
+                    <p>더베스트마케팅</p>
+                    <p class="footer-desc">비즈니스 성장을 위한 올인원 마케팅 파트너</p>
+                </div>
+                <div class="footer-links">
+                    <div class="footer-col">
+                        <h4>서비스</h4>
+                        <a href="#services">카페활성화</a>
+                        <a href="#services">블로그 체험단/대행</a>
+                        <a href="#services">유튜브 대행</a>
+                        <a href="#services">인스타 대행</a>
+                    </div>
+                    <div class="footer-col">
+                        <h4>영상 & 제작</h4>
+                        <a href="#services">롱폼 제작</a>
+                        <a href="#services">숏폼 제작</a>
+                        <a href="#services">사이트 제작</a>
+                        <a href="#services">언론 홍보</a>
+                    </div>
+                    <div class="footer-col">
+                        <h4>바로가기</h4>
+                        <a href="estimate.html">견적서 작성</a>
+                        <a href="report.html">결과보고서</a>
+                        <a href="#reviews">고객 후기</a>
+                    </div>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2026 THE BEST Marketing. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="main.js"></script>
+</body>
+</html>
