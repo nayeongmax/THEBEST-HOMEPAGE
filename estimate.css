@@ -380,7 +380,7 @@
 .score-value span { font-size: 0.75rem; font-weight: 500; margin-left: 2px; }
 .score-status { font-size: 0.75rem; font-weight: 600; padding: 3px 12px; border-radius: 100px; display: inline-block; }
 .score-status.bad { background: rgba(180,180,180,0.15); color: #999; }
-.score-status.good { background: rgba(200,149,108,0.15); color: var(--primary-dark); }
+.score-status.good { background: rgba(200,169,106,0.15); color: var(--primary-dark); }
 .score-arrow { display: flex; flex-direction: column; align-items: center; gap: 4px; }
 .arrow-label { font-size: 0.78rem; font-weight: 700; color: var(--primary); }
 
