@@ -505,21 +505,21 @@
                 <div class="rpt-section">
                     <div class="rpt-section-header">
                         <div class="rpt-section-num">2</div>
-                        <h3>마케팅 성과 분석 (레이더 차트)</h3>
+                        <h3>마케팅 성과 분석</h3>
                     </div>
                     <div class="rpt-section-body">
                         <div class="radar-container">
                             <div class="radar-toggle">
-                                <button class="radar-toggle-btn" id="radarBtnX" onclick="setRadarMode('x')">마케팅 X</button>
+                                <button class="radar-toggle-btn" id="radarBtnX" onclick="setRadarMode('x')"><span style="display:inline-block;width:10px;height:10px;background:#B0B0B0;border-radius:2px;margin-right:6px;vertical-align:middle;"></span>마케팅 미실행</button>
                                 <button class="radar-toggle-btn active-both" id="radarBtnBoth" onclick="setRadarMode('both')">비교</button>
-                                <button class="radar-toggle-btn" id="radarBtnO" onclick="setRadarMode('o')">마케팅 O</button>
+                                <button class="radar-toggle-btn" id="radarBtnO" onclick="setRadarMode('o')"><span style="display:inline-block;width:10px;height:10px;background:#3B82F6;border-radius:2px;margin-right:6px;vertical-align:middle;"></span>마케팅 실행</button>
                             </div>
                             <div class="radar-canvas-wrap">
                                 <canvas id="radarChart" width="400" height="400"></canvas>
                             </div>
                             <div class="radar-legend" id="radarLegend">
-                                <div class="radar-legend-item"><span class="radar-legend-dot" style="background:rgba(180,180,180,0.6);"></span> 마케팅 전</div>
-                                <div class="radar-legend-item"><span class="radar-legend-dot" style="background:rgba(59,130,246,0.8);"></span> 마케팅 후</div>
+                                <div class="radar-legend-item"><span class="radar-legend-dot" style="background:#B0B0B0;border-radius:2px;width:12px;height:12px;"></span> 마케팅 미실행</div>
+                                <div class="radar-legend-item"><span class="radar-legend-dot" style="background:#3B82F6;border-radius:2px;width:12px;height:12px;"></span> 마케팅 실행</div>
                             </div>
                         </div>
 
@@ -683,10 +683,11 @@
                     <div class="rpt-section-body">
                         <div class="ai-analysis-box">
                             <h4>&#129302; AI 마케팅 분석</h4>
-                            <p>이번 캠페인은 <span class="ai-highlight">콘텐츠 반응률이 높은 편</span>이며, 네이버 카페 내 <span class="ai-highlight">검색 노출 증가 가능성이 높은</span> 구조입니다.</p>
-                            <p>특히 리뷰형 콘텐츠의 <span class="ai-highlight">댓글 반응률이 높아</span>, 브랜드 관심도가 <span class="ai-highlight">상승하는 패턴</span>이 나타나고 있습니다.</p>
-                            <p>현재 키워드 <span class="ai-highlight">"강남카페"</span> 기준 검색 4위로, 추가 콘텐츠 20건 이상 투입 시 <span class="ai-highlight">3위 이내 진입이 예상</span>됩니다.</p>
-                            <p>마케팅 연장 시 <span class="ai-highlight">월 평균 노출 50만+</span> 달성이 가능하며, 신규 방문자 유입이 <span class="ai-highlight">약 40% 추가 증가</span>할 것으로 분석됩니다.</p>
+                            <p><strong>[카페활성화 성과 분석]</strong></p>
+                            <p>카페 회원 수 및 게시글 활동량이 <span class="ai-highlight">꾸준한 상승세</span>를 보이고 있으며, 카페 내 <span class="ai-highlight">검색 유입이 안정적으로 증가</span>하는 구조입니다.</p>
+                            <p>댓글·좋아요 반응이 활발하여 <span class="ai-highlight">카페 등급 상승에 긍정적</span>이며, 현재 활성도 추세대로라면 <span class="ai-highlight">다음 등급 달성이 충분히 가능</span>합니다.</p>
+                            <p>카페활성화는 지속적인 운영이 핵심이므로, <span class="ai-highlight">연장 진행 시 회원 유입 및 활동량이 더욱 가속화</span>되어 광고 수익 및 제휴 기회가 확대될 것으로 분석됩니다.</p>
+                            <p>현재 성장 곡선을 유지하면 <span class="ai-highlight">월 평균 노출 50만+ 달성</span>과 함께 신규 방문자 유입이 <span class="ai-highlight">약 30~40% 추가 증가</span>할 것으로 예상됩니다.</p>
                         </div>
                     </div>
                 </div>
@@ -735,8 +736,8 @@
                             </div>
                             <div class="form-group">
                                 <label>업체 비밀번호 설정</label>
-                                <input type="text" id="createPassword" placeholder="업체명과 동일하게 자동 설정됩니다" readonly>
-                                <p style="font-size:0.75rem; color:var(--text-muted); margin-top:6px;">* 비밀번호는 업체명으로 자동 설정됩니다 (매번 같은 비밀번호로 조회)</p>
+                                <input type="text" id="createPassword" placeholder="비밀번호를 입력하세요 (예: 0012)">
+                                <p style="font-size:0.75rem; color:var(--text-muted); margin-top:6px;">* 광고주가 업체명 + 이 비밀번호로 보고서를 조회합니다</p>
                             </div>
                         </div>
                         <div class="form-group">
@@ -746,6 +747,12 @@
                                 <span>~</span>
                                 <input type="date" id="createEndDate" required>
                             </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label>작업 플랫폼 링크</label>
+                            <input type="url" id="createPlatformLink" placeholder="예: https://cafe.naver.com/mycafe">
+                            <p style="font-size:0.75rem; color:var(--text-muted); margin-top:6px;">* 작업하는 플랫폼(카페, 블로그 등)의 대표 링크를 입력하세요</p>
                         </div>
 
                         <div style="display:flex; justify-content:space-between; align-items:center;">
@@ -899,18 +906,22 @@
             }
         }
 
-        // Access form - password is same as company name
+        // Access form - password is set by admin during report creation
         document.getElementById('accessForm').addEventListener('submit', function(e) {
             e.preventDefault();
             const company = document.getElementById('accessCompany').value.trim();
             const password = document.getElementById('accessPassword').value.trim();
-            if (company && company === password) {
+            // Demo: check stored password or fallback to demo password
+            const storedPw = localStorage.getItem('rpt_pw_' + company);
+            const isValid = storedPw ? (password === storedPw) : (company === 'thebest' && password === 'thebest2026');
+            if (company && isValid) {
                 document.getElementById('accessSection').style.display = 'none';
                 document.getElementById('reportView').classList.add('active');
                 document.getElementById('rptCompanyName').textContent = company;
                 generateReportTable();
-                drawRadarChart('both');
-                drawExposureChart();
+                animateRadarChart('both');
+                startRadarRepeat();
+                animateExposureChart();
                 animateCompare();
                 applySectionVisibility();
             } else {
@@ -918,19 +929,15 @@
             }
         });
 
-        // Auto-set password when company name changes in create form
-        const createCafeNameEl = document.getElementById('createCafeName');
-        if (createCafeNameEl) {
-            createCafeNameEl.addEventListener('input', function() {
-                document.getElementById('createPassword').value = this.value;
-            });
-        }
+        // Password is now manually set by admin (no auto-fill)
 
         // ===== Radar Chart =====
         const radarLabels = ['노출 확산력', '검색 노출력', '콘텐츠 반응', '브랜드 인지', '전환 가능성'];
-        const dataWithout = [25, 18, 15, 20, 12]; // 마케팅 X
-        const dataWith = [85, 78, 92, 70, 82];    // 마케팅 O
+        const dataWithout = [25, 18, 15, 20, 12]; // 마케팅 미실행
+        const dataWith = [85, 78, 92, 70, 82];    // 마케팅 실행
         let currentRadarMode = 'both';
+        let radarAnimId = null;
+        let radarRepeatTimer = null;
 
         function setRadarMode(mode) {
             currentRadarMode = mode;
@@ -940,10 +947,11 @@
             if (mode === 'x') document.getElementById('radarBtnX').classList.add('active-x');
             else if (mode === 'o') document.getElementById('radarBtnO').classList.add('active-o');
             else document.getElementById('radarBtnBoth').classList.add('active-both');
-            drawRadarChart(mode);
+            animateRadarChart(mode);
         }
 
-        function drawRadarChart(mode) {
+        function drawRadarChart(mode, progress) {
+            progress = progress === undefined ? 1 : progress;
             const canvas = document.getElementById('radarChart');
             const ctx = canvas.getContext('2d');
             const W = canvas.width, H = canvas.height;
@@ -992,13 +1000,14 @@
                 ctx.fillText(radarLabels[i], lx, ly);
             }
 
-            // Draw data polygon
+            // Draw data polygon with progress scale
             function drawPoly(data, fillColor, strokeColor) {
+                const scaledData = data.map(v => v * progress);
                 ctx.beginPath();
                 for (let i = 0; i <= n; i++) {
                     const idx = i % n;
                     const angle = (Math.PI * 2 * idx / n) - Math.PI / 2;
-                    const r = R * data[idx] / 100;
+                    const r = R * scaledData[idx] / 100;
                     const x = cx + r * Math.cos(angle);
                     const y = cy + r * Math.sin(angle);
                     i === 0 ? ctx.moveTo(x, y) : ctx.lineTo(x, y);
@@ -1013,22 +1022,24 @@
                 // Draw dots
                 for (let i = 0; i < n; i++) {
                     const angle = (Math.PI * 2 * i / n) - Math.PI / 2;
-                    const r = R * data[i] / 100;
+                    const r = R * scaledData[i] / 100;
                     ctx.beginPath();
                     ctx.arc(cx + r * Math.cos(angle), cy + r * Math.sin(angle), 4, 0, Math.PI * 2);
                     ctx.fillStyle = strokeColor;
                     ctx.fill();
                 }
 
-                // Draw values
-                ctx.font = '700 11px Poppins';
-                for (let i = 0; i < n; i++) {
-                    const angle = (Math.PI * 2 * i / n) - Math.PI / 2;
-                    const r = R * data[i] / 100;
-                    const tx = cx + (r + 14) * Math.cos(angle);
-                    const ty = cy + (r + 14) * Math.sin(angle);
-                    ctx.fillStyle = strokeColor;
-                    ctx.fillText(data[i], tx, ty);
+                // Draw values (show target values only at full progress)
+                if (progress > 0.9) {
+                    ctx.font = '700 11px Poppins';
+                    for (let i = 0; i < n; i++) {
+                        const angle = (Math.PI * 2 * i / n) - Math.PI / 2;
+                        const r = R * scaledData[i] / 100;
+                        const tx = cx + (r + 14) * Math.cos(angle);
+                        const ty = cy + (r + 14) * Math.sin(angle);
+                        ctx.fillStyle = strokeColor;
+                        ctx.fillText(data[i], tx, ty);
+                    }
                 }
             }
 
@@ -1040,8 +1051,32 @@
             }
         }
 
+        function animateRadarChart(mode) {
+            if (radarAnimId) cancelAnimationFrame(radarAnimId);
+            const duration = 1200;
+            const start = performance.now();
+            function step(now) {
+                const elapsed = now - start;
+                const progress = Math.min(elapsed / duration, 1);
+                const eased = 1 - Math.pow(1 - progress, 3);
+                drawRadarChart(mode, eased);
+                if (progress < 1) radarAnimId = requestAnimationFrame(step);
+            }
+            radarAnimId = requestAnimationFrame(step);
+        }
+
+        function startRadarRepeat() {
+            if (radarRepeatTimer) clearInterval(radarRepeatTimer);
+            radarRepeatTimer = setInterval(() => {
+                animateRadarChart(currentRadarMode);
+            }, 30000);
+        }
+
         // ===== Exposure Line Chart =====
-        function drawExposureChart() {
+        let exposureAnimId = null;
+
+        function drawExposureChart(progress) {
+            progress = progress === undefined ? 1 : progress;
             const canvas = document.getElementById('exposureChart');
             const ctx = canvas.getContext('2d');
             const W = canvas.width, H = canvas.height;
@@ -1080,11 +1115,18 @@
                 ctx.fillText(w, x, H - 12);
             });
 
-            // Draw bars (exposure)
+            // Draw bars sequentially with progress
             const barW = 40;
             weeks.forEach((_, i) => {
+                // Each bar appears sequentially: bar i starts at progress i/4
+                const barStart = i / weeks.length;
+                const barEnd = (i + 1) / weeks.length;
+                const barProgress = Math.max(0, Math.min(1, (progress - barStart) / (barEnd - barStart)));
+                if (barProgress <= 0) return;
+
                 const x = pad.left + cW * i / (weeks.length - 1) - barW / 2;
-                const barH = cH * exposureData[i] / maxVal;
+                const fullBarH = cH * exposureData[i] / maxVal;
+                const barH = fullBarH * barProgress;
                 const y = pad.top + cH - barH;
                 const grad = ctx.createLinearGradient(x, y, x, y + barH);
                 grad.addColorStop(0, 'rgba(59,130,246,0.7)');
@@ -1093,25 +1135,28 @@
                 ctx.beginPath();
                 ctx.roundRect(x, y, barW, barH, [4, 4, 0, 0]);
                 ctx.fill();
-                // Value on bar
-                ctx.font = '700 11px Poppins';
-                ctx.fillStyle = '#3B82F6';
-                ctx.textAlign = 'center';
-                ctx.fillText(exposureData[i].toLocaleString(), x + barW / 2, y - 8);
+                // Value on bar (only show when bar is fully grown)
+                if (barProgress > 0.9) {
+                    ctx.font = '700 11px Poppins';
+                    ctx.fillStyle = '#3B82F6';
+                    ctx.textAlign = 'center';
+                    ctx.fillText(exposureData[i].toLocaleString(), x + barW / 2, y - 8);
+                }
             });
 
-            // Draw line (clicks)
+            // Draw line (clicks) - sequentially
             ctx.beginPath();
             ctx.strokeStyle = '#555';
             ctx.lineWidth = 2;
-            weeks.forEach((_, i) => {
+            const visiblePoints = Math.floor(progress * weeks.length) + 1;
+            for (let i = 0; i < Math.min(visiblePoints, weeks.length); i++) {
                 const x = pad.left + cW * i / (weeks.length - 1);
                 const y = pad.top + cH - cH * clickData[i] / maxVal;
                 i === 0 ? ctx.moveTo(x, y) : ctx.lineTo(x, y);
-            });
+            }
             ctx.stroke();
             // Dots
-            weeks.forEach((_, i) => {
+            for (let i = 0; i < Math.min(visiblePoints, weeks.length); i++) {
                 const x = pad.left + cW * i / (weeks.length - 1);
                 const y = pad.top + cH - cH * clickData[i] / maxVal;
                 ctx.beginPath();
@@ -1121,17 +1166,15 @@
                 ctx.font = '600 10px Poppins';
                 ctx.fillStyle = '#555';
                 ctx.fillText(clickData[i].toLocaleString(), x, y - 12);
-            });
+            }
 
             // Legend
             ctx.font = '600 11px "Noto Sans KR"';
-            // Bar legend
             ctx.fillStyle = 'rgba(59,130,246,0.6)';
             ctx.fillRect(W - 200, 10, 14, 14);
             ctx.fillStyle = '#555';
             ctx.textAlign = 'left';
             ctx.fillText('노출수', W - 180, 22);
-            // Line legend
             ctx.beginPath();
             ctx.moveTo(W - 110, 17);
             ctx.lineTo(W - 90, 17);
@@ -1139,6 +1182,20 @@
             ctx.lineWidth = 2;
             ctx.stroke();
             ctx.fillText('유입 클릭', W - 85, 22);
+        }
+
+        function animateExposureChart() {
+            if (exposureAnimId) cancelAnimationFrame(exposureAnimId);
+            const duration = 2000;
+            const start = performance.now();
+            function step(now) {
+                const elapsed = now - start;
+                const progress = Math.min(elapsed / duration, 1);
+                const eased = 1 - Math.pow(1 - progress, 3);
+                drawExposureChart(eased);
+                if (progress < 1) exposureAnimId = requestAnimationFrame(step);
+            }
+            exposureAnimId = requestAnimationFrame(step);
         }
 
         // ===== Competition Comparison Animation =====
@@ -1181,7 +1238,7 @@
             tr.id = 'createRow-' + createRowCount;
             tr.innerHTML = `
                 <td>${createRowCount}</td>
-                <td><input type="date" name="rowDate"></td>
+                <td><input type="text" name="rowDate" placeholder="2026-01-06" style="width:100px;"></td>
                 <td><input type="url" name="rowUrl" placeholder="URL 입력"></td>
                 <td><button type="button" class="btn-remove-row" onclick="removeCreateRow('createRow-${createRowCount}')">&times;</button></td>
             `;
@@ -1448,14 +1505,31 @@
                 if (rankEl) rankEl.value = Math.floor(2 + Math.random() * 12);
             }
 
-            // Auto-generate AI comment
+            // Auto-generate AI comment (platform-specific, positive, re-engagement focused)
             const totalContent = postCount || urls.length;
-            const aiComment = `이번 ${service} 캠페인은 총 ${totalContent}건의 콘텐츠가 제작되었으며, 예상 노출수 ${exposure.toLocaleString()}회를 기록했습니다.\n\n콘텐츠 참여율은 ${engagement > 0 ? engagement : '4.2'}%로 업종 평균 대비 높은 수준이며, 특히 "${keywords[0]}" 키워드에서 검색 노출이 강화되고 있습니다.\n\n평균 조회수 ${(avgViews || 3800).toLocaleString()}회, 평균 좋아요 ${(avgLikes || 198).toLocaleString()}개로 브랜드 관심도가 상승하는 패턴이 나타나고 있습니다.\n\n마케팅 연장 시 월 평균 노출 ${Math.round(exposure * 1.5).toLocaleString()}+ 달성이 가능하며, 신규 방문자 유입이 약 40% 추가 증가할 것으로 분석됩니다.`;
+            const platformAnalysis = {
+                '네이버 카페': `[카페활성화 성과 분석]\n\n이번 카페활성화 캠페인은 총 ${totalContent}건의 작업이 진행되었으며, 카페 내 활동량이 안정적으로 증가하고 있습니다.\n\n회원 유입과 게시글 반응이 꾸준히 상승하여 카페 등급 향상에 긍정적이며, 현재 추세대로라면 다음 등급 달성이 충분히 가능합니다.\n\n카페활성화는 지속적인 운영이 핵심입니다. 연장 진행 시 회원 활동량이 더욱 가속화되어 검색 유입 및 제휴 광고 기회가 확대될 것으로 분석됩니다.\n\n현재 성장 곡선 유지 시 월 평균 노출 ${Math.round(exposure * 1.3).toLocaleString()}+ 달성이 가능하며, 카페 내 검색 유입이 약 30~40% 추가 증가할 것으로 예상됩니다.`,
+                '네이버 블로그': `[블로그 대행 성과 분석]\n\n이번 블로그 캠페인은 총 ${totalContent}건의 콘텐츠가 발행되었으며, 예상 노출수 ${exposure.toLocaleString()}회를 기록했습니다.\n\n블로그 상위노출 키워드가 안정적으로 확보되고 있으며, "${keywords[0]}" 키워드 검색 노출이 강화되는 추세입니다.\n\n블로그는 누적 콘텐츠가 많을수록 검색 노출이 강화됩니다. 연장 진행 시 상위노출 키워드가 추가 확보되어 자연 유입이 더욱 증가할 것으로 분석됩니다.\n\n현재 추세 유지 시 월 평균 방문자 ${Math.round(visits * 1.4).toLocaleString()}+ 달성과 함께 전환율 상승이 예상됩니다.`,
+                '유튜브': `[유튜브 대행 성과 분석]\n\n이번 유튜브 캠페인은 총 ${totalContent}건의 영상이 제작되었으며, 예상 노출수 ${exposure.toLocaleString()}회를 기록했습니다.\n\n영상 조회수와 구독자 반응이 우수하며, 시청 지속시간이 업종 평균 대비 높은 수준입니다.\n\n유튜브는 꾸준한 영상 업로드가 알고리즘 추천에 핵심적입니다. 연장 진행 시 채널 성장 속도가 가속화되어 추천 영상 노출이 크게 증가할 것으로 분석됩니다.\n\n현재 성장세 유지 시 구독자 및 조회수가 약 50% 이상 추가 성장할 것으로 예상됩니다.`,
+                '인스타그램': `[인스타그램 대행 성과 분석]\n\n이번 인스타그램 캠페인은 총 ${totalContent}건의 콘텐츠가 발행되었으며, 예상 도달수 ${exposure.toLocaleString()}회를 기록했습니다.\n\n팔로워 증가율과 콘텐츠 인게이지먼트가 안정적이며, 릴스 및 피드 콘텐츠의 반응이 우수합니다.\n\n인스타그램은 지속적인 콘텐츠 운영이 브랜드 인지도에 핵심적입니다. 연장 진행 시 팔로워 성장과 함께 브랜드 신뢰도가 더욱 강화될 것으로 분석됩니다.\n\n현재 추세 유지 시 팔로워 및 도달수가 약 40% 추가 성장할 것으로 예상됩니다.`,
+                '언론사': `[언론홍보 성과 분석]\n\n이번 언론홍보 캠페인은 총 ${totalContent}건의 보도자료가 배포되었으며, 예상 노출수 ${exposure.toLocaleString()}회를 기록했습니다.\n\n주요 언론사 게재를 통해 브랜드 신뢰도 및 검색 노출이 크게 강화되었습니다.\n\n언론홍보는 지속적인 노출이 브랜드 권위 확립에 핵심적입니다. 연장 진행 시 검색 결과에 긍정적 기사가 누적되어 브랜드 이미지가 더욱 공고해질 것으로 분석됩니다.\n\n추가 보도 진행 시 브랜드 검색량이 약 30% 이상 증가할 것으로 예상됩니다.`
+            };
+            const aiComment = platformAnalysis[platform] || `[${service} 성과 분석]\n\n이번 ${service} 캠페인은 총 ${totalContent}건의 작업이 진행되었으며, 예상 노출수 ${exposure.toLocaleString()}회를 기록했습니다.\n\n콘텐츠 반응률이 업종 평균 대비 우수하며, 전반적인 마케팅 성과가 긍정적입니다.\n\n연장 진행 시 현재의 성장세가 더욱 가속화되어 노출 및 유입이 약 30~40% 추가 증가할 것으로 분석됩니다.\n\n지속적인 마케팅 운영이 안정적인 성과 유지와 추가 성장에 핵심적인 역할을 할 것으로 예상됩니다.`;
 
             document.getElementById('createAIComment').value = aiComment;
 
             alert('자동 분석이 완료되었습니다!\nKPI, 키워드, AI 분석 코멘트가 자동으로 채워졌습니다.');
         }
+    </script>
+    <script>
+        // Disable right-click context menu
+        document.addEventListener('contextmenu', function(e) { e.preventDefault(); });
+        // Disable F12, Ctrl+Shift+I, Ctrl+U, Ctrl+S
+        document.addEventListener('keydown', function(e) {
+            if (e.key === 'F12') { e.preventDefault(); return false; }
+            if (e.ctrlKey && e.shiftKey && (e.key === 'I' || e.key === 'i' || e.key === 'J' || e.key === 'j' || e.key === 'C' || e.key === 'c')) { e.preventDefault(); return false; }
+            if (e.ctrlKey && (e.key === 'U' || e.key === 'u' || e.key === 'S' || e.key === 's')) { e.preventDefault(); return false; }
+        });
     </script>
 </body>
 </html>
