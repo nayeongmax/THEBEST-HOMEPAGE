@@ -522,7 +522,7 @@
 }
 
 .preview-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px; }
-.preview-header .logo-the, .preview-header .logo-best { font-family: var(--font-en); font-weight: 800; font-size: 1.1rem; }
+.preview-header .logo-the, .preview-header .logo-best, .preview-header .logo-bold { font-family: var(--font-en); font-weight: 800; font-size: 1.1rem; }
 .preview-doc-title { font-size: 1rem; font-weight: 800; color: var(--primary); letter-spacing: 2px; }
 .preview-divider { height: 1px; background: var(--border); margin: 16px 0; }
 .preview-info { display: flex; flex-direction: column; gap: 10px; }
