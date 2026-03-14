@@ -405,10 +405,13 @@ function updatePreview(selected, total) {
 function getChecklistAnswers() {
     const answers = [];
     const questions = [
-        { name: 'purpose', label: '운영 목적' },
+        { name: 'purpose', label: '마케팅 목적' },
+        { name: 'target', label: '타겟 고객층' },
+        { name: 'channel', label: '운영 채널' },
+        { name: 'experience', label: '대행 경험' },
+        { name: 'budget', label: '월 예산' },
         { name: 'revenue', label: '매출 목표' },
-        { name: 'budget', label: '운용 예산' },
-        { name: 'experience', label: '마케팅 경험' },
+        { name: 'kpi', label: '성과 지표' },
         { name: 'timing', label: '시작 시기' }
     ];
     questions.forEach(q => {
@@ -425,6 +428,64 @@ document.getElementById('industry').addEventListener('change', () => updateEstim
 // Init
 document.getElementById('prevDate').textContent = new Date().toLocaleDateString('ko-KR');
 renderServiceTiers();
+
+// ===== Generate SVG Radar for PDF =====
+function generateRadarSVG(data, w, h) {
+    const cx = w / 2, cy = h / 2 + 8;
+    const radius = Math.min(w, h) / 2 - 40;
+    const sides = 5;
+    const step = (Math.PI * 2) / sides;
+    const start = -Math.PI / 2;
+
+    function pt(angle, r) {
+        return `${cx + r * Math.cos(angle)},${cy + r * Math.sin(angle)}`;
+    }
+
+    let svg = `<svg xmlns="http://www.w3.org/2000/svg" width="${w}" height="${h}" viewBox="0 0 ${w} ${h}">`;
+
+    // Grid lines
+    for (let lvl = 1; lvl <= 5; lvl++) {
+        const r = (radius * lvl) / 5;
+        let pts = [];
+        for (let i = 0; i < sides; i++) pts.push(pt(start + i * step, r));
+        svg += `<polygon points="${pts.join(' ')}" fill="none" stroke="#E8E2DB" stroke-width="1"/>`;
+    }
+
+    // Axes
+    for (let i = 0; i < sides; i++) {
+        svg += `<line x1="${cx}" y1="${cy}" x2="${pt(start + i * step, radius).split(',')[0]}" y2="${pt(start + i * step, radius).split(',')[1]}" stroke="#E8E2DB" stroke-width="1"/>`;
+    }
+
+    // Before polygon
+    let beforePts = [];
+    for (let i = 0; i < sides; i++) beforePts.push(pt(start + i * step, radius * data.before[i] / 100));
+    svg += `<polygon points="${beforePts.join(' ')}" fill="rgba(180,180,180,0.15)" stroke="rgba(150,150,150,0.6)" stroke-width="2"/>`;
+    for (let i = 0; i < sides; i++) {
+        const p = pt(start + i * step, radius * data.before[i] / 100);
+        svg += `<circle cx="${p.split(',')[0]}" cy="${p.split(',')[1]}" r="3" fill="rgba(150,150,150,0.6)"/>`;
+    }
+
+    // After polygon
+    let afterPts = [];
+    for (let i = 0; i < sides; i++) afterPts.push(pt(start + i * step, radius * data.after[i] / 100));
+    svg += `<polygon points="${afterPts.join(' ')}" fill="rgba(200,149,108,0.18)" stroke="rgba(200,149,108,0.9)" stroke-width="2.5"/>`;
+    for (let i = 0; i < sides; i++) {
+        const p = pt(start + i * step, radius * data.after[i] / 100);
+        svg += `<circle cx="${p.split(',')[0]}" cy="${p.split(',')[1]}" r="3.5" fill="#C8956C"/>`;
+    }
+
+    // Labels
+    for (let i = 0; i < sides; i++) {
+        const a = start + i * step;
+        const lr = radius + 28;
+        const lx = cx + lr * Math.cos(a);
+        const ly = cy + lr * Math.sin(a);
+        svg += `<text x="${lx}" y="${ly}" text-anchor="middle" dominant-baseline="middle" font-size="11" font-weight="600" fill="#6B6560" font-family="'Noto Sans KR',sans-serif">${data.labels[i]}</text>`;
+    }
+
+    svg += '</svg>';
+    return svg;
+}
 
 // ===== PDF Download (Landscape PPT-style) =====
 function downloadPDF() {
@@ -450,250 +511,247 @@ function downloadPDF() {
     const avgAfter = Math.round(displayAfter.reduce((a, b) => a + b, 0) / 5);
     const improvement = avgAfter - avgBefore;
 
-    // Build services HTML
+    const displayData = { labels: radarData.labels, before: radarData.before, after: displayAfter };
+    const radarSVG = generateRadarSVG(displayData, 320, 280);
+
+    // Services HTML
     let servicesHTML = '';
     selected.forEach((s, idx) => {
         servicesHTML += `
-            <div style="margin-bottom:14px;padding:14px 18px;background:#FFFAF5;border:1px solid #F0E6DA;border-radius:8px;">
-                <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:6px;">
-                    <div style="font-size:13px;font-weight:700;color:#2D2A26;">${idx + 1}. ${s.name} <span style="font-size:11px;font-weight:500;color:#C8956C;background:#FFF3E8;padding:2px 8px;border-radius:4px;margin-left:6px;">${s.tierName}</span></div>
-                    <div style="font-size:13px;font-weight:700;color:#C8956C;">${s.price.toLocaleString()}원</div>
+            <div style="margin-bottom:12px;padding:12px 16px;background:#FFFAF5;border:1px solid #F0E6DA;border-radius:8px;">
+                <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:4px;">
+                    <div style="font-size:12px;font-weight:700;color:#2D2A26;">${idx + 1}. ${s.name} <span style="font-size:10px;font-weight:500;color:#C8956C;background:#FFF3E8;padding:1px 6px;border-radius:4px;margin-left:4px;">${s.tierName}</span></div>
+                    <div style="font-size:12px;font-weight:700;color:#C8956C;">${s.price.toLocaleString()}원</div>
                 </div>
-                <div style="font-size:10px;color:#8A8580;margin-bottom:8px;">${s.desc}</div>
-                <div style="border-top:1px dashed #E8E2DB;padding-top:8px;">
-                    <div style="font-size:10px;font-weight:600;color:#6B6560;margin-bottom:4px;">작업 사항</div>
-                    ${s.workItems.map(w => `<div style="font-size:10px;color:#6B6560;padding:1px 0 1px 12px;position:relative;"><span style="position:absolute;left:0;color:#C8956C;">•</span>${w}</div>`).join('')}
-                </div>
-            </div>
-        `;
+                <div style="font-size:9px;color:#8A8580;">${s.desc}</div>
+            </div>`;
     });
+    if (!selected.length) servicesHTML = '<div style="padding:24px;text-align:center;color:#AEA9A4;font-size:11px;">선택된 서비스가 없습니다</div>';
 
-    if (selected.length === 0) {
-        servicesHTML = '<div style="padding:30px;text-align:center;color:#AEA9A4;font-size:12px;">선택된 서비스가 없습니다</div>';
-    }
-
-    // Build checklist HTML
+    // Checklist HTML
     let checklistHTML = '';
     if (checklist.length > 0) {
-        checklistHTML = checklist.map(c => `
-            <div style="display:flex;gap:12px;padding:8px 0;border-bottom:1px solid #F0E6DA;">
-                <span style="font-size:11px;font-weight:600;color:#6B6560;min-width:80px;">${c.label}</span>
-                <span style="font-size:11px;color:#2D2A26;font-weight:500;">${c.value}</span>
-            </div>
-        `).join('');
+        checklistHTML = `<div style="display:grid;grid-template-columns:1fr 1fr;gap:6px 20px;">` +
+            checklist.map(c => `<div style="display:flex;gap:8px;padding:5px 0;"><span style="font-size:10px;font-weight:600;color:#8A8580;min-width:65px;">${c.label}</span><span style="font-size:10px;color:#2D2A26;font-weight:500;">${c.value}</span></div>`).join('') +
+            `</div>`;
     }
 
-    // Build score bars HTML
+    // Score bars
     let scoreBarsHTML = '';
     if (industry && industry !== '-') {
         radarData.labels.forEach((label, i) => {
             scoreBarsHTML += `
-                <div style="margin-bottom:8px;">
+                <div style="margin-bottom:10px;">
                     <div style="display:flex;justify-content:space-between;margin-bottom:3px;">
-                        <span style="font-size:10px;font-weight:600;color:#6B6560;">${label}</span>
-                        <span style="font-size:10px;color:#8A8580;">${radarData.before[i]} → <strong style="color:#C8956C;">${displayAfter[i]}</strong></span>
+                        <span style="font-size:11px;font-weight:600;color:#6B6560;">${label}</span>
+                        <span style="font-size:10px;color:#8A8580;">${radarData.before[i]}점 → <strong style="color:#C8956C;">${displayAfter[i]}점</strong></span>
                     </div>
                     <div style="display:flex;gap:4px;">
-                        <div style="flex:1;height:7px;background:#EDEDED;border-radius:4px;overflow:hidden;">
-                            <div style="width:${radarData.before[i]}%;height:100%;background:#B0B0B0;border-radius:4px;"></div>
-                        </div>
-                        <div style="flex:1;height:7px;background:#EDEDED;border-radius:4px;overflow:hidden;">
-                            <div style="width:${displayAfter[i]}%;height:100%;background:#C8956C;border-radius:4px;"></div>
-                        </div>
+                        <div style="flex:1;height:8px;background:#EDEDED;border-radius:4px;overflow:hidden;"><div style="width:${radarData.before[i]}%;height:100%;background:#B0B0B0;border-radius:4px;"></div></div>
+                        <div style="flex:1;height:8px;background:#EDEDED;border-radius:4px;overflow:hidden;"><div style="width:${displayAfter[i]}%;height:100%;background:#C8956C;border-radius:4px;"></div></div>
                     </div>
-                </div>
-            `;
+                </div>`;
         });
     }
 
-    // === LANDSCAPE PDF PAGES ===
-    const pageW = 920;
-    const pageH = 630;
-    const pageStyle = `width:${pageW}px;min-height:${pageH}px;background:#fff;position:relative;page-break-after:always;overflow:hidden;`;
+    // Each page = exactly one slide
+    const pages = [];
 
-    const pdfHTML = `
-    <div style="font-family:'Noto Sans KR',sans-serif;color:#2D2A26;width:${pageW}px;">
-
-        <!-- PAGE 1: COVER -->
-        <div style="${pageStyle}display:flex;flex-direction:column;justify-content:center;align-items:center;text-align:center;">
-            <div style="position:absolute;top:0;left:0;right:0;height:4px;background:linear-gradient(90deg,#C8956C,#E8C9A0,#C8956C);"></div>
-            <div style="position:absolute;top:40px;left:48px;">
-                <span style="font-size:18px;font-weight:800;color:#2D2A26;">THE </span><span style="font-size:18px;font-weight:800;color:#C8956C;">BEST</span>
-            </div>
-            <div style="margin-top:20px;">
-                <div style="font-size:14px;font-weight:500;color:#C8956C;letter-spacing:4px;margin-bottom:16px;">AI-POWERED CUSTOM ESTIMATE</div>
-                <div style="font-size:42px;font-weight:800;color:#2D2A26;margin-bottom:8px;">AI 맞춤견적서</div>
-                <div style="font-size:15px;color:#8A8580;margin-bottom:40px;">${company} 맞춤 마케팅 제안서</div>
-                <div style="display:inline-block;background:#FAF6F1;border:1px solid #E8E2DB;border-radius:8px;padding:16px 40px;">
-                    <div style="font-size:12px;color:#8A8580;margin-bottom:4px;">견적일자</div>
-                    <div style="font-size:16px;font-weight:700;color:#2D2A26;">${today}</div>
+    // PAGE 1: Cover
+    pages.push(`
+        <div class="pdf-slide">
+            <div style="position:absolute;top:0;left:0;right:0;height:5px;background:linear-gradient(90deg,#C8956C,#E8C9A0,#C8956C);"></div>
+            <div style="position:absolute;top:36px;left:48px;"><span style="font-size:18px;font-weight:800;color:#2D2A26;">THE </span><span style="font-size:18px;font-weight:800;color:#C8956C;">BEST</span></div>
+            <div style="display:flex;flex-direction:column;justify-content:center;align-items:center;height:100%;text-align:center;">
+                <div style="font-size:13px;font-weight:600;color:#C8956C;letter-spacing:5px;margin-bottom:20px;">AI-POWERED CUSTOM ESTIMATE</div>
+                <div style="font-size:44px;font-weight:800;color:#2D2A26;margin-bottom:10px;">AI 맞춤견적서</div>
+                <div style="font-size:16px;color:#8A8580;margin-bottom:48px;">${company} 맞춤 마케팅 제안서</div>
+                <div style="display:inline-block;background:#FAF6F1;border:1px solid #E8E2DB;border-radius:10px;padding:18px 48px;">
+                    <div style="font-size:11px;color:#AEA9A4;margin-bottom:4px;">견적일자</div>
+                    <div style="font-size:17px;font-weight:700;color:#2D2A26;">${today}</div>
                 </div>
             </div>
-            <div style="position:absolute;bottom:40px;left:48px;right:48px;display:flex;justify-content:space-between;align-items:center;border-top:1px solid #E8E2DB;padding-top:16px;">
-                <div style="font-size:11px;color:#AEA9A4;">더베스트마케팅 | THE BEST Marketing</div>
-                <div style="font-size:11px;color:#AEA9A4;">Confidential</div>
+            <div style="position:absolute;bottom:36px;left:48px;right:48px;display:flex;justify-content:space-between;border-top:1px solid #E8E2DB;padding-top:14px;">
+                <span style="font-size:10px;color:#AEA9A4;">더베스트마케팅 | THE BEST Marketing</span>
+                <span style="font-size:10px;color:#AEA9A4;">Confidential</span>
             </div>
         </div>
+    `);
 
-        <!-- PAGE 2: BASIC INFO -->
-        <div style="${pageStyle}padding:48px;">
-            <div style="display:flex;align-items:center;gap:12px;margin-bottom:32px;">
-                <div style="width:36px;height:36px;background:linear-gradient(135deg,#C8956C,#E8C9A0);border-radius:50%;display:flex;align-items:center;justify-content:center;color:#fff;font-weight:800;font-size:16px;">1</div>
-                <div style="font-size:22px;font-weight:800;color:#2D2A26;">기본 정보</div>
+    // PAGE 2: Basic Info + Checklist
+    pages.push(`
+        <div class="pdf-slide" style="padding:44px 48px;">
+            <div style="display:flex;align-items:center;gap:10px;margin-bottom:28px;">
+                <div style="width:32px;height:32px;background:linear-gradient(135deg,#C8956C,#E8C9A0);border-radius:50%;display:flex;align-items:center;justify-content:center;color:#fff;font-weight:800;font-size:14px;">1</div>
+                <div style="font-size:20px;font-weight:800;color:#2D2A26;">기본 정보</div>
             </div>
-            <table style="width:100%;border-collapse:collapse;font-size:13px;margin-bottom:32px;">
+            <table style="width:100%;border-collapse:collapse;font-size:12px;margin-bottom:24px;">
                 <tr>
-                    <td style="padding:14px 18px;background:#FAF6F1;border:1px solid #F0E6DA;font-weight:600;color:#6B6560;width:15%;">업체명</td>
-                    <td style="padding:14px 18px;border:1px solid #F0E6DA;width:35%;font-size:14px;font-weight:600;">${company}</td>
-                    <td style="padding:14px 18px;background:#FAF6F1;border:1px solid #F0E6DA;font-weight:600;color:#6B6560;width:15%;">담당자</td>
-                    <td style="padding:14px 18px;border:1px solid #F0E6DA;width:35%;">${manager}</td>
+                    <td style="padding:11px 16px;background:#FAF6F1;border:1px solid #F0E6DA;font-weight:600;color:#6B6560;width:14%;">업체명</td>
+                    <td style="padding:11px 16px;border:1px solid #F0E6DA;width:36%;font-weight:600;">${company}</td>
+                    <td style="padding:11px 16px;background:#FAF6F1;border:1px solid #F0E6DA;font-weight:600;color:#6B6560;width:14%;">담당자</td>
+                    <td style="padding:11px 16px;border:1px solid #F0E6DA;width:36%;">${manager}</td>
                 </tr>
                 <tr>
-                    <td style="padding:14px 18px;background:#FAF6F1;border:1px solid #F0E6DA;font-weight:600;color:#6B6560;">연락처</td>
-                    <td style="padding:14px 18px;border:1px solid #F0E6DA;">${phone}</td>
-                    <td style="padding:14px 18px;background:#FAF6F1;border:1px solid #F0E6DA;font-weight:600;color:#6B6560;">이메일</td>
-                    <td style="padding:14px 18px;border:1px solid #F0E6DA;">${email}</td>
+                    <td style="padding:11px 16px;background:#FAF6F1;border:1px solid #F0E6DA;font-weight:600;color:#6B6560;">연락처</td>
+                    <td style="padding:11px 16px;border:1px solid #F0E6DA;">${phone}</td>
+                    <td style="padding:11px 16px;background:#FAF6F1;border:1px solid #F0E6DA;font-weight:600;color:#6B6560;">이메일</td>
+                    <td style="padding:11px 16px;border:1px solid #F0E6DA;">${email}</td>
                 </tr>
                 <tr>
-                    <td style="padding:14px 18px;background:#FAF6F1;border:1px solid #F0E6DA;font-weight:600;color:#6B6560;">업종</td>
-                    <td style="padding:14px 18px;border:1px solid #F0E6DA;">${industry}</td>
-                    <td style="padding:14px 18px;background:#FAF6F1;border:1px solid #F0E6DA;font-weight:600;color:#6B6560;">견적일자</td>
-                    <td style="padding:14px 18px;border:1px solid #F0E6DA;">${today}</td>
+                    <td style="padding:11px 16px;background:#FAF6F1;border:1px solid #F0E6DA;font-weight:600;color:#6B6560;">업종</td>
+                    <td style="padding:11px 16px;border:1px solid #F0E6DA;">${industry}</td>
+                    <td style="padding:11px 16px;background:#FAF6F1;border:1px solid #F0E6DA;font-weight:600;color:#6B6560;">견적일자</td>
+                    <td style="padding:11px 16px;border:1px solid #F0E6DA;">${today}</td>
                 </tr>
             </table>
             ${checklist.length > 0 ? `
-            <div style="margin-top:12px;">
-                <div style="font-size:15px;font-weight:700;color:#2D2A26;margin-bottom:14px;padding-bottom:6px;border-bottom:2px solid #C8956C;display:inline-block;">체크리스트 응답</div>
-                <div style="background:#FAF6F1;border-radius:8px;padding:16px 20px;">
-                    ${checklistHTML}
-                </div>
-            </div>
+            <div style="font-size:14px;font-weight:700;color:#2D2A26;margin-bottom:10px;padding-bottom:5px;border-bottom:2px solid #C8956C;display:inline-block;">마케팅 설계 체크리스트</div>
+            <div style="background:#FAF6F1;border-radius:8px;padding:14px 18px;">${checklistHTML}</div>
             ` : ''}
-            <div style="position:absolute;bottom:24px;right:48px;font-size:10px;color:#AEA9A4;">2 / ${industry && industry !== '-' ? '4' : '3'}</div>
+            <div style="position:absolute;bottom:20px;right:48px;font-size:9px;color:#AEA9A4;">Page 2</div>
         </div>
+    `);
 
-        <!-- PAGE 3: SERVICES -->
-        <div style="${pageStyle}padding:48px;">
-            <div style="display:flex;align-items:center;gap:12px;margin-bottom:24px;">
-                <div style="width:36px;height:36px;background:linear-gradient(135deg,#C8956C,#E8C9A0);border-radius:50%;display:flex;align-items:center;justify-content:center;color:#fff;font-weight:800;font-size:16px;">2</div>
-                <div style="font-size:22px;font-weight:800;color:#2D2A26;">서비스 & 견적</div>
+    // PAGE 3: Services
+    pages.push(`
+        <div class="pdf-slide" style="padding:44px 48px;">
+            <div style="display:flex;align-items:center;gap:10px;margin-bottom:24px;">
+                <div style="width:32px;height:32px;background:linear-gradient(135deg,#C8956C,#E8C9A0);border-radius:50%;display:flex;align-items:center;justify-content:center;color:#fff;font-weight:800;font-size:14px;">2</div>
+                <div style="font-size:20px;font-weight:800;color:#2D2A26;">서비스 & 견적</div>
             </div>
-            <div style="max-height:440px;overflow:hidden;">
-                ${servicesHTML}
+            ${servicesHTML}
+            <div style="margin-top:14px;background:linear-gradient(135deg,#2D2A26,#3D3A36);border-radius:10px;padding:16px 24px;display:flex;justify-content:space-between;align-items:center;">
+                <div><div style="font-size:12px;font-weight:600;color:#AEA9A4;">총 견적금액</div><div style="font-size:8px;color:#8A8580;margin-top:1px;">VAT 별도</div></div>
+                <div style="font-size:26px;font-weight:800;color:#C8956C;">${total.toLocaleString()}원</div>
             </div>
-            <div style="margin-top:16px;background:linear-gradient(135deg,#2D2A26 0%,#3D3A36 100%);border-radius:10px;padding:18px 24px;display:flex;justify-content:space-between;align-items:center;">
-                <div>
-                    <div style="font-size:13px;font-weight:600;color:#AEA9A4;">총 견적금액</div>
-                    <div style="font-size:9px;color:#8A8580;margin-top:2px;">VAT 별도</div>
-                </div>
-                <div style="font-size:28px;font-weight:800;color:#C8956C;">${total.toLocaleString()}원</div>
-            </div>
-            <div style="position:absolute;bottom:24px;right:48px;font-size:10px;color:#AEA9A4;">3 / ${industry && industry !== '-' ? '4' : '3'}</div>
+            <div style="position:absolute;bottom:20px;right:48px;font-size:9px;color:#AEA9A4;">Page 3</div>
         </div>
+    `);
 
-        ${industry && industry !== '-' ? `
-        <!-- PAGE 4: AI ANALYSIS -->
-        <div style="${pageStyle}padding:48px;">
-            <div style="display:flex;align-items:center;gap:12px;margin-bottom:24px;">
-                <div style="width:36px;height:36px;background:linear-gradient(135deg,#C8956C,#E8C9A0);border-radius:50%;display:flex;align-items:center;justify-content:center;color:#fff;font-weight:800;font-size:16px;">3</div>
-                <div style="font-size:22px;font-weight:800;color:#2D2A26;">결과 분석</div>
-            </div>
-            <div style="display:flex;gap:24px;">
-                <!-- Left: Image + Scores -->
-                <div style="flex:1;">
-                    <div style="border-radius:10px;overflow:hidden;border:1px solid #F0E6DA;margin-bottom:16px;">
-                        <img src="${imgUrl}" alt="${industry}" style="width:100%;height:140px;object-fit:cover;display:block;" crossorigin="anonymous">
-                        <div style="padding:8px 14px;background:#FAF6F1;font-size:12px;font-weight:600;color:#6B6560;">${industry} 업종 마케팅 분석</div>
-                    </div>
-                    <div style="display:flex;gap:12px;">
-                        <div style="flex:1;text-align:center;padding:14px;background:#F8F5F0;border-radius:8px;border:1px solid #E8E2DB;">
-                            <div style="font-size:10px;font-weight:600;color:#8A8580;margin-bottom:6px;">미진행</div>
-                            <div style="font-size:28px;font-weight:800;color:#999;">${avgBefore}<span style="font-size:12px;">점</span></div>
-                            <div style="font-size:10px;color:#B0B0B0;background:#EDEDED;padding:2px 8px;border-radius:8px;display:inline-block;margin-top:4px;">개선 필요</div>
-                        </div>
-                        <div style="display:flex;align-items:center;flex-direction:column;justify-content:center;">
-                            <div style="font-size:20px;color:#C8956C;">→</div>
-                            <div style="font-size:11px;font-weight:700;color:#C8956C;">+${improvement}</div>
-                        </div>
-                        <div style="flex:1;text-align:center;padding:14px;background:#FFFAF5;border-radius:8px;border:1px solid #F0E6DA;">
-                            <div style="font-size:10px;font-weight:600;color:#C8956C;margin-bottom:6px;">진행 후</div>
-                            <div style="font-size:28px;font-weight:800;color:#C8956C;">${avgAfter}<span style="font-size:12px;">점</span></div>
-                            <div style="font-size:10px;color:#fff;background:#C8956C;padding:2px 8px;border-radius:8px;display:inline-block;margin-top:4px;">우수</div>
-                        </div>
-                    </div>
+    // PAGE 4: AI Analysis (if industry selected)
+    if (industry && industry !== '-') {
+        pages.push(`
+            <div class="pdf-slide" style="padding:44px 48px;">
+                <div style="display:flex;align-items:center;gap:10px;margin-bottom:20px;">
+                    <div style="width:32px;height:32px;background:linear-gradient(135deg,#C8956C,#E8C9A0);border-radius:50%;display:flex;align-items:center;justify-content:center;color:#fff;font-weight:800;font-size:14px;">3</div>
+                    <div style="font-size:20px;font-weight:800;color:#2D2A26;">마케팅 효과 분석</div>
+                    <div style="font-size:11px;color:#8A8580;margin-left:8px;">${industry} 업종 AI 분석 리포트</div>
                 </div>
-                <!-- Right: Detail Bars -->
-                <div style="flex:1;">
-                    <div style="padding:16px 18px;background:#FFFAF5;border:1px solid #F0E6DA;border-radius:8px;height:100%;">
-                        <div style="font-size:13px;font-weight:700;color:#2D2A26;margin-bottom:8px;">항목별 상세 분석</div>
-                        <div style="display:flex;gap:8px;margin-bottom:12px;">
-                            <div style="display:flex;align-items:center;gap:4px;font-size:9px;color:#8A8580;">
-                                <span style="display:inline-block;width:10px;height:5px;background:#B0B0B0;border-radius:3px;"></span>미진행
-                            </div>
-                            <div style="display:flex;align-items:center;gap:4px;font-size:9px;color:#8A8580;">
-                                <span style="display:inline-block;width:10px;height:5px;background:#C8956C;border-radius:3px;"></span>진행 후
+                <div style="display:flex;gap:28px;">
+                    <!-- LEFT: Radar Chart -->
+                    <div style="flex:0 0 340px;">
+                        <div style="background:#F8F5F0;border:1px solid #E8E2DB;border-radius:12px;padding:16px;text-align:center;">
+                            <div style="font-size:12px;font-weight:700;color:#2D2A26;margin-bottom:4px;">마케팅 전후 지표 비교</div>
+                            ${radarSVG}
+                            <div style="display:flex;justify-content:center;gap:16px;margin-top:4px;">
+                                <div style="display:flex;align-items:center;gap:4px;font-size:9px;color:#8A8580;"><span style="width:16px;height:3px;background:rgba(150,150,150,0.6);border-radius:2px;display:inline-block;"></span>미진행</div>
+                                <div style="display:flex;align-items:center;gap:4px;font-size:9px;color:#8A8580;"><span style="width:16px;height:3px;background:#C8956C;border-radius:2px;display:inline-block;"></span>진행 후</div>
                             </div>
                         </div>
-                        ${scoreBarsHTML}
+                        <div style="display:flex;gap:10px;margin-top:12px;">
+                            <div style="flex:1;text-align:center;padding:12px;background:#F8F5F0;border-radius:8px;border:1px solid #E8E2DB;">
+                                <div style="font-size:9px;font-weight:600;color:#8A8580;margin-bottom:4px;">현재 (미진행)</div>
+                                <div style="font-size:26px;font-weight:800;color:#999;">${avgBefore}<span style="font-size:11px;">점</span></div>
+                            </div>
+                            <div style="display:flex;align-items:center;justify-content:center;flex-direction:column;">
+                                <div style="font-size:18px;color:#C8956C;">▶</div>
+                                <div style="font-size:10px;font-weight:700;color:#C8956C;">+${improvement}</div>
+                            </div>
+                            <div style="flex:1;text-align:center;padding:12px;background:#FFFAF5;border-radius:8px;border:1px solid #F0E6DA;">
+                                <div style="font-size:9px;font-weight:600;color:#C8956C;margin-bottom:4px;">진행 후 (예상)</div>
+                                <div style="font-size:26px;font-weight:800;color:#C8956C;">${avgAfter}<span style="font-size:11px;">점</span></div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- RIGHT: Detail bars + Industry image -->
+                    <div style="flex:1;display:flex;flex-direction:column;gap:14px;">
+                        <div style="border-radius:10px;overflow:hidden;border:1px solid #F0E6DA;">
+                            <img src="${imgUrl}" alt="${industry}" style="width:100%;height:120px;object-fit:cover;display:block;" crossorigin="anonymous">
+                        </div>
+                        <div style="background:#FFFAF5;border:1px solid #F0E6DA;border-radius:10px;padding:16px 18px;flex:1;">
+                            <div style="font-size:12px;font-weight:700;color:#2D2A26;margin-bottom:6px;">항목별 상세 분석</div>
+                            <div style="display:flex;gap:8px;margin-bottom:8px;">
+                                <div style="display:flex;align-items:center;gap:4px;font-size:9px;color:#8A8580;"><span style="width:10px;height:5px;background:#B0B0B0;border-radius:3px;display:inline-block;"></span>미진행</div>
+                                <div style="display:flex;align-items:center;gap:4px;font-size:9px;color:#8A8580;"><span style="width:10px;height:5px;background:#C8956C;border-radius:3px;display:inline-block;"></span>진행 후</div>
+                            </div>
+                            ${scoreBarsHTML}
+                        </div>
                     </div>
                 </div>
+                <div style="position:absolute;bottom:20px;right:48px;font-size:9px;color:#AEA9A4;">Page 4</div>
             </div>
-            <div style="position:absolute;bottom:24px;right:48px;font-size:10px;color:#AEA9A4;">4 / 4</div>
-        </div>
-        ` : ''}
+        `);
+    }
 
-        <!-- LAST PAGE: THANK YOU -->
-        <div style="${pageStyle}display:flex;flex-direction:column;justify-content:center;align-items:center;text-align:center;">
-            <div style="position:absolute;top:0;left:0;right:0;height:4px;background:linear-gradient(90deg,#C8956C,#E8C9A0,#C8956C);"></div>
-            <div style="font-size:36px;font-weight:800;color:#2D2A26;margin-bottom:12px;">감사합니다</div>
-            <div style="font-size:14px;color:#8A8580;margin-bottom:40px;">더베스트마케팅과 함께 성공적인 마케팅을 시작하세요</div>
-            <div style="display:flex;gap:32px;margin-bottom:40px;">
-                <div style="text-align:center;">
-                    <div style="font-size:11px;color:#AEA9A4;margin-bottom:4px;">TEL</div>
-                    <div style="font-size:13px;font-weight:600;">010-1234-5678</div>
-                </div>
-                <div style="text-align:center;">
-                    <div style="font-size:11px;color:#AEA9A4;margin-bottom:4px;">EMAIL</div>
-                    <div style="font-size:13px;font-weight:600;">thebest@marketing.com</div>
-                </div>
-                <div style="text-align:center;">
-                    <div style="font-size:11px;color:#AEA9A4;margin-bottom:4px;">KAKAO</div>
-                    <div style="font-size:13px;font-weight:600;">@THEBEST</div>
-                </div>
+    // LAST PAGE: Thank you
+    pages.push(`
+        <div class="pdf-slide" style="display:flex;flex-direction:column;justify-content:center;align-items:center;text-align:center;">
+            <div style="position:absolute;top:0;left:0;right:0;height:5px;background:linear-gradient(90deg,#C8956C,#E8C9A0,#C8956C);"></div>
+            <div style="font-size:38px;font-weight:800;color:#2D2A26;margin-bottom:12px;">감사합니다</div>
+            <div style="font-size:14px;color:#8A8580;margin-bottom:44px;">더베스트마케팅과 함께 성공적인 마케팅을 시작하세요</div>
+            <div style="display:flex;gap:36px;margin-bottom:44px;">
+                <div><div style="font-size:10px;color:#AEA9A4;margin-bottom:3px;">TEL</div><div style="font-size:13px;font-weight:600;">010-1234-5678</div></div>
+                <div><div style="font-size:10px;color:#AEA9A4;margin-bottom:3px;">EMAIL</div><div style="font-size:13px;font-weight:600;">thebest@marketing.com</div></div>
+                <div><div style="font-size:10px;color:#AEA9A4;margin-bottom:3px;">KAKAO</div><div style="font-size:13px;font-weight:600;">@THEBEST</div></div>
             </div>
-            <div style="font-size:20px;font-weight:800;"><span style="color:#2D2A26;">THE </span><span style="color:#C8956C;">BEST</span></div>
+            <div style="font-size:22px;font-weight:800;"><span style="color:#2D2A26;">THE </span><span style="color:#C8956C;">BEST</span></div>
             <div style="font-size:10px;color:#AEA9A4;margin-top:4px;">더베스트마케팅</div>
-            <div style="position:absolute;bottom:40px;left:48px;right:48px;text-align:center;font-size:10px;color:#AEA9A4;border-top:1px solid #E8E2DB;padding-top:16px;">
-                본 견적서는 발행일로부터 30일간 유효합니다.
-            </div>
+            <div style="position:absolute;bottom:36px;left:48px;right:48px;text-align:center;font-size:10px;color:#AEA9A4;border-top:1px solid #E8E2DB;padding-top:14px;">본 견적서는 발행일로부터 30일간 유효합니다.</div>
         </div>
+    `);
 
-    </div>
-    `;
+    // === Render each slide to canvas, then build PDF page-by-page ===
+    const slideW = 960;
+    const slideH = 540;
 
-    // Create hidden container
     const wrapper = document.createElement('div');
-    wrapper.style.position = 'fixed';
-    wrapper.style.top = '-9999px';
-    wrapper.style.left = '-9999px';
-    wrapper.style.width = pageW + 'px';
-    wrapper.innerHTML = pdfHTML;
+    wrapper.style.cssText = 'position:fixed;top:-9999px;left:-9999px;';
+    const styleTag = document.createElement('style');
+    styleTag.textContent = `.pdf-slide{width:${slideW}px;height:${slideH}px;background:#fff;position:relative;overflow:hidden;box-sizing:border-box;font-family:'Noto Sans KR',sans-serif;color:#2D2A26;}`;
+    wrapper.appendChild(styleTag);
+    wrapper.insertAdjacentHTML('beforeend', pages.join(''));
     document.body.appendChild(wrapper);
 
-    const pdfContent = wrapper.firstElementChild;
+    const slides = wrapper.querySelectorAll('.pdf-slide');
+    const scale = 2;
 
-    const opt = {
-        margin: [0, 0, 0, 0],
-        filename: `AI맞춤견적서_${company !== '-' ? company : '견적서'}_${todayFile}.pdf`,
-        image: { type: 'jpeg', quality: 0.95 },
-        html2canvas: { scale: 2, useCORS: true, backgroundColor: '#ffffff', logging: false, width: pageW },
-        jsPDF: { unit: 'px', format: [pageW, pageH], orientation: 'landscape', hotfixes: ['px_scaling'] },
-        pagebreak: { mode: ['css'], before: [], after: [], avoid: [] }
-    };
+    // Sequentially render each slide, then combine into single PDF
+    async function buildPDF() {
+        const canvases = [];
+        for (const slide of slides) {
+            const c = await html2canvas(slide, {
+                scale, useCORS: true, backgroundColor: '#ffffff', logging: false,
+                width: slideW, height: slideH
+            });
+            canvases.push(c);
+        }
 
-    html2pdf().set(opt).from(pdfContent).save().then(() => {
+        // A4 landscape in mm: 297 x 210
+        const pdfW = 297, pdfH = 210;
+
+        // Access jsPDF from the html2pdf bundle globals
+        const JsPDF = (window.jspdf && window.jspdf.jsPDF) || window.jsPDF;
+        if (!JsPDF) {
+            // Fallback: render first page with html2pdf normally
+            alert('PDF 생성에 실패했습니다. 페이지를 새로고침 후 다시 시도해주세요.');
+            document.body.removeChild(wrapper);
+            return;
+        }
+
+        const pdf = new JsPDF({ orientation: 'landscape', unit: 'mm', format: 'a4' });
+
+        canvases.forEach((canvas, idx) => {
+            if (idx > 0) pdf.addPage();
+            const imgData = canvas.toDataURL('image/jpeg', 0.92);
+            pdf.addImage(imgData, 'JPEG', 0, 0, pdfW, pdfH, undefined, 'FAST');
+        });
+
+        pdf.save(`AI맞춤견적서_${company !== '-' ? company : '견적서'}_${todayFile}.pdf`);
         document.body.removeChild(wrapper);
-    });
+    }
+
+    buildPDF();
 }
 
 // ===== Form Submit =====
@@ -727,5 +785,4 @@ function resetForm() {
     document.querySelectorAll('.tier-option input[type="radio"]').forEach(r => r.checked = false);
     document.getElementById('estimateAmount').value = '';
     updatePreview([], 0);
-    document.getElementById('expectedResults').innerHTML = '<div class="result-placeholder"><p>업종과 서비스를 선택하면 AI 분석 결과가 표시됩니다</p></div>';
 }
