@@ -76,11 +76,11 @@ const counterObserver = new IntersectionObserver((entries) => {
         if (entry.isIntersecting) {
             animateCounter(entry.target);
             counterObserver.unobserve(entry.target);
-            // Start repeating every 20 seconds
+            // Repeat every 10 seconds
             entry.target._counterInterval = setInterval(() => {
                 entry.target.textContent = '0';
                 animateCounter(entry.target);
-            }, 20000);
+            }, 10000);
         }
     });
 }, { threshold: 0.5 });
@@ -89,18 +89,66 @@ document.querySelectorAll('.stat-number').forEach(el => {
     counterObserver.observe(el);
 });
 
+// ===== Hero Graph Rising Animation =====
+function animateHeroGraph() {
+    const line = document.getElementById('heroGraphLine');
+    const fill = document.getElementById('heroGraphFill');
+    if (!line || !fill) return;
+
+    // Multiple rising path stages
+    const paths = [
+        { line: 'M0,98 Q30,97 60,95 T100,92 T140,88 T180,84 L200,82', fill: 'M0,98 Q30,97 60,95 T100,92 T140,88 T180,84 L200,82 V100 H0Z' },
+        { line: 'M0,95 Q30,93 60,88 T100,78 T140,60 T180,40 L200,30', fill: 'M0,95 Q30,93 60,88 T100,78 T140,60 T180,40 L200,30 V100 H0Z' },
+        { line: 'M0,95 Q30,93 60,88 T100,70 T140,35 T180,8 L200,2', fill: 'M0,95 Q30,93 60,88 T100,70 T140,35 T180,8 L200,2 V100 H0Z' },
+        { line: 'M0,92 Q30,88 60,78 T100,55 T140,22 T180,5 L200,1', fill: 'M0,92 Q30,88 60,78 T100,55 T140,22 T180,5 L200,1 V100 H0Z' }
+    ];
+
+    let step = 0;
+    // Start from flat, rise through stages
+    line.setAttribute('d', paths[0].line);
+    fill.setAttribute('d', paths[0].fill);
+
+    function nextStep() {
+        step = (step + 1) % paths.length;
+        line.style.transition = 'd 1.5s ease-in-out';
+        fill.style.transition = 'd 1.5s ease-in-out';
+        line.setAttribute('d', paths[step].line);
+        fill.setAttribute('d', paths[step].fill);
+    }
+
+    // Rise every 10 seconds
+    setInterval(nextStep, 10000);
+    // Initial rise after 500ms
+    setTimeout(nextStep, 500);
+}
+animateHeroGraph();
+
 // ===== Case Bar After Animation =====
+const caseBarTargets = [75, 50, 65];
+let caseBarInterval = null;
+
+function animateCaseBars() {
+    const bars = document.querySelectorAll('.case-bar-animate');
+    // Reset to 0
+    bars.forEach(bar => { bar.style.transition = 'none'; bar.style.width = '0%'; });
+    // Animate to target
+    setTimeout(() => {
+        bars.forEach((bar, i) => {
+            bar.style.transition = 'width 1.5s cubic-bezier(0.25, 0.46, 0.45, 0.94)';
+            setTimeout(() => {
+                bar.style.width = (caseBarTargets[i] || 60) + '%';
+            }, 200 + i * 300);
+        });
+    }, 50);
+}
+
 const caseBarObserver = new IntersectionObserver((entries) => {
     entries.forEach(entry => {
         if (entry.isIntersecting) {
-            const bars = entry.target.querySelectorAll('.case-bar-animate');
-            const targets = [75, 50, 65]; // target widths for each case
-            bars.forEach((bar, i) => {
-                setTimeout(() => {
-                    bar.style.width = (targets[i] || 60) + '%';
-                }, 200 + i * 300);
-            });
+            animateCaseBars();
             caseBarObserver.unobserve(entry.target);
+            // Repeat every 10 seconds
+            caseBarInterval = setInterval(animateCaseBars, 10000);
         }
     });
 }, { threshold: 0.3 });

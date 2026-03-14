@@ -47,16 +47,16 @@
                     <div class="hero-stat-card hsc-2"><span class="hsc-num">+170%</span><span class="hsc-label">매출 성장</span></div>
                     <div class="hero-stat-card hsc-3"><span class="hsc-num">1위</span><span class="hsc-label">검색 순위</span></div>
                     <div class="hero-graph">
-                        <svg viewBox="0 0 200 100" preserveAspectRatio="none"><path d="M0,95 Q30,93 60,88 T100,70 T140,35 T180,8 L200,2" fill="none" stroke="#C8A96A" stroke-width="2.5"/><path d="M0,95 Q30,93 60,88 T100,70 T140,35 T180,8 L200,2 V100 H0Z" fill="url(#heroGrad)" opacity="0.15"/><defs><linearGradient id="heroGrad" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#C8A96A"/><stop offset="100%" stop-color="#C8A96A" stop-opacity="0"/></linearGradient></defs></svg>
+                        <svg id="heroGraphSvg" viewBox="0 0 200 100" preserveAspectRatio="none"><path id="heroGraphLine" d="M0,95 Q30,93 60,88 T100,70 T140,35 T180,8 L200,2" fill="none" stroke="#C8A96A" stroke-width="2.5"/><path id="heroGraphFill" d="M0,95 Q30,93 60,88 T100,70 T140,35 T180,8 L200,2 V100 H0Z" fill="url(#heroGrad)" opacity="0.15"/><defs><linearGradient id="heroGrad" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#C8A96A"/><stop offset="100%" stop-color="#C8A96A" stop-opacity="0"/></linearGradient></defs></svg>
                     </div>
                 </div>
             </div>
         </div>
         <div class="hero-stats-bar animate-fade-up delay-3">
-            <div class="stat-card"><span class="stat-number" data-count="1000">0</span><span class="stat-plus">+</span><span class="stat-label">프로젝트 완료</span></div>
-            <div class="stat-card"><span class="stat-number" data-count="300">0</span><span class="stat-plus">%</span><span class="stat-label">평균 노출 상승</span></div>
-            <div class="stat-card"><span class="stat-number" data-count="50000">0</span><span class="stat-plus">+</span><span class="stat-label">마케팅 작업 및 콘텐츠 제작 건수</span></div>
-            <div class="stat-card"><span class="stat-number" data-count="3000">0</span><span class="stat-plus">+</span><span class="stat-label">마케팅 제휴 고객사</span></div>
+            <div class="stat-card"><span class="stat-number" data-count="1247">0</span><span class="stat-plus">+</span><span class="stat-label">프로젝트 완료</span></div>
+            <div class="stat-card"><span class="stat-number" data-count="327">0</span><span class="stat-plus">%</span><span class="stat-label">평균 노출 상승</span></div>
+            <div class="stat-card"><span class="stat-number" data-count="52847">0</span><span class="stat-plus">+</span><span class="stat-label">마케팅 작업 및 콘텐츠 제작 건수</span></div>
+            <div class="stat-card"><span class="stat-number" data-count="3291">0</span><span class="stat-plus">+</span><span class="stat-label">마케팅 제휴 고객사</span></div>
         </div>
     </section>
 
@@ -150,7 +150,7 @@
                 <div class="icon-card animate-on-scroll"><div class="icon-card-emoji">&#128221;</div><h3>블로그대행 및 체험단</h3><p class="icon-card-desc">전국 2만명 블로거 보유<br>검색 상위노출 + 후기 확보</p></div>
                 <div class="icon-card animate-on-scroll"><div class="icon-card-emoji">&#127909;</div><h3>유튜브대행 및 활성화</h3><p class="icon-card-desc">영상 콘텐츠로<br>브랜드 신뢰도 극대화</p></div>
                 <div class="icon-card animate-on-scroll"><div class="icon-card-emoji">&#128247;</div><h3>인스타그램 대행 및 활성화</h3><p class="icon-card-desc">팔로워 확보부터 피드 운영까지<br>브랜드 인지도 확장</p></div>
-                <div class="icon-card animate-on-scroll"><div class="icon-card-emoji">&#128172;</div><h3>각종플랫폼 활성화</h3><p class="icon-card-desc">네이버·카카오·커뮤니티<br>다채널 동시 바이럴 확산</p></div>
+                <div class="icon-card animate-on-scroll"><div class="icon-card-emoji">&#128172;</div><h3>마케팅 ONE-STOP 활성화</h3><p class="icon-card-desc">틱톡, 밴드, 당근 등<br>다채널 동시 바이럴 확산</p></div>
                 <div class="icon-card animate-on-scroll"><div class="icon-card-emoji">&#128187;</div><h3>사이트 제작</h3><p class="icon-card-desc">고객이 머무는<br>반응형 웹 & 쇼핑몰 제작</p></div>
                 <div class="icon-card animate-on-scroll"><div class="icon-card-emoji">&#128250;</div><h3>롱폼 및 숏폼 제작</h3><p class="icon-card-desc">릴스·틱톡·유튜브까지<br>트렌디한 영상 콘텐츠</p></div>
                 <div class="icon-card animate-on-scroll"><div class="icon-card-emoji">&#128240;</div><h3>언론사 홍보</h3><p class="icon-card-desc">언론사 홍보로<br>브랜드 신뢰도 상승</p></div>
@@ -176,7 +176,7 @@
                             <option value="blogReview" selected>블로그 체험단</option>
                             <option value="youtube">유튜브 대행 및 활성화</option>
                             <option value="insta">인스타그램 대행 및 활성화</option>
-                            <option value="platform">각종플랫폼 활성화</option>
+                            <option value="platform">마케팅 ONE-STOP 활성화</option>
                             <option value="shortform">숏폼 제작</option>
                             <option value="longform">롱폼 제작</option>
                             <option value="press">언론사 홍보</option>

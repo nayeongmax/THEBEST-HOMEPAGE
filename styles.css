@@ -365,6 +365,10 @@ img { max-width: 100%; display: block; }
     height: 100%;
 }
 
+.hero-graph svg path {
+    transition: d 1.5s ease-in-out;
+}
+
 /* Hero Stats Bar */
 .hero-stats-bar {
     display: grid;
