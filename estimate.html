@@ -1,0 +1,279 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>견적서 작성 | 더베스트마케팅</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;600;700;800;900&family=Poppins:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="estimate.css">
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="navbar scrolled" id="navbar">
+        <div class="nav-container">
+            <a href="index.html" class="logo">
+                <span class="logo-the">THE</span> <span class="logo-best">BEST</span>
+            </a>
+            <ul class="nav-links" id="navLinks">
+                <li><a href="index.html">홈</a></li>
+                <li><a href="index.html#services">서비스</a></li>
+                <li><a href="index.html#reviews">고객후기</a></li>
+                <li><a href="report.html">결과보고서</a></li>
+                <li><a href="estimate.html" class="nav-cta">견적서 작성</a></li>
+            </ul>
+            <button class="mobile-menu" id="mobileMenu" aria-label="메뉴 열기">
+                <span></span><span></span><span></span>
+            </button>
+        </div>
+    </nav>
+
+    <main class="estimate-page">
+        <div class="container">
+            <div class="estimate-header">
+                <span class="section-tag">ESTIMATE</span>
+                <h1 class="section-title">맞춤 <span class="gradient-text">견적서</span> 작성</h1>
+                <p class="section-desc">고객님의 비즈니스에 맞는 마케팅 견적서를 작성하세요</p>
+            </div>
+
+            <div class="estimate-layout">
+                <!-- Form Section -->
+                <div class="estimate-form-section">
+                    <form id="estimateForm" class="estimate-form">
+                        <!-- 기본 정보 -->
+                        <div class="form-section">
+                            <h3 class="form-section-title">
+                                <span class="form-step">1</span>기본 정보
+                            </h3>
+                            <div class="form-grid">
+                                <div class="form-group">
+                                    <label for="companyName">업체명 <span class="required">*</span></label>
+                                    <input type="text" id="companyName" placeholder="업체명을 입력하세요" required>
+                                </div>
+                                <div class="form-group">
+                                    <label for="contactName">담당자명</label>
+                                    <input type="text" id="contactName" placeholder="담당자명을 입력하세요">
+                                </div>
+                                <div class="form-group">
+                                    <label for="phone">연락처 <span class="required">*</span></label>
+                                    <input type="tel" id="phone" placeholder="010-0000-0000" required>
+                                </div>
+                                <div class="form-group">
+                                    <label for="email">이메일</label>
+                                    <input type="email" id="email" placeholder="email@example.com">
+                                </div>
+                                <div class="form-group full-width">
+                                    <label for="industry">업종 <span class="required">*</span></label>
+                                    <select id="industry" required>
+                                        <option value="">업종을 선택하세요</option>
+                                        <option value="뷰티/미용">뷰티/미용</option>
+                                        <option value="맛집/요식업">맛집/요식업</option>
+                                        <option value="병원/의료">병원/의료</option>
+                                        <option value="학원/교육">학원/교육</option>
+                                        <option value="인테리어/건설">인테리어/건설</option>
+                                        <option value="쇼핑몰/이커머스">쇼핑몰/이커머스</option>
+                                        <option value="부동산">부동산</option>
+                                        <option value="IT/스타트업">IT/스타트업</option>
+                                        <option value="프랜차이즈">프랜차이즈</option>
+                                        <option value="제조업">제조업</option>
+                                        <option value="기타">기타</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- 서비스 선택 -->
+                        <div class="form-section">
+                            <h3 class="form-section-title">
+                                <span class="form-step">2</span>서비스 선택 & 견적
+                            </h3>
+                            <div class="service-select-grid">
+                                <label class="service-checkbox">
+                                    <input type="checkbox" name="service" value="카페활성화" data-price="500000">
+                                    <div class="checkbox-card">
+                                        <div class="checkbox-mark"></div>
+                                        <span class="checkbox-label">카페 활성화</span>
+                                        <span class="checkbox-price">500,000원~</span>
+                                    </div>
+                                </label>
+                                <label class="service-checkbox">
+                                    <input type="checkbox" name="service" value="블로그체험단" data-price="800000">
+                                    <div class="checkbox-card">
+                                        <div class="checkbox-mark"></div>
+                                        <span class="checkbox-label">블로그 체험단</span>
+                                        <span class="checkbox-price">800,000원~</span>
+                                    </div>
+                                </label>
+                                <label class="service-checkbox">
+                                    <input type="checkbox" name="service" value="블로그대행" data-price="600000">
+                                    <div class="checkbox-card">
+                                        <div class="checkbox-mark"></div>
+                                        <span class="checkbox-label">블로그 대행</span>
+                                        <span class="checkbox-price">600,000원~</span>
+                                    </div>
+                                </label>
+                                <label class="service-checkbox">
+                                    <input type="checkbox" name="service" value="유튜브대행" data-price="1500000">
+                                    <div class="checkbox-card">
+                                        <div class="checkbox-mark"></div>
+                                        <span class="checkbox-label">유튜브 대행 & 활성화</span>
+                                        <span class="checkbox-price">1,500,000원~</span>
+                                    </div>
+                                </label>
+                                <label class="service-checkbox">
+                                    <input type="checkbox" name="service" value="인스타대행" data-price="700000">
+                                    <div class="checkbox-card">
+                                        <div class="checkbox-mark"></div>
+                                        <span class="checkbox-label">인스타 대행 & 활성화</span>
+                                        <span class="checkbox-price">700,000원~</span>
+                                    </div>
+                                </label>
+                                <label class="service-checkbox">
+                                    <input type="checkbox" name="service" value="롱폼제작" data-price="2000000">
+                                    <div class="checkbox-card">
+                                        <div class="checkbox-mark"></div>
+                                        <span class="checkbox-label">롱폼 영상 제작</span>
+                                        <span class="checkbox-price">2,000,000원~</span>
+                                    </div>
+                                </label>
+                                <label class="service-checkbox">
+                                    <input type="checkbox" name="service" value="숏폼제작" data-price="500000">
+                                    <div class="checkbox-card">
+                                        <div class="checkbox-mark"></div>
+                                        <span class="checkbox-label">숏폼 영상 제작</span>
+                                        <span class="checkbox-price">500,000원~</span>
+                                    </div>
+                                </label>
+                                <label class="service-checkbox">
+                                    <input type="checkbox" name="service" value="사이트제작" data-price="3000000">
+                                    <div class="checkbox-card">
+                                        <div class="checkbox-mark"></div>
+                                        <span class="checkbox-label">사이트 제작</span>
+                                        <span class="checkbox-price">3,000,000원~</span>
+                                    </div>
+                                </label>
+                                <label class="service-checkbox">
+                                    <input type="checkbox" name="service" value="언론홍보" data-price="1000000">
+                                    <div class="checkbox-card">
+                                        <div class="checkbox-mark"></div>
+                                        <span class="checkbox-label">언론 홍보</span>
+                                        <span class="checkbox-price">1,000,000원~</span>
+                                    </div>
+                                </label>
+                            </div>
+
+                            <div class="form-group full-width" style="margin-top: 24px;">
+                                <label for="estimateAmount">총 견적 금액</label>
+                                <div class="amount-input-wrapper">
+                                    <input type="text" id="estimateAmount" placeholder="0" class="amount-input">
+                                    <span class="amount-suffix">원</span>
+                                </div>
+                                <p class="form-hint">선택한 서비스를 기반으로 자동 계산됩니다. 직접 수정도 가능합니다.</p>
+                            </div>
+                        </div>
+
+                        <!-- 작업 내용 -->
+                        <div class="form-section">
+                            <h3 class="form-section-title">
+                                <span class="form-step">3</span>상세 내용
+                            </h3>
+                            <div class="form-group full-width">
+                                <label for="workDetail">작업 내용 상세</label>
+                                <textarea id="workDetail" rows="5" placeholder="마케팅 목표, 원하는 작업 범위, 기간 등을 상세히 적어주세요"></textarea>
+                            </div>
+                            <div class="form-group full-width">
+                                <label for="industryImage">견적문의 업종 관련 이미지</label>
+                                <div class="file-upload-area" id="fileUploadArea">
+                                    <svg viewBox="0 0 48 48" fill="none" width="40" height="40">
+                                        <rect x="6" y="10" width="36" height="28" rx="4" stroke="currentColor" stroke-width="2"/>
+                                        <circle cx="18" cy="22" r="4" stroke="currentColor" stroke-width="2"/>
+                                        <path d="M6 34l10-10 8 8 6-6 12 12" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                                    </svg>
+                                    <p>클릭하여 이미지를 업로드하거나<br>여기에 드래그 앤 드롭 하세요</p>
+                                    <span>JPG, PNG, PDF (최대 10MB)</span>
+                                    <input type="file" id="industryImage" accept="image/*,.pdf" multiple hidden>
+                                </div>
+                                <div id="filePreview" class="file-preview"></div>
+                            </div>
+                        </div>
+
+                        <!-- 예상 결과 분석 -->
+                        <div class="form-section">
+                            <h3 class="form-section-title">
+                                <span class="form-step">4</span>작업 후 예상 결과 데이터
+                            </h3>
+                            <div class="expected-results" id="expectedResults">
+                                <div class="result-placeholder">
+                                    <p>서비스를 선택하면 예상 결과 분석이 표시됩니다</p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="form-actions">
+                            <button type="button" class="btn btn-outline" onclick="resetForm()">초기화</button>
+                            <button type="submit" class="btn btn-primary btn-lg">견적서 생성하기</button>
+                        </div>
+                    </form>
+                </div>
+
+                <!-- Preview Section -->
+                <div class="estimate-preview-section" id="previewSection">
+                    <div class="preview-sticky">
+                        <h3 class="preview-title">견적서 미리보기</h3>
+                        <div class="preview-card" id="previewCard">
+                            <div class="preview-header">
+                                <div class="preview-logo">
+                                    <span class="logo-the">THE</span> <span class="logo-best">BEST</span>
+                                </div>
+                                <span class="preview-doc-title">견 적 서</span>
+                            </div>
+                            <div class="preview-divider"></div>
+                            <div class="preview-info">
+                                <div class="preview-row">
+                                    <span class="preview-label">업체명</span>
+                                    <span class="preview-value" id="prevCompany">-</span>
+                                </div>
+                                <div class="preview-row">
+                                    <span class="preview-label">업종</span>
+                                    <span class="preview-value" id="prevIndustry">-</span>
+                                </div>
+                                <div class="preview-row">
+                                    <span class="preview-label">견적일자</span>
+                                    <span class="preview-value" id="prevDate">-</span>
+                                </div>
+                                <div class="preview-row highlight">
+                                    <span class="preview-label">견적금액</span>
+                                    <span class="preview-value amount" id="prevAmount">0원</span>
+                                </div>
+                            </div>
+                            <div class="preview-divider"></div>
+                            <div class="preview-services" id="prevServices">
+                                <p class="preview-empty">선택된 서비스가 없습니다</p>
+                            </div>
+                            <div class="preview-divider"></div>
+                            <div class="preview-footer">
+                                <p>더베스트마케팅</p>
+                                <p class="small">THE BEST Marketing</p>
+                            </div>
+                        </div>
+                        <button class="btn btn-primary" style="width:100%; margin-top:16px;" onclick="printEstimate()">견적서 인쇄 / PDF 저장</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-bottom" style="border-top:none; padding-top:0;">
+                <p>&copy; 2026 THE BEST Marketing. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="estimate.js"></script>
+</body>
+</html>
