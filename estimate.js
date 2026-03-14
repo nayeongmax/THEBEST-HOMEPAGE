@@ -583,7 +583,7 @@ function downloadPDF() {
         </div>
         ${footerLine}
         <div style="position:absolute;bottom:14px;left:36px;right:36px;display:flex;justify-content:space-between;">
-            <span style="font-size:9px;color:#999999;">더베스트마케팅 | THE BEST Marketing</span>
+            <span style="font-size:9px;color:#999999;">더베스트마케팅 | THEBEST Marketing</span>
             <span style="font-size:9px;color:#999999;">Confidential</span>
         </div>
     </div>`);

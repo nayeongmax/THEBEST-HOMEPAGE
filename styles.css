@@ -1394,15 +1394,7 @@ img { max-width: 100%; display: block; }
 }
 
 .process-timeline::before {
-    content: '';
-    position: absolute;
-    top: 50%;
-    left: 40px;
-    right: 40px;
-    height: 2px;
-    background: linear-gradient(90deg, rgba(200,169,106,0.1), rgba(200,169,106,0.4), rgba(200,169,106,0.4), rgba(200,169,106,0.1));
-    transform: translateY(-50%);
-    z-index: 0;
+    display: none;
 }
 
 .process-step {
