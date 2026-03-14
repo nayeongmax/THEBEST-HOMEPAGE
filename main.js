@@ -96,7 +96,7 @@ function createParticles() {
             position: absolute;
             width: ${size}px;
             height: ${size}px;
-            background: rgba(200, 149, 108, ${Math.random() * 0.15 + 0.05});
+            background: rgba(200, 169, 106, ${Math.random() * 0.15 + 0.05});
             border-radius: 50%;
             left: ${Math.random() * 100}%;
             top: ${Math.random() * 100}%;
