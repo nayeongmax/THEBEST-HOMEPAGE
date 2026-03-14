@@ -11,6 +11,10 @@
     <style>
         /* Blue theme overrides for report content */
         .report-page {
+            --primary: #3B82F6;
+            --primary-dark: #1D4ED8;
+            --primary-light: #60A5FA;
+            --bg-warm: #EFF6FF;
             --rpt-primary: #3B82F6;
             --rpt-primary-dark: #1D4ED8;
             --rpt-primary-light: #60A5FA;
@@ -18,6 +22,22 @@
             --rpt-focus-shadow: rgba(59,130,246,0.1);
         }
         .report-page { padding: 120px 0 80px; min-height: 100vh; }
+        .report-page .gradient-text { background: linear-gradient(135deg, #3B82F6, #60A5FA); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; }
+        .report-page .btn-primary { background: linear-gradient(135deg, #3B82F6, #1D4ED8); border: none; }
+        .report-page .btn-primary:hover { background: linear-gradient(135deg, #2563EB, #1E40AF); }
+        .report-page .access-icon { background: linear-gradient(135deg, #3B82F6, #60A5FA); }
+        .report-page .access-form input:focus { border-color: #3B82F6; box-shadow: 0 0 0 3px rgba(59,130,246,0.1); }
+        .report-page .rpt-section { border-color: #E2E8F0; }
+        .report-page .rpt-section-header { border-bottom-color: #E2E8F0; }
+        .report-page .info-pair { background: #EFF6FF; }
+        .report-page .kpi-card { background: #F8FAFC; border: 1px solid #E2E8F0; }
+        .report-page .radar-legend-dot { background: rgba(59,130,246,0.8) !important; }
+        .report-page .type-post { background: rgba(59,130,246,0.1); color: #3B82F6; }
+        .report-page .type-comment { background: rgba(100,116,139,0.1); color: #64748B; }
+        .report-page .ai-analysis-box { background: #EFF6FF; border-left: 4px solid #3B82F6; }
+        .report-page .compare-bar-track { background: #F1F5F9; }
+        .report-page .content-bar-track { background: #F1F5F9; }
+        .report-page .kw-bar { background: #F1F5F9; }
         .report-page-header { text-align: center; margin-bottom: 56px; }
 
         /* Tab Toggle */
@@ -57,7 +77,7 @@
             margin-top: -30px;
             margin-bottom: 32px;
         }
-        .admin-pw-hint strong { color: var(--primary); }
+        .admin-pw-hint strong { color: var(--rpt-primary); }
 
         /* Access Form */
         .access-section { max-width: 480px; margin: 0 auto; }
@@ -91,8 +111,8 @@
             transition: var(--transition);
         }
         .access-form input:focus {
-            border-color: var(--primary);
-            box-shadow: 0 0 0 3px rgba(200,169,106,0.1);
+            border-color: var(--rpt-primary, var(--primary));
+            box-shadow: 0 0 0 3px var(--rpt-focus-shadow, rgba(200,169,106,0.1));
         }
 
         /* Report Creation Form */
@@ -119,7 +139,7 @@
             transition: var(--transition); box-sizing: border-box;
         }
         .form-group input:focus, .form-group textarea:focus, .form-group select:focus {
-            border-color: var(--primary); box-shadow: 0 0 0 3px rgba(200,169,106,0.1);
+            border-color: var(--rpt-primary, var(--primary)); box-shadow: 0 0 0 3px var(--rpt-focus-shadow, rgba(200,169,106,0.1));
         }
         .form-group textarea { resize: vertical; min-height: 80px; }
         .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
@@ -139,7 +159,7 @@
             outline: none; width: 100%; box-sizing: border-box;
         }
         .create-table-section .work-table input:focus,
-        .create-table-section .work-table select:focus { border-color: var(--primary); }
+        .create-table-section .work-table select:focus { border-color: var(--rpt-primary, var(--primary)); }
         .btn-add-row {
             display: inline-flex; align-items: center; gap: 6px;
             margin-top: 12px; padding: 10px 20px;
@@ -148,7 +168,7 @@
             font-family: var(--font); color: var(--text-light);
             cursor: pointer; transition: var(--transition);
         }
-        .btn-add-row:hover { border-color: var(--primary); color: var(--primary); }
+        .btn-add-row:hover { border-color: var(--rpt-primary, var(--primary)); color: var(--rpt-primary, var(--primary)); }
         .btn-remove-row {
             background: none; border: none; color: var(--text-muted);
             cursor: pointer; font-size: 1.1rem; padding: 4px 8px; transition: var(--transition);
@@ -195,7 +215,7 @@
             gap: 16px;
         }
         .kpi-card {
-            background: var(--bg-warm);
+            background: var(--rpt-bg-warm, var(--bg-warm));
             border-radius: var(--radius-sm);
             padding: 20px;
             text-align: center;
@@ -222,8 +242,8 @@
             transition: var(--transition); background: var(--bg-card); color: var(--text-light);
         }
         .radar-toggle-btn.active-x { background: #555; color: #fff; }
-        .radar-toggle-btn.active-o { background: var(--primary); color: #fff; }
-        .radar-toggle-btn.active-both { background: var(--dark); color: var(--primary); }
+        .radar-toggle-btn.active-o { background: var(--rpt-primary, var(--primary)); color: #fff; }
+        .radar-toggle-btn.active-both { background: var(--dark); color: var(--rpt-primary, var(--primary)); }
         .radar-canvas-wrap { position: relative; max-width: 400px; margin: 0 auto; }
         .radar-canvas-wrap canvas { width: 100%; height: auto; }
         .radar-legend {
@@ -243,7 +263,7 @@
         .compare-bar-label { font-size: 0.78rem; color: var(--text-light); min-width: 80px; text-align: right; }
         .compare-bar-track { flex: 1; height: 28px; background: var(--bg); border-radius: 6px; overflow: hidden; position: relative; }
         .compare-bar-fill { height: 100%; border-radius: 6px; display: flex; align-items: center; padding-left: 10px; font-size: 0.72rem; font-weight: 700; color: #fff; transition: width 1s ease; }
-        .compare-bar-fill.ours { background: linear-gradient(90deg, var(--primary), var(--primary-light)); }
+        .compare-bar-fill.ours { background: linear-gradient(90deg, var(--rpt-primary, var(--primary)), var(--rpt-primary-light, var(--primary-light))); }
         .compare-bar-fill.competitor { background: #ccc; color: #666; }
         .compare-bar-value { font-size: 0.78rem; font-weight: 700; min-width: 40px; }
 
@@ -254,35 +274,35 @@
         /* 4. Keyword Table */
         .keyword-table { width: 100%; border-collapse: collapse; }
         .keyword-table th {
-            background: var(--bg-warm); padding: 12px 16px; text-align: left;
+            background: var(--rpt-bg-warm, var(--bg-warm)); padding: 12px 16px; text-align: left;
             font-size: 0.8rem; font-weight: 700; color: var(--text-light);
             border-bottom: 2px solid var(--border);
         }
         .keyword-table td {
             padding: 12px 16px; border-bottom: 1px solid var(--border); font-size: 0.88rem;
         }
-        .keyword-table tr:hover td { background: var(--bg-warm); }
+        .keyword-table tr:hover td { background: var(--rpt-bg-warm, var(--bg-warm)); }
         .kw-rank { font-weight: 800; color: var(--rpt-primary, var(--primary)); }
         .kw-exposure { font-weight: 700; font-family: var(--font-en); }
         .kw-bar { height: 6px; background: var(--bg); border-radius: 3px; margin-top: 6px; }
-        .kw-bar-fill { height: 100%; background: var(--primary); border-radius: 3px; transition: width 1s ease; }
+        .kw-bar-fill { height: 100%; background: var(--rpt-primary, var(--primary)); border-radius: 3px; transition: width 1s ease; }
 
         /* 5. Content Analysis */
         .content-metrics {
             display: grid; grid-template-columns: repeat(4, 1fr); gap: 14px; margin-bottom: 24px;
         }
         .cm-card {
-            background: var(--bg-warm); border-radius: var(--radius-sm);
+            background: var(--rpt-bg-warm, var(--bg-warm)); border-radius: var(--radius-sm);
             padding: 16px; text-align: center;
         }
         .cm-label { font-size: 0.75rem; color: var(--text-muted); margin-bottom: 4px; }
-        .cm-value { font-size: 1.4rem; font-weight: 800; color: var(--primary); font-family: var(--font-en); }
+        .cm-value { font-size: 1.4rem; font-weight: 800; color: var(--rpt-primary, var(--primary)); font-family: var(--font-en); }
         .content-bar-chart { display: flex; flex-direction: column; gap: 10px; }
         .content-bar-item { display: flex; align-items: center; gap: 10px; }
         .content-bar-label { font-size: 0.78rem; color: var(--text-light); min-width: 90px; text-align: right; }
         .content-bar-track { flex: 1; height: 22px; background: var(--bg); border-radius: 6px; overflow: hidden; }
         .content-bar-fill {
-            height: 100%; background: linear-gradient(90deg, var(--primary), var(--primary-light));
+            height: 100%; background: linear-gradient(90deg, var(--rpt-primary, var(--primary)), var(--rpt-primary-light, var(--primary-light)));
             border-radius: 6px; display: flex; align-items: center; justify-content: flex-end;
             padding-right: 8px; font-size: 0.7rem; color: #fff; font-weight: 600;
             transition: width 1s ease;
@@ -293,29 +313,29 @@
             width: 100%; border-collapse: collapse; font-size: 0.82rem;
         }
         .work-table th {
-            background: var(--bg-warm); padding: 12px 14px; text-align: left;
+            background: var(--rpt-bg-warm, var(--bg-warm)); padding: 12px 14px; text-align: left;
             font-weight: 600; color: var(--text-light); border-bottom: 2px solid var(--border);
             position: sticky; top: 0;
         }
         .work-table td { padding: 11px 14px; border-bottom: 1px solid var(--border); }
-        .work-table tr:hover td { background: var(--bg-warm); }
+        .work-table tr:hover td { background: var(--rpt-bg-warm, var(--bg-warm)); }
         .work-table .type-badge {
             display: inline-block; padding: 2px 10px; border-radius: 100px;
             font-size: 0.75rem; font-weight: 600; white-space: nowrap;
         }
-        .type-post { background: rgba(200,169,106,0.15); color: var(--primary-dark); }
-        .type-comment { background: rgba(139,111,78,0.12); color: #8B6F4E; }
-        .work-table a { color: var(--primary); text-decoration: underline; text-underline-offset: 2px; }
+        .type-post { background: rgba(59,130,246,0.12); color: var(--rpt-primary-dark, var(--primary-dark)); }
+        .type-comment { background: rgba(29,78,216,0.1); color: #1D4ED8; }
+        .work-table a { color: var(--rpt-primary, var(--primary)); text-decoration: underline; text-underline-offset: 2px; }
         .table-wrapper {
             max-height: 500px; overflow-y: auto;
             border: 1px solid var(--border); border-radius: var(--radius-sm);
         }
-        .work-stats-num { font-weight: 700; color: var(--primary); font-family: var(--font-en); }
+        .work-stats-num { font-weight: 700; color: var(--rpt-primary, var(--primary)); font-family: var(--font-en); }
 
         /* 7. AI Analysis */
         .ai-analysis-box {
-            background: linear-gradient(135deg, rgba(200,169,106,0.06), rgba(200,169,106,0.02));
-            border: 1px solid rgba(200,169,106,0.2);
+            background: linear-gradient(135deg, rgba(59,130,246,0.06), rgba(59,130,246,0.02));
+            border: 1px solid rgba(59,130,246,0.2);
             border-radius: var(--radius);
             padding: 28px;
         }
@@ -328,7 +348,7 @@
             line-height: 1.9; margin-bottom: 12px;
         }
         .ai-analysis-box p:last-child { margin-bottom: 0; }
-        .ai-highlight { color: var(--primary); font-weight: 600; }
+        .ai-highlight { color: var(--rpt-primary, var(--primary)); font-weight: 600; }
 
         /* Info pairs */
         .info-pairs {
@@ -337,7 +357,7 @@
         }
         .info-pair {
             display: flex; gap: 12px; align-items: center;
-            background: var(--bg-warm); padding: 12px 16px; border-radius: var(--radius-sm);
+            background: var(--rpt-bg-warm, var(--bg-warm)); padding: 12px 16px; border-radius: var(--radius-sm);
         }
         .info-pair .ip-label { font-size: 0.78rem; font-weight: 600; color: var(--text-muted); min-width: 70px; }
         .info-pair .ip-value { font-size: 0.88rem; font-weight: 600; }
@@ -417,7 +437,7 @@
 
                 <!-- Report Header Info -->
                 <div class="rpt-section">
-                    <div class="rpt-section-header" style="background: linear-gradient(135deg, var(--primary), var(--primary-dark)); border-bottom: none;">
+                    <div class="rpt-section-header" style="background: linear-gradient(135deg, var(--rpt-primary, var(--primary)), var(--rpt-primary-dark, var(--primary-dark))); border-bottom: none;">
                         <h3 style="color:#fff; flex:1;">카페활성화 마케팅 결과보고서</h3>
                         <span style="color:rgba(255,255,255,0.7); font-size:0.85rem;" id="rptCompanyName">PREMIUM</span>
                     </div>
@@ -499,7 +519,7 @@
                             </div>
                             <div class="radar-legend" id="radarLegend">
                                 <div class="radar-legend-item"><span class="radar-legend-dot" style="background:rgba(180,180,180,0.6);"></span> 마케팅 전</div>
-                                <div class="radar-legend-item"><span class="radar-legend-dot" style="background:rgba(200,169,106,0.8);"></span> 마케팅 후</div>
+                                <div class="radar-legend-item"><span class="radar-legend-dot" style="background:rgba(59,130,246,0.8);"></span> 마케팅 후</div>
                             </div>
                         </div>
 
@@ -510,7 +530,7 @@
                                 <div class="compare-bar-item">
                                     <span class="compare-bar-label">우리 브랜드</span>
                                     <div class="compare-bar-track"><div class="compare-bar-fill ours" id="compareOurs" style="width:0%">78</div></div>
-                                    <span class="compare-bar-value" style="color:var(--primary);">78</span>
+                                    <span class="compare-bar-value" style="color:var(--rpt-primary, var(--primary));">78</span>
                                 </div>
                                 <div class="compare-bar-item">
                                     <span class="compare-bar-label">경쟁 평균</span>
@@ -644,13 +664,8 @@
                                 <thead>
                                     <tr>
                                         <th style="width:45px;">순번</th>
-                                        <th style="width:65px;">날짜</th>
-                                        <th style="width:65px;">분류</th>
+                                        <th style="width:110px;">날짜</th>
                                         <th>URL</th>
-                                        <th style="width:60px;">조회수</th>
-                                        <th style="width:50px;">댓글</th>
-                                        <th style="width:65px; white-space:nowrap;">좋아요</th>
-                                        <th style="width:55px;">상태</th>
                                     </tr>
                                 </thead>
                                 <tbody id="reportTableBody"></tbody>
@@ -798,7 +813,7 @@
                                     구글시트 데이터 붙여넣기
                                 </button>
                                 <div id="sheetPasteArea" style="display:none;">
-                                    <textarea id="sheetPasteInput" rows="6" style="width:100%; padding:12px; border:1px solid var(--border); border-radius:var(--radius-sm); font-size:0.82rem; font-family:var(--font); background:var(--bg); margin-bottom:8px; box-sizing:border-box;" placeholder="구글시트에서 복사한 데이터를 여기에 붙여넣으세요.&#10;탭으로 구분된 열: 날짜, 분류, URL, 조회수, 댓글, 좋아요&#10;예: 2026-01-06&#9;게시글&#9;https://example.com&#9;1200&#9;15&#9;85"></textarea>
+                                    <textarea id="sheetPasteInput" rows="6" style="width:100%; padding:12px; border:1px solid var(--border); border-radius:var(--radius-sm); font-size:0.82rem; font-family:var(--font); background:var(--bg); margin-bottom:8px; box-sizing:border-box;" placeholder="구글시트에서 복사한 데이터를 여기에 붙여넣으세요.&#10;탭으로 구분된 열: 날짜, URL&#10;예: 2026-01-06&#9;https://example.com"></textarea>
                                     <button type="button" class="btn btn-primary" style="padding:8px 20px; font-size:0.82rem;" onclick="parseSheetData()">데이터 적용</button>
                                     <button type="button" class="btn-add-row" style="margin-top:0; margin-left:8px;" onclick="toggleSheetPaste()">취소</button>
                                 </div>
@@ -808,12 +823,8 @@
                                     <thead>
                                         <tr>
                                             <th style="width:45px;">순번</th>
-                                            <th style="width:95px;">날짜</th>
-                                            <th style="width:70px;">분류</th>
+                                            <th style="width:110px;">날짜</th>
                                             <th>URL</th>
-                                            <th style="width:60px;">조회수</th>
-                                            <th style="width:50px;">댓글</th>
-                                            <th style="width:65px; white-space:nowrap;">좋아요</th>
                                             <th style="width:35px;"></th>
                                         </tr>
                                     </thead>
@@ -901,6 +912,7 @@
                 drawRadarChart('both');
                 drawExposureChart();
                 animateCompare();
+                applySectionVisibility();
             } else {
                 alert('업체명 또는 비밀번호가 올바르지 않습니다.\n비밀번호는 업체명과 동일합니다.');
             }
@@ -952,7 +964,7 @@
                     i === 0 ? ctx.moveTo(x, y) : ctx.lineTo(x, y);
                 }
                 ctx.closePath();
-                ctx.strokeStyle = 'rgba(200,169,106,0.12)';
+                ctx.strokeStyle = 'rgba(59,130,246,0.12)';
                 ctx.lineWidth = 1;
                 ctx.stroke();
             }
@@ -963,7 +975,7 @@
                 ctx.beginPath();
                 ctx.moveTo(cx, cy);
                 ctx.lineTo(cx + R * Math.cos(angle), cy + R * Math.sin(angle));
-                ctx.strokeStyle = 'rgba(200,169,106,0.15)';
+                ctx.strokeStyle = 'rgba(59,130,246,0.15)';
                 ctx.lineWidth = 1;
                 ctx.stroke();
             }
@@ -1024,7 +1036,7 @@
                 drawPoly(dataWithout, 'rgba(180,180,180,0.15)', 'rgba(150,150,150,0.6)');
             }
             if (mode === 'o' || mode === 'both') {
-                drawPoly(dataWith, 'rgba(200,169,106,0.18)', 'rgba(200,169,106,0.85)');
+                drawPoly(dataWith, 'rgba(59,130,246,0.18)', 'rgba(59,130,246,0.85)');
             }
         }
 
@@ -1045,7 +1057,7 @@
             ctx.clearRect(0, 0, W, H);
 
             // Grid lines
-            ctx.strokeStyle = 'rgba(200,169,106,0.1)';
+            ctx.strokeStyle = 'rgba(59,130,246,0.1)';
             ctx.lineWidth = 1;
             for (let i = 0; i <= 4; i++) {
                 const y = pad.top + cH * (1 - i / 4);
@@ -1075,15 +1087,15 @@
                 const barH = cH * exposureData[i] / maxVal;
                 const y = pad.top + cH - barH;
                 const grad = ctx.createLinearGradient(x, y, x, y + barH);
-                grad.addColorStop(0, 'rgba(200,169,106,0.7)');
-                grad.addColorStop(1, 'rgba(200,169,106,0.2)');
+                grad.addColorStop(0, 'rgba(59,130,246,0.7)');
+                grad.addColorStop(1, 'rgba(59,130,246,0.2)');
                 ctx.fillStyle = grad;
                 ctx.beginPath();
                 ctx.roundRect(x, y, barW, barH, [4, 4, 0, 0]);
                 ctx.fill();
                 // Value on bar
                 ctx.font = '700 11px Poppins';
-                ctx.fillStyle = '#C8A96A';
+                ctx.fillStyle = '#3B82F6';
                 ctx.textAlign = 'center';
                 ctx.fillText(exposureData[i].toLocaleString(), x + barW / 2, y - 8);
             });
@@ -1114,7 +1126,7 @@
             // Legend
             ctx.font = '600 11px "Noto Sans KR"';
             // Bar legend
-            ctx.fillStyle = 'rgba(200,169,106,0.6)';
+            ctx.fillStyle = 'rgba(59,130,246,0.6)';
             ctx.fillRect(W - 200, 10, 14, 14);
             ctx.fillStyle = '#555';
             ctx.textAlign = 'left';
@@ -1149,21 +1161,11 @@
                           '1/8','1/8','1/8','1/8','1/8','1/8'];
 
             for (let i = 0; i < 40; i++) {
-                const type = i % 3 === 2 ? '댓글' : '게시글';
-                const typeClass = type === '게시글' ? 'type-post' : 'type-comment';
                 const urlNum = 6811 + i;
-                const views = type === '게시글' ? Math.floor(2000 + Math.random() * 6000) : '-';
-                const comments = type === '게시글' ? Math.floor(5 + Math.random() * 50) : '-';
-                const likes = type === '게시글' ? Math.floor(20 + Math.random() * 300) : '-';
                 data.push(`<tr>
                     <td>${num++}</td>
                     <td>${dates[i]}</td>
-                    <td><span class="type-badge ${typeClass}">${type}</span></td>
                     <td><a href="#" target="_blank">https://cafe.naver.com/mia2897/${urlNum}</a></td>
-                    <td class="work-stats-num">${typeof views === 'number' ? views.toLocaleString() : views}</td>
-                    <td class="work-stats-num">${typeof comments === 'number' ? comments : comments}</td>
-                    <td class="work-stats-num">${typeof likes === 'number' ? likes : likes}</td>
-                    <td><span class="type-badge type-post">완료</span></td>
                 </tr>`);
             }
             tbody.innerHTML = data.join('');
@@ -1180,11 +1182,7 @@
             tr.innerHTML = `
                 <td>${createRowCount}</td>
                 <td><input type="date" name="rowDate"></td>
-                <td><select name="rowType"><option value="게시글">게시글</option><option value="댓글">댓글</option></select></td>
                 <td><input type="url" name="rowUrl" placeholder="URL 입력"></td>
-                <td><input type="number" name="rowViews" placeholder="조회" min="0"></td>
-                <td><input type="number" name="rowComments" placeholder="댓글" min="0"></td>
-                <td><input type="number" name="rowLikes" placeholder="좋아요" min="0"></td>
                 <td><button type="button" class="btn-remove-row" onclick="removeCreateRow('createRow-${createRowCount}')">&times;</button></td>
             `;
             tbody.appendChild(tr);
@@ -1222,39 +1220,177 @@
             alert('보고서가 저장되었습니다. (데모 모드 - 실제 저장 기능은 백엔드 연동이 필요합니다)');
         });
 
+        // ===== Platform Custom Input Toggle =====
+        document.getElementById('createPlatform').addEventListener('change', function() {
+            const customInput = document.getElementById('createPlatformCustom');
+            if (this.value === '직접입력') {
+                customInput.style.display = '';
+                customInput.required = true;
+                customInput.focus();
+            } else {
+                customInput.style.display = 'none';
+                customInput.required = false;
+                customInput.value = '';
+            }
+            updateKPIFields();
+        });
+
+        // ===== Dynamic KPI Fields per Platform =====
+        const platformKPIConfig = {
+            '네이버 카페': [
+                { id: 'createPostCount', label: '총 게시글', icon: '&#128221;', unit: '건', placeholder: '게시글 수' },
+                { id: 'createCommentCount', label: '총 댓글', icon: '&#128172;', unit: '개', placeholder: '댓글 수' },
+                { id: 'createExposure', label: '예상 노출수', icon: '&#128065;', unit: '+', placeholder: '예상 노출' },
+                { id: 'createVisits', label: '예상 방문수', icon: '&#128100;', unit: '+', placeholder: '예상 방문' },
+                { id: 'createEngagement', label: '콘텐츠 참여율', icon: '&#128200;', unit: '%', placeholder: '참여율' },
+                { id: 'createMemberGrowth', label: '회원 증가수', icon: '&#128101;', unit: '명', placeholder: '회원 증가' }
+            ],
+            '네이버 블로그': [
+                { id: 'createPostCount', label: '총 게시글', icon: '&#128221;', unit: '건', placeholder: '게시글 수' },
+                { id: 'createExposure', label: '예상 노출수', icon: '&#128065;', unit: '+', placeholder: '예상 노출' },
+                { id: 'createSearchInflow', label: '검색 유입수', icon: '&#128269;', unit: '회', placeholder: '검색 유입' },
+                { id: 'createKeywordRank', label: '키워드 순위', icon: '&#127942;', unit: '위', placeholder: '평균 순위' },
+                { id: 'createEngagement', label: '콘텐츠 참여율', icon: '&#128200;', unit: '%', placeholder: '참여율' },
+                { id: 'createAvgViews', label: '평균 조회수', icon: '&#128293;', unit: '회', placeholder: '평균 조회' }
+            ],
+            '유튜브': [
+                { id: 'createVideoCount', label: '총 영상수', icon: '&#127909;', unit: '건', placeholder: '영상 수' },
+                { id: 'createExposure', label: '예상 조회수', icon: '&#128065;', unit: '+', placeholder: '예상 조회' },
+                { id: 'createSubscriberGrowth', label: '구독자 증가', icon: '&#128101;', unit: '명', placeholder: '구독자 증가' },
+                { id: 'createWatchTime', label: '시청시간(분)', icon: '&#9202;', unit: '분', placeholder: '시청시간' },
+                { id: 'createAvgLikes', label: '좋아요수', icon: '&#128077;', unit: '개', placeholder: '좋아요' },
+                { id: 'createEngagement', label: '참여율', icon: '&#128200;', unit: '%', placeholder: '참여율' }
+            ],
+            '인스타그램': [
+                { id: 'createPostCount', label: '총 게시물수', icon: '&#128247;', unit: '건', placeholder: '게시물 수' },
+                { id: 'createFollowerGrowth', label: '팔로워 증가', icon: '&#128101;', unit: '명', placeholder: '팔로워 증가' },
+                { id: 'createAvgLikes', label: '좋아요/저장', icon: '&#128077;', unit: '개', placeholder: '좋아요/저장' },
+                { id: 'createReelsViews', label: '릴스 조회수', icon: '&#127909;', unit: '회', placeholder: '릴스 조회' },
+                { id: 'createEngagement', label: '참여율', icon: '&#128200;', unit: '%', placeholder: '참여율' },
+                { id: 'createReach', label: '도달수', icon: '&#128065;', unit: '명', placeholder: '도달수' }
+            ],
+            '언론사': [
+                { id: 'createArticleCount', label: '총 기사수', icon: '&#128240;', unit: '건', placeholder: '기사 수' },
+                { id: 'createExposure', label: '예상 노출수', icon: '&#128065;', unit: '+', placeholder: '예상 노출' },
+                { id: 'createPortalSearch', label: '포털 검색 등록', icon: '&#128269;', unit: '건', placeholder: '검색 등록' },
+                { id: 'createBrandMention', label: '브랜드 언급수', icon: '&#128172;', unit: '회', placeholder: '브랜드 언급' }
+            ]
+        };
+
+        function updateKPIFields() {
+            const platform = document.getElementById('createPlatform').value;
+            const container = document.getElementById('kpiFieldsContainer');
+            const config = platformKPIConfig[platform] || platformKPIConfig['네이버 카페'];
+
+            let html = '<div class="form-row-3">';
+            config.forEach((field, idx) => {
+                html += `<div class="form-group">
+                    <label>${field.label} (${field.unit})</label>
+                    <input type="number" id="${field.id}" placeholder="${field.placeholder}" min="0" step="any">
+                </div>`;
+                if ((idx + 1) % 3 === 0 && idx < config.length - 1) {
+                    html += '</div><div class="form-row-3">';
+                }
+            });
+            html += '</div>';
+            container.innerHTML = html;
+        }
+
+        // Initialize KPI fields on page load
+        updateKPIFields();
+
+        // ===== Section Visibility Toggles =====
+        // Store toggle state for report view
+        const sectionToggles = {
+            keyword: true,
+            content: true,
+            worklog: true
+        };
+
+        document.getElementById('toggleKeywordSection').addEventListener('change', function() {
+            sectionToggles.keyword = this.checked;
+        });
+        document.getElementById('toggleContentSection').addEventListener('change', function() {
+            sectionToggles.content = this.checked;
+        });
+        document.getElementById('toggleWorkLogSection').addEventListener('change', function() {
+            sectionToggles.worklog = this.checked;
+        });
+
+        // Apply section visibility when viewing report
+        function applySectionVisibility() {
+            const sections = document.querySelectorAll('#reportView .rpt-section');
+            // Sections: header(0), KPI(1), radar(2), exposure(3), keyword(4), content(5), worklog(6), AI(7)
+            if (sections[4]) sections[4].style.display = sectionToggles.keyword ? '' : 'none';  // 키워드 분석
+            if (sections[5]) sections[5].style.display = sectionToggles.content ? '' : 'none';  // 콘텐츠 반응 분석
+            if (sections[6]) sections[6].style.display = sectionToggles.worklog ? '' : 'none';  // 작업 진행 로그
+        }
+
+        // ===== Google Sheets Paste Support =====
+        function toggleSheetPaste() {
+            const area = document.getElementById('sheetPasteArea');
+            area.style.display = area.style.display === 'none' ? '' : 'none';
+        }
+
+        function parseSheetData() {
+            const input = document.getElementById('sheetPasteInput').value.trim();
+            if (!input) {
+                alert('붙여넣을 데이터가 없습니다.');
+                return;
+            }
+
+            const lines = input.split('\n').filter(line => line.trim());
+            if (lines.length === 0) {
+                alert('유효한 데이터가 없습니다.');
+                return;
+            }
+
+            // Clear existing rows
+            document.getElementById('createTableBody').innerHTML = '';
+            createRowCount = 0;
+
+            lines.forEach(line => {
+                const cols = line.split('\t');
+                if (cols.length < 1 || !cols[0].trim()) return;
+
+                addCreateRow();
+                const row = document.getElementById('createRow-' + createRowCount);
+                if (!row) return;
+
+                const dateInput = row.querySelector('input[name="rowDate"]');
+                const urlInput = row.querySelector('input[name="rowUrl"]');
+
+                // Expected columns: 날짜, URL
+                if (cols[0] && dateInput) dateInput.value = cols[0].trim();
+                if (cols[1] && urlInput) urlInput.value = cols[1].trim();
+            });
+
+            // Hide paste area after parsing
+            document.getElementById('sheetPasteArea').style.display = 'none';
+            document.getElementById('sheetPasteInput').value = '';
+            alert(`${lines.length}개의 작업 내역이 입력되었습니다.`);
+        }
+
         // ===== Auto Analyze from URLs =====
         function autoAnalyze() {
             const rows = document.getElementById('createTableBody').querySelectorAll('tr');
             const urls = [];
-            let postCount = 0, commentCount = 0;
-            let totalViews = 0, totalComments = 0, totalLikes = 0;
 
             rows.forEach(row => {
-                const type = row.querySelector('select[name="rowType"]');
                 const url = row.querySelector('input[name="rowUrl"]');
-                const views = row.querySelector('input[name="rowViews"]');
-                const comments = row.querySelector('input[name="rowComments"]');
-                const likes = row.querySelector('input[name="rowLikes"]');
-
-                if (type && type.value === '게시글') postCount++;
-                if (type && type.value === '댓글') commentCount++;
                 if (url && url.value) urls.push(url.value);
-                if (views && views.value) totalViews += parseInt(views.value) || 0;
-                if (comments && comments.value) totalComments += parseInt(comments.value) || 0;
-                if (likes && likes.value) totalLikes += parseInt(likes.value) || 0;
             });
 
             if (urls.length === 0) {
-                alert('작업 내역에 URL을 먼저 입력해주세요.\n입력된 URL과 조회수/댓글/좋아요 데이터를 기반으로 자동 분석합니다.');
+                alert('작업 내역에 URL을 먼저 입력해주세요.');
                 return;
             }
 
-            // If no view data, generate realistic estimates
-            if (totalViews === 0) {
-                totalViews = urls.length * (2000 + Math.floor(Math.random() * 4000));
-                totalComments = Math.floor(urls.length * (5 + Math.random() * 30));
-                totalLikes = Math.floor(urls.length * (20 + Math.random() * 200));
-            }
+            const postCount = urls.length;
+            // Generate realistic estimates based on URL count
+            const totalViews = urls.length * (2000 + Math.floor(Math.random() * 4000));
+            const totalComments = Math.floor(urls.length * (5 + Math.random() * 30));
+            const totalLikes = Math.floor(urls.length * (20 + Math.random() * 200));
 
             const avgViews = Math.round(totalViews / Math.max(postCount, 1));
             const avgLikes = Math.round(totalLikes / Math.max(postCount, 1));
@@ -1262,20 +1398,37 @@
             const visits = Math.round(exposure * (0.012 + Math.random() * 0.02));
             const engagement = (((totalComments + totalLikes) / Math.max(totalViews, 1)) * 100).toFixed(1);
 
-            // Auto-fill KPI
-            document.getElementById('createPostCount').value = postCount || urls.length;
-            document.getElementById('createCommentCount').value = commentCount || totalComments;
-            document.getElementById('createExposure').value = exposure;
-            document.getElementById('createVisits').value = visits;
-            document.getElementById('createEngagement').value = engagement > 0 ? engagement : (3 + Math.random() * 3).toFixed(1);
-            document.getElementById('createAvgViews').value = avgViews || Math.floor(2000 + Math.random() * 4000);
-            document.getElementById('createAvgLikes').value = avgLikes || Math.floor(50 + Math.random() * 200);
-
-            // Extract keywords from URLs
+            // Auto-fill KPI fields dynamically based on what exists
             const platform = document.getElementById('createPlatform').value;
             const service = document.getElementById('createServiceType').value;
             const company = document.getElementById('createCafeName').value || '브랜드';
 
+            const fillIfExists = (id, value) => {
+                const el = document.getElementById(id);
+                if (el) el.value = value;
+            };
+
+            fillIfExists('createPostCount', postCount || urls.length);
+            fillIfExists('createCommentCount', commentCount || totalComments);
+            fillIfExists('createExposure', exposure);
+            fillIfExists('createVisits', visits);
+            fillIfExists('createEngagement', engagement > 0 ? engagement : (3 + Math.random() * 3).toFixed(1));
+            fillIfExists('createAvgViews', avgViews || Math.floor(2000 + Math.random() * 4000));
+            fillIfExists('createAvgLikes', avgLikes || Math.floor(50 + Math.random() * 200));
+            fillIfExists('createMemberGrowth', Math.floor(50 + Math.random() * 200));
+            fillIfExists('createSearchInflow', Math.floor(500 + Math.random() * 3000));
+            fillIfExists('createKeywordRank', Math.floor(2 + Math.random() * 10));
+            fillIfExists('createVideoCount', postCount || urls.length);
+            fillIfExists('createSubscriberGrowth', Math.floor(30 + Math.random() * 300));
+            fillIfExists('createWatchTime', Math.floor(500 + Math.random() * 5000));
+            fillIfExists('createFollowerGrowth', Math.floor(50 + Math.random() * 500));
+            fillIfExists('createReelsViews', Math.floor(5000 + Math.random() * 50000));
+            fillIfExists('createReach', Math.floor(3000 + Math.random() * 30000));
+            fillIfExists('createArticleCount', postCount || urls.length);
+            fillIfExists('createPortalSearch', Math.floor(postCount * 0.8) || urls.length);
+            fillIfExists('createBrandMention', Math.floor(10 + Math.random() * 50));
+
+            // Extract keywords from URLs
             const keywordSets = {
                 '네이버 카페': [company + '카페', company + '맛집', company + '추천'],
                 '네이버 블로그': [company + '후기', company + '리뷰', company + '추천'],
