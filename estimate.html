@@ -9,6 +9,7 @@
     <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;600;700;800;900&family=Poppins:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="styles.css">
     <link rel="stylesheet" href="estimate.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
 </head>
 <body>
     <!-- Navigation -->
@@ -42,7 +43,7 @@
                 <!-- Form Section -->
                 <div class="estimate-form-section">
                     <form id="estimateForm" class="estimate-form">
-                        <!-- 기본 정보 -->
+                        <!-- Step 1: 기본 정보 -->
                         <div class="form-section">
                             <h3 class="form-section-title">
                                 <span class="form-step">1</span>기본 정보
@@ -85,125 +86,29 @@
                             </div>
                         </div>
 
-                        <!-- 서비스 선택 -->
+                        <!-- Step 2: 서비스 선택 (규모별 가격 + 작업사항) -->
                         <div class="form-section">
                             <h3 class="form-section-title">
-                                <span class="form-step">2</span>서비스 선택 & 견적
+                                <span class="form-step">2</span>서비스 & 규모 선택
                             </h3>
-                            <div class="service-select-grid">
-                                <label class="service-checkbox">
-                                    <input type="checkbox" name="service" value="카페활성화" data-price="500000">
-                                    <div class="checkbox-card">
-                                        <div class="checkbox-mark"></div>
-                                        <span class="checkbox-label">카페 활성화</span>
-                                        <span class="checkbox-price">500,000원~</span>
-                                    </div>
-                                </label>
-                                <label class="service-checkbox">
-                                    <input type="checkbox" name="service" value="블로그체험단" data-price="800000">
-                                    <div class="checkbox-card">
-                                        <div class="checkbox-mark"></div>
-                                        <span class="checkbox-label">블로그 체험단</span>
-                                        <span class="checkbox-price">800,000원~</span>
-                                    </div>
-                                </label>
-                                <label class="service-checkbox">
-                                    <input type="checkbox" name="service" value="블로그대행" data-price="600000">
-                                    <div class="checkbox-card">
-                                        <div class="checkbox-mark"></div>
-                                        <span class="checkbox-label">블로그 대행</span>
-                                        <span class="checkbox-price">600,000원~</span>
-                                    </div>
-                                </label>
-                                <label class="service-checkbox">
-                                    <input type="checkbox" name="service" value="유튜브대행" data-price="1500000">
-                                    <div class="checkbox-card">
-                                        <div class="checkbox-mark"></div>
-                                        <span class="checkbox-label">유튜브 대행 & 활성화</span>
-                                        <span class="checkbox-price">1,500,000원~</span>
-                                    </div>
-                                </label>
-                                <label class="service-checkbox">
-                                    <input type="checkbox" name="service" value="인스타대행" data-price="700000">
-                                    <div class="checkbox-card">
-                                        <div class="checkbox-mark"></div>
-                                        <span class="checkbox-label">인스타 대행 & 활성화</span>
-                                        <span class="checkbox-price">700,000원~</span>
-                                    </div>
-                                </label>
-                                <label class="service-checkbox">
-                                    <input type="checkbox" name="service" value="롱폼제작" data-price="2000000">
-                                    <div class="checkbox-card">
-                                        <div class="checkbox-mark"></div>
-                                        <span class="checkbox-label">롱폼 영상 제작</span>
-                                        <span class="checkbox-price">2,000,000원~</span>
-                                    </div>
-                                </label>
-                                <label class="service-checkbox">
-                                    <input type="checkbox" name="service" value="숏폼제작" data-price="500000">
-                                    <div class="checkbox-card">
-                                        <div class="checkbox-mark"></div>
-                                        <span class="checkbox-label">숏폼 영상 제작</span>
-                                        <span class="checkbox-price">500,000원~</span>
-                                    </div>
-                                </label>
-                                <label class="service-checkbox">
-                                    <input type="checkbox" name="service" value="사이트제작" data-price="3000000">
-                                    <div class="checkbox-card">
-                                        <div class="checkbox-mark"></div>
-                                        <span class="checkbox-label">사이트 제작</span>
-                                        <span class="checkbox-price">3,000,000원~</span>
-                                    </div>
-                                </label>
-                                <label class="service-checkbox">
-                                    <input type="checkbox" name="service" value="언론홍보" data-price="1000000">
-                                    <div class="checkbox-card">
-                                        <div class="checkbox-mark"></div>
-                                        <span class="checkbox-label">언론 홍보</span>
-                                        <span class="checkbox-price">1,000,000원~</span>
-                                    </div>
-                                </label>
+                            <div class="service-tier-list" id="serviceTierList">
+                                <!-- JS에서 렌더링 -->
                             </div>
 
                             <div class="form-group full-width" style="margin-top: 24px;">
                                 <label for="estimateAmount">총 견적 금액</label>
                                 <div class="amount-input-wrapper">
-                                    <input type="text" id="estimateAmount" placeholder="0" class="amount-input">
+                                    <input type="text" id="estimateAmount" placeholder="0" class="amount-input" readonly>
                                     <span class="amount-suffix">원</span>
                                 </div>
-                                <p class="form-hint">선택한 서비스를 기반으로 자동 계산됩니다. 직접 수정도 가능합니다.</p>
+                                <p class="form-hint">선택한 서비스와 규모를 기반으로 자동 계산됩니다.</p>
                             </div>
                         </div>
 
-                        <!-- 작업 내용 -->
+                        <!-- Step 3: AI 예상 결과 분석 -->
                         <div class="form-section">
                             <h3 class="form-section-title">
-                                <span class="form-step">3</span>상세 내용
-                            </h3>
-                            <div class="form-group full-width">
-                                <label for="workDetail">작업 내용 상세</label>
-                                <textarea id="workDetail" rows="5" placeholder="마케팅 목표, 원하는 작업 범위, 기간 등을 상세히 적어주세요"></textarea>
-                            </div>
-                            <div class="form-group full-width">
-                                <label for="industryImage">견적문의 업종 관련 이미지</label>
-                                <div class="file-upload-area" id="fileUploadArea">
-                                    <svg viewBox="0 0 48 48" fill="none" width="40" height="40">
-                                        <rect x="6" y="10" width="36" height="28" rx="4" stroke="currentColor" stroke-width="2"/>
-                                        <circle cx="18" cy="22" r="4" stroke="currentColor" stroke-width="2"/>
-                                        <path d="M6 34l10-10 8 8 6-6 12 12" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-                                    </svg>
-                                    <p>클릭하여 이미지를 업로드하거나<br>여기에 드래그 앤 드롭 하세요</p>
-                                    <span>JPG, PNG, PDF (최대 10MB)</span>
-                                    <input type="file" id="industryImage" accept="image/*,.pdf" multiple hidden>
-                                </div>
-                                <div id="filePreview" class="file-preview"></div>
-                            </div>
-                        </div>
-
-                        <!-- AI 예상 결과 분석 -->
-                        <div class="form-section">
-                            <h3 class="form-section-title">
-                                <span class="form-step">4</span>AI 예상 결과 분석
+                                <span class="form-step">3</span>AI 예상 결과 분석
                             </h3>
                             <div class="expected-results" id="expectedResults">
                                 <div class="result-placeholder">
@@ -228,7 +133,7 @@
                                 <div class="preview-logo">
                                     <span class="logo-the">THE</span> <span class="logo-best">BEST</span>
                                 </div>
-                                <span class="preview-doc-title">견 적 서</span>
+                                <span class="preview-doc-title">AI 맞춤견적서</span>
                             </div>
                             <div class="preview-divider"></div>
                             <div class="preview-info">
@@ -254,12 +159,16 @@
                                 <p class="preview-empty">선택된 서비스가 없습니다</p>
                             </div>
                             <div class="preview-divider"></div>
+                            <div class="preview-work-items" id="prevWorkItems"></div>
                             <div class="preview-footer">
                                 <p>더베스트마케팅</p>
                                 <p class="small">THE BEST Marketing</p>
                             </div>
                         </div>
-                        <button class="btn btn-primary" style="width:100%; margin-top:16px;" onclick="printEstimate()">견적서 인쇄 / PDF 저장</button>
+                        <div class="pdf-buttons">
+                            <button type="button" class="btn btn-primary" style="flex:1;" onclick="downloadPDF()">PDF 다운로드</button>
+                            <button type="button" class="btn btn-outline" style="flex:1;" onclick="window.print()">인쇄하기</button>
+                        </div>
                     </div>
                 </div>
             </div>
