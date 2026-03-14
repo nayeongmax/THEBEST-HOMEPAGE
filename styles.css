@@ -307,41 +307,41 @@ img { max-width: 100%; display: block; }
 /* Hero Stats */
 .hero-stats {
     display: flex;
-    align-items: center;
+    align-items: stretch;
     justify-content: center;
-    gap: 40px;
+    gap: 16px;
 }
 
-.stat-item {
+.stat-card {
     text-align: center;
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-sm);
+    padding: 24px 36px;
+    box-shadow: var(--shadow);
 }
 
 .stat-number {
-    display: block;
+    display: inline;
     font-family: var(--font-en);
-    font-size: 2.2rem;
-    font-weight: 700;
+    font-size: 2.5rem;
+    font-weight: 800;
     color: var(--primary);
 }
 
 .stat-plus {
     font-family: var(--font-en);
-    font-size: 1.5rem;
-    font-weight: 700;
+    font-size: 1.6rem;
+    font-weight: 800;
     color: var(--primary);
 }
 
 .stat-label {
     display: block;
-    font-size: 0.8rem;
-    color: var(--text-muted);
-    margin-top: 4px;
-}
-
-.stat-divider {
-    width: 1px;
-    height: 40px;
-    background: var(--border);
+    font-size: 0.82rem;
+    font-weight: 600;
+    color: var(--text-light);
+    margin-top: 6px;
 }
 
 /* Hero scroll indicator */
@@ -384,14 +384,17 @@ img { max-width: 100%; display: block; }
 
 .marquee-track {
     display: flex;
+    width: max-content;
     overflow: hidden;
 }
 
 .marquee-content {
     display: flex;
     gap: 24px;
-    animation: marquee 25s linear infinite;
+    padding-right: 24px;
+    animation: marquee 20s linear infinite;
     white-space: nowrap;
+    flex-shrink: 0;
 }
 
 .marquee-content span {
@@ -406,7 +409,7 @@ img { max-width: 100%; display: block; }
 
 @keyframes marquee {
     0% { transform: translateX(0); }
-    100% { transform: translateX(-50%); }
+    100% { transform: translateX(-100%); }
 }
 
 /* ===== Section Headers ===== */
@@ -745,32 +748,6 @@ img { max-width: 100%; display: block; }
     margin-bottom: 20px;
 }
 
-/* ===== Hero Proof Items ===== */
-.hero-proof {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 10px;
-    margin-bottom: 36px;
-}
-
-.proof-item {
-    display: flex;
-    align-items: center;
-    gap: 8px;
-    font-size: 0.95rem;
-    color: var(--text-light);
-}
-
-.proof-item svg {
-    color: var(--primary);
-    flex-shrink: 0;
-}
-
-.proof-item strong {
-    color: var(--text);
-}
-
 /* ===== Icon Cards (Services) ===== */
 .icon-cards-grid {
     display: grid;
@@ -781,8 +758,8 @@ img { max-width: 100%; display: block; }
 .icon-card {
     background: var(--bg-card);
     border: 1px solid var(--border);
-    border-radius: var(--radius);
-    padding: 32px 24px;
+    border-radius: var(--radius-sm);
+    padding: 20px 16px;
     text-align: center;
     transition: var(--transition);
     position: relative;
@@ -812,32 +789,34 @@ img { max-width: 100%; display: block; }
 }
 
 .icon-card-icon {
-    width: 56px;
-    height: 56px;
+    width: 48px;
+    height: 48px;
     background: var(--bg-warm);
-    border-radius: 14px;
+    border-radius: 12px;
     display: flex;
     align-items: center;
     justify-content: center;
-    margin: 0 auto 16px;
+    margin: 0 auto 12px;
     color: var(--primary);
+    overflow: hidden;
 }
 
 .icon-card-icon svg {
-    width: 28px;
-    height: 28px;
+    width: 24px;
+    height: 24px;
+    flex-shrink: 0;
 }
 
 .icon-card h3 {
-    font-size: 1.05rem;
+    font-size: 0.92rem;
     font-weight: 700;
-    margin-bottom: 8px;
+    margin-bottom: 4px;
 }
 
 .icon-card-arrow {
-    font-size: 0.82rem;
+    font-size: 0.78rem;
     color: var(--text-muted);
-    margin-bottom: 12px;
+    margin-bottom: 8px;
 }
 
 .icon-card-arrow::before {
@@ -1593,7 +1572,12 @@ img { max-width: 100%; display: block; }
     }
 
     .hero-stats {
-        gap: 20px;
+        gap: 10px;
+        flex-wrap: wrap;
+    }
+
+    .stat-card {
+        padding: 16px 20px;
     }
 
     .stat-number {
