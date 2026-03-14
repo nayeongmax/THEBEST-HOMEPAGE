@@ -426,7 +426,7 @@
                         <button type="submit" class="btn btn-primary" style="width:100%;">보고서 확인하기</button>
                     </form>
                     <p style="margin-top:20px; margin-bottom:0; font-size:0.8rem; color:var(--text-muted);">
-                        * 비밀번호는 업체명과 동일합니다<br>
+                        * 전달받은 업체명과 비밀번호를 입력하세요<br>
                         데모 보기: 업체명 <strong>PREMIUM</strong> / 비밀번호 <strong>PREMIUM</strong>
                     </p>
                 </div>
@@ -911,9 +911,9 @@
             e.preventDefault();
             const company = document.getElementById('accessCompany').value.trim();
             const password = document.getElementById('accessPassword').value.trim();
-            // Demo: check stored password or fallback to demo password
+            // Check stored password or fallback to demo access
             const storedPw = localStorage.getItem('rpt_pw_' + company);
-            const isValid = storedPw ? (password === storedPw) : (company === 'thebest' && password === 'thebest2026');
+            const isValid = storedPw ? (password === storedPw) : (company === password);
             if (company && isValid) {
                 document.getElementById('accessSection').style.display = 'none';
                 document.getElementById('reportView').classList.add('active');
@@ -925,7 +925,7 @@
                 animateCompare();
                 applySectionVisibility();
             } else {
-                alert('업체명 또는 비밀번호가 올바르지 않습니다.\n비밀번호는 업체명과 동일합니다.');
+                alert('업체명 또는 비밀번호가 올바르지 않습니다.\n전달받은 비밀번호를 확인해주세요.');
             }
         });
 
@@ -1274,7 +1274,12 @@
 
         document.getElementById('createForm').addEventListener('submit', function(e) {
             e.preventDefault();
-            alert('보고서가 저장되었습니다. (데모 모드 - 실제 저장 기능은 백엔드 연동이 필요합니다)');
+            const companyName = document.getElementById('createCafeName').value.trim();
+            const pw = document.getElementById('createPassword').value.trim();
+            if (companyName && pw) {
+                localStorage.setItem('rpt_pw_' + companyName, pw);
+            }
+            alert('보고서가 저장되었습니다.\n\n조회 정보:\n업체명: ' + companyName + '\n비밀번호: ' + pw + '\n\n(데모 모드 - 실제 저장 기능은 백엔드 연동이 필요합니다)');
         });
 
         // ===== Platform Custom Input Toggle =====
