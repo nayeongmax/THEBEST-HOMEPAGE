@@ -167,29 +167,33 @@
                 <p class="section-desc animate-on-scroll">서비스와 수량을 선택하면 예상 효과를 바로 확인할 수 있습니다</p>
             </div>
             <div class="calc-card animate-on-scroll">
-                <div class="calc-left">
-                    <div class="calc-label">마케팅 서비스 선택</div>
-                    <select class="calc-select" id="expServiceSelect">
-                        <option value="cafe">네이버 카페활성화</option>
-                        <option value="blogManage">블로그 대행</option>
-                        <option value="blogReview" selected>블로그 체험단</option>
-                        <option value="youtube">유튜브 대행 및 활성화</option>
-                        <option value="insta">인스타그램 대행 및 활성화</option>
-                        <option value="platform">각종플랫폼 활성화</option>
-                        <option value="shortform">숏폼 제작</option>
-                        <option value="longform">롱폼 제작</option>
-                        <option value="press">언론사 홍보</option>
-                        <option value="site">사이트 제작</option>
-                    </select>
-                    <div class="calc-label">수량 / 건수</div>
-                    <div class="calc-qty-group" id="expQty">
-                        <button class="calc-qty active" data-qty="10">10건</button>
-                        <button class="calc-qty" data-qty="30">30건</button>
-                        <button class="calc-qty" data-qty="50">50건</button>
-                        <button class="calc-qty" data-qty="100">100건</button>
+                <div class="calc-inputs-row">
+                    <div class="calc-input-group">
+                        <div class="calc-label">마케팅 서비스 선택</div>
+                        <select class="calc-select" id="expServiceSelect">
+                            <option value="cafe">네이버 카페활성화</option>
+                            <option value="blogManage">블로그 대행</option>
+                            <option value="blogReview" selected>블로그 체험단</option>
+                            <option value="youtube">유튜브 대행 및 활성화</option>
+                            <option value="insta">인스타그램 대행 및 활성화</option>
+                            <option value="platform">각종플랫폼 활성화</option>
+                            <option value="shortform">숏폼 제작</option>
+                            <option value="longform">롱폼 제작</option>
+                            <option value="press">언론사 홍보</option>
+                            <option value="site">사이트 제작</option>
+                        </select>
+                    </div>
+                    <div class="calc-input-group">
+                        <div class="calc-label">수량 / 건수</div>
+                        <div class="calc-qty-group" id="expQty">
+                            <button class="calc-qty active" data-qty="10">10건</button>
+                            <button class="calc-qty" data-qty="30">30건</button>
+                            <button class="calc-qty" data-qty="50">50건</button>
+                            <button class="calc-qty" data-qty="100">100건</button>
+                        </div>
                     </div>
                 </div>
-                <div class="calc-right" id="expResult">
+                <div class="calc-results-grid" id="expResult">
                     <div class="calc-result-item"><span class="calc-result-label">예상 월 노출수</span><span class="calc-result-value" id="expViews">8,000 ~ 30,000</span></div>
                     <div class="calc-result-item"><span class="calc-result-label">예상 유입 클릭</span><span class="calc-result-value" id="expClicks">800 ~ 3,000</span></div>
                     <div class="calc-result-item"><span class="calc-result-label">예상 콘텐츠 생성</span><span class="calc-result-value" id="expContent">30개 리뷰 콘텐츠</span></div>
@@ -248,7 +252,7 @@
                 <p class="section-desc animate-on-scroll">현재 매출과 마케팅 비용을 입력하면<br>예상 매출과 수익을 바로 확인할 수 있습니다</p>
             </div>
             <div class="roi-card animate-on-scroll">
-                <div class="roi-inputs">
+                <div class="roi-inputs-row">
                     <div class="roi-field">
                         <label>현재 월 매출</label>
                         <div class="roi-input-wrap"><input type="number" id="roiRevenue" value="10000000" min="0" step="1000000" oninput="calcROI()"><span class="roi-unit">원</span></div>
@@ -257,12 +261,12 @@
                         <label>마케팅 월 예산</label>
                         <div class="roi-input-wrap"><input type="number" id="roiBudget" value="1000000" min="0" step="100000" oninput="calcROI()"><span class="roi-unit">원</span></div>
                     </div>
-                    <div class="roi-field">
+                    <div class="roi-field roi-field-full">
                         <label>마케팅 후 예상 매출 증가 <strong id="roiRateDisplay">30%</strong></label>
                         <input type="range" id="roiRate" min="10" max="200" value="30" class="roi-slider">
                     </div>
                 </div>
-                <div class="roi-results" id="roiResults">
+                <div class="roi-results-grid" id="roiResults">
                     <div class="roi-result-card"><span class="roi-result-label">예상 월 매출</span><span class="roi-result-value" id="roiExpected">13,000,000원</span><span class="roi-result-desc" id="roiExpectedDesc">마케팅 후 예상되는 월 매출입니다</span></div>
                     <div class="roi-result-card"><span class="roi-result-label">추가 매출</span><span class="roi-result-value" id="roiExtra">+3,000,000원</span><span class="roi-result-desc" id="roiExtraDesc">현재보다 300만원 더 벌 수 있습니다</span></div>
                     <div class="roi-result-card"><span class="roi-result-label">마케팅 비용</span><span class="roi-result-value" id="roiBudgetDisplay">1,000,000원</span><span class="roi-result-desc">매월 투자하는 마케팅 비용입니다</span></div>
@@ -323,10 +327,10 @@
                 <h2 class="section-title animate-on-scroll">이거 신청하면 <span class="gradient-text">어떻게 진행</span>되나요?</h2>
             </div>
             <div class="process-timeline">
-                <div class="process-step animate-on-scroll"><div class="step-number">STEP 1</div><div class="step-content"><h3>AI 맞춤 견적 신청</h3><p>간단한 정보 입력으로 AI가 최적 전략을 설계합니다</p></div></div>
-                <div class="process-step animate-on-scroll"><div class="step-number">STEP 2</div><div class="step-content"><h3>마케팅 전략 설계</h3><p>전담 매니저가 데이터 기반 맞춤 전략을 수립합니다</p></div></div>
-                <div class="process-step animate-on-scroll"><div class="step-number">STEP 3</div><div class="step-content"><h3>콘텐츠 제작 및 배포</h3><p>전문 팀이 고품질 콘텐츠를 제작·배포합니다</p></div></div>
-                <div class="process-step animate-on-scroll"><div class="step-number">STEP 4</div><div class="step-content"><h3>성과 분석 리포트</h3><p>투명한 결과 보고서로 성과를 확인합니다</p></div></div>
+                <div class="process-step animate-on-scroll"><div class="step-number">STEP 1</div><div class="step-content"><h3>AI 맞춤 견적 신청</h3><p>간단한 정보 입력으로<br>AI가 최적 전략을 설계합니다</p></div></div>
+                <div class="process-step animate-on-scroll"><div class="step-number">STEP 2</div><div class="step-content"><h3>마케팅 전략 설계</h3><p>전담 매니저가 데이터 기반<br>맞춤 전략을 수립합니다</p></div></div>
+                <div class="process-step animate-on-scroll"><div class="step-number">STEP 3</div><div class="step-content"><h3>콘텐츠 제작 및 배포</h3><p>전문 팀이 고품질 콘텐츠를<br>제작·배포합니다</p></div></div>
+                <div class="process-step animate-on-scroll"><div class="step-number">STEP 4</div><div class="step-content"><h3>성과 분석 리포트</h3><p>투명한 결과 보고서로<br>성과를 확인합니다</p></div></div>
             </div>
         </div>
     </section>

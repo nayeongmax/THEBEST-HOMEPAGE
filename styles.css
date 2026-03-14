@@ -802,18 +802,28 @@ img { max-width: 100%; display: block; }
 }
 
 .calc-card {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 40px;
+    display: flex;
+    flex-direction: column;
+    gap: 32px;
     background: var(--dark-light);
     border: 1px solid rgba(200,169,106,0.15);
     border-radius: var(--radius);
     padding: 44px;
 }
 
-.calc-left, .calc-right {
-    display: flex;
-    flex-direction: column;
+.calc-inputs-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 32px;
+    align-items: end;
+}
+
+.calc-input-group {}
+
+.calc-results-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 12px;
 }
 
 .calc-label {
@@ -1120,24 +1130,28 @@ img { max-width: 100%; display: block; }
 }
 
 .roi-card {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 40px;
+    display: flex;
+    flex-direction: column;
+    gap: 32px;
     background: var(--bg-warm);
     border: 1px solid var(--border);
     border-radius: var(--radius);
     padding: 44px;
 }
 
-.roi-inputs {
-    display: flex;
-    flex-direction: column;
+.roi-inputs-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
     gap: 20px;
 }
 
-.roi-results {
-    display: flex;
-    flex-direction: column;
+.roi-field-full {
+    grid-column: span 2;
+}
+
+.roi-results-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
     gap: 12px;
 }
 
@@ -2221,8 +2235,11 @@ img { max-width: 100%; display: block; }
     .problem-grid { grid-template-columns: repeat(2, 1fr); }
     .ai-flow { grid-template-columns: repeat(2, 1fr); }
     .ai-flow-arrow { display: none; }
-    .calc-card { grid-template-columns: 1fr; }
-    .roi-card { grid-template-columns: 1fr; }
+    .calc-inputs-row { grid-template-columns: 1fr; }
+    .calc-results-grid { grid-template-columns: 1fr; }
+    .roi-inputs-row { grid-template-columns: 1fr; }
+    .roi-field-full { grid-column: span 1; }
+    .roi-results-grid { grid-template-columns: 1fr; }
     .icon-cards-grid { grid-template-columns: repeat(2, 1fr); }
     .process-timeline { grid-template-columns: repeat(2, 1fr); }
     .process-timeline::before { display: none; }
