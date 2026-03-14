@@ -826,6 +826,7 @@ img { max-width: 100%; display: block; }
     gap: 12px;
 }
 
+
 .calc-label {
     font-size: 0.95rem;
     font-weight: 700;
@@ -951,7 +952,6 @@ img { max-width: 100%; display: block; }
     display: flex;
     justify-content: space-between;
     align-items: center;
-    margin-bottom: 12px;
 }
 
 .calc-result-item.highlight {
