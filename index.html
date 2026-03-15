@@ -21,7 +21,7 @@
                 <li><a href="#cases">성공사례</a></li>
                 <li><a href="#reviews">고객후기</a></li>
                 <li><a href="#process">진행프로세스</a></li>
-                <li><a href="report.html">결과보고서</a></li>
+                <li><a href="report.html" style="position:relative;">결과보고서<span class="partner-badge">제휴사 전용</span></a></li>
                 <li><a href="estimate.html" class="nav-cta">AI 맞춤견적</a></li>
             </ul>
             <button class="mobile-menu" id="mobileMenu" aria-label="메뉴"><span></span><span></span><span></span></button>
@@ -47,7 +47,7 @@
                     <div class="hero-stat-card hsc-2"><span class="hsc-num">+170%</span><span class="hsc-label">매출 성장</span></div>
                     <div class="hero-stat-card hsc-3"><span class="hsc-num">1위</span><span class="hsc-label">검색 순위</span></div>
                     <div class="hero-graph">
-                        <svg id="heroGraphSvg" viewBox="0 0 200 100" preserveAspectRatio="none"><path id="heroGraphLine" d="M0,95 Q30,93 60,88 T100,70 T140,35 T180,8 L200,2" fill="none" stroke="#C8A96A" stroke-width="2.5"/><path id="heroGraphFill" d="M0,95 Q30,93 60,88 T100,70 T140,35 T180,8 L200,2 V100 H0Z" fill="url(#heroGrad)" opacity="0.15"/><defs><linearGradient id="heroGrad" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#C8A96A"/><stop offset="100%" stop-color="#C8A96A" stop-opacity="0"/></linearGradient></defs></svg>
+                        <svg id="heroGraphSvg" viewBox="0 0 200 100" preserveAspectRatio="none"><path id="heroGraphLine" d="M0,98 Q40,97 80,95 T120,88 T160,60 T185,20 L200,2" fill="none" stroke="#C8A96A" stroke-width="2.5"/><path id="heroGraphFill" d="M0,98 Q40,97 80,95 T120,88 T160,60 T185,20 L200,2 V100 H0Z" fill="url(#heroGrad)" opacity="0.15"/><defs><linearGradient id="heroGrad" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#C8A96A"/><stop offset="100%" stop-color="#C8A96A" stop-opacity="0"/></linearGradient></defs></svg>
                     </div>
                 </div>
             </div>
@@ -87,12 +87,12 @@
                     <p>마케팅 업체가 너무 많아서<br>선택이 어려우신가요?</p>
                 </div>
                 <div class="problem-card animate-on-scroll" data-delay="200">
-                    <div class="problem-icon">&#128200;</div>
+                    <div class="problem-icon">&#128201;</div>
                     <h4>비용 대비<br>결과가 안 보입니다</h4>
                     <p>투자한 만큼 성과가 나오지 않아<br>답답하신가요?</p>
                 </div>
                 <div class="problem-card animate-on-scroll" data-delay="300">
-                    <div class="problem-icon">&#128161;</div>
+                    <div class="problem-icon">&#10067;</div>
                     <h4>어떤 마케팅을 해야 할지<br>모르겠습니다</h4>
                     <p>블로그? 인스타? 유튜브?<br>뭐부터 시작해야 할지 막막한가요?</p>
                 </div>
@@ -634,6 +634,53 @@
             if (e.ctrlKey && e.shiftKey && (e.key === 'I' || e.key === 'i' || e.key === 'J' || e.key === 'j' || e.key === 'C' || e.key === 'c')) { e.preventDefault(); return false; }
             if (e.ctrlKey && (e.key === 'U' || e.key === 'u' || e.key === 'S' || e.key === 's')) { e.preventDefault(); return false; }
         });
+    </script>
+
+    <!-- 실시간 접속자 팝업 -->
+    <div id="liveVisitorPopup" style="position:fixed; top:20px; right:20px; background:#fff; color:#333; padding:10px 18px; border-radius:100px; box-shadow:0 4px 20px rgba(0,0,0,0.15); font-size:0.82rem; font-weight:500; z-index:9999; display:none; align-items:center; gap:8px; font-family:var(--font);">
+        <span style="display:inline-block; width:8px; height:8px; background:#e74c3c; border-radius:50%; animation:livePulse 1.5s infinite;"></span>
+        현재 사이트에 <strong id="liveCount">0</strong>명이 접속해 있습니다.
+    </div>
+    <style>
+        @keyframes livePulse { 0%,100% { opacity:1; } 50% { opacity:0.3; } }
+        .partner-badge {
+            position:absolute; top:-10px; right:-18px;
+            background: linear-gradient(135deg, #FF6B6B, #FF8E53);
+            color:#fff; font-size:0.55rem; font-weight:700;
+            padding:3px 7px; border-radius:100px; white-space:nowrap;
+            animation: badgeBounce 2s ease-in-out infinite;
+            box-shadow: 0 2px 8px rgba(255,107,107,0.4);
+        }
+        @keyframes badgeBounce {
+            0%,100% { transform: translateY(0); }
+            50% { transform: translateY(-5px); }
+        }
+    </style>
+    <script>
+        // 실시간 접속자 - 15초마다 자연스러운 숫자 변화
+        (function() {
+            const popup = document.getElementById('liveVisitorPopup');
+            const countEl = document.getElementById('liveCount');
+            let currentCount = Math.floor(Math.random() * 20) + 20; // 시작: 20~40
+
+            function showVisitorCount() {
+                // 자연스러운 변동: -3 ~ +5 범위
+                const change = Math.floor(Math.random() * 9) - 3;
+                currentCount = Math.max(11, Math.min(70, currentCount + change));
+                countEl.textContent = currentCount;
+                popup.style.display = 'flex';
+
+                // 8초 후 숨기기
+                setTimeout(() => {
+                    popup.style.display = 'none';
+                }, 8000);
+            }
+
+            // 첫 표시: 3초 후
+            setTimeout(showVisitorCount, 3000);
+            // 이후 15초마다 반복
+            setInterval(showVisitorCount, 15000);
+        })();
     </script>
 </body>
 </html>
