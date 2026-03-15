@@ -9,6 +9,18 @@
     <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;600;700;800;900&family=Poppins:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="styles.css">
     <style>
+        .partner-badge {
+            position:absolute; top:-16px; left:50%; transform:translateX(-50%);
+            background: linear-gradient(135deg, #FF6B6B, #FF8E53);
+            color:#fff; font-size:0.7rem; font-weight:700;
+            padding:4px 10px; border-radius:100px; white-space:nowrap;
+            animation: badgeBounce 2s ease-in-out infinite;
+            box-shadow: 0 2px 8px rgba(255,107,107,0.4);
+        }
+        @keyframes badgeBounce {
+            0%,100% { transform: translateX(-50%) translateY(0); }
+            50% { transform: translateX(-50%) translateY(-5px); }
+        }
         /* Blue theme overrides for report content */
         .report-page {
             --primary: #3B82F6;
@@ -388,7 +400,7 @@
                 <li><a href="index.html#cases">성공사례</a></li>
                 <li><a href="index.html#reviews">고객후기</a></li>
                 <li><a href="index.html#process">진행프로세스</a></li>
-                <li><a href="report.html">결과보고서</a></li>
+                <li><a href="report.html" style="position:relative;">결과보고서<span class="partner-badge">제휴사 전용</span></a></li>
                 <li><a href="estimate.html" class="nav-cta">AI 맞춤견적</a></li>
             </ul>
             <button class="mobile-menu" id="mobileMenu" aria-label="메뉴 열기">
@@ -1290,19 +1302,22 @@
 
         // ===== Create Form Logic =====
         let createRowCount = 0;
+        let createRowIdCounter = 0; // Unique ID counter (never decreases)
 
         function addCreateRow() {
-            createRowCount++;
+            createRowIdCounter++;
             const tbody = document.getElementById('createTableBody');
+            const rowNum = tbody.querySelectorAll('tr').length + 1;
             const tr = document.createElement('tr');
-            tr.id = 'createRow-' + createRowCount;
+            tr.id = 'createRow-' + createRowIdCounter;
             tr.innerHTML = `
-                <td>${createRowCount}</td>
+                <td class="row-num">${rowNum}</td>
                 <td><input type="text" name="rowDate" placeholder="2026-01-06" style="width:100px;"></td>
                 <td><input type="url" name="rowUrl" placeholder="URL 입력"></td>
-                <td><button type="button" class="btn-remove-row" onclick="removeCreateRow('createRow-${createRowCount}')">&times;</button></td>
+                <td><button type="button" class="btn-remove-row" onclick="removeCreateRow('createRow-${createRowIdCounter}')">&times;</button></td>
             `;
             tbody.appendChild(tr);
+            createRowCount = tbody.querySelectorAll('tr').length;
         }
 
         function removeCreateRow(rowId) {
@@ -1312,7 +1327,11 @@
 
         function renumberCreateRows() {
             const rows = document.getElementById('createTableBody').querySelectorAll('tr');
-            rows.forEach((row, index) => { row.querySelector('td:first-child').textContent = index + 1; });
+            rows.forEach((row, index) => {
+                const numCell = row.querySelector('.row-num') || row.querySelector('td:first-child');
+                numCell.textContent = index + 1;
+            });
+            createRowCount = rows.length;
         }
 
         function addKeywordRow() {
@@ -1483,6 +1502,7 @@
                 if (cols[1] && urlInput) urlInput.value = cols[1].trim();
             });
 
+            renumberCreateRows();
             document.getElementById('sheetPasteArea').style.display = 'none';
             document.getElementById('sheetPasteInput').value = '';
             alert(`${lines.length}개의 작업 내역이 추가되었습니다. (현재 총 ${createRowCount}건)`);
@@ -1534,35 +1554,73 @@
             const visits = Math.round(exposure * (0.012 + Math.random() * 0.02));
             const engagement = (((totalComments + totalLikes) / Math.max(totalViews, 1)) * 100).toFixed(1);
 
-            // Auto-fill KPI fields dynamically based on what exists
+            // Auto-fill KPI fields based on current platform
             const platform = document.getElementById('createPlatform').value;
             const service = document.getElementById('createServiceType').value;
             const company = document.getElementById('createCafeName').value || '브랜드';
+
+            // Refresh KPI fields to match current platform
+            updateKPIFields();
 
             const fillIfExists = (id, value) => {
                 const el = document.getElementById(id);
                 if (el) el.value = value;
             };
 
-            fillIfExists('createPostCount', postCount || urls.length);
-            fillIfExists('createCommentCount', totalComments);
-            fillIfExists('createExposure', exposure);
-            fillIfExists('createVisits', visits);
-            fillIfExists('createEngagement', engagement > 0 ? engagement : (3 + Math.random() * 3).toFixed(1));
-            fillIfExists('createAvgViews', avgViews || Math.floor(2000 + Math.random() * 4000));
-            fillIfExists('createAvgLikes', avgLikes || Math.floor(50 + Math.random() * 200));
-            fillIfExists('createMemberGrowth', Math.floor(50 + Math.random() * 200));
-            fillIfExists('createSearchInflow', Math.floor(500 + Math.random() * 3000));
-            fillIfExists('createKeywordRank', Math.floor(2 + Math.random() * 10));
-            fillIfExists('createVideoCount', postCount || urls.length);
-            fillIfExists('createSubscriberGrowth', Math.floor(30 + Math.random() * 300));
-            fillIfExists('createWatchTime', Math.floor(500 + Math.random() * 5000));
-            fillIfExists('createFollowerGrowth', Math.floor(50 + Math.random() * 500));
-            fillIfExists('createReelsViews', Math.floor(5000 + Math.random() * 50000));
-            fillIfExists('createReach', Math.floor(3000 + Math.random() * 30000));
-            fillIfExists('createArticleCount', postCount || urls.length);
-            fillIfExists('createPortalSearch', Math.floor(postCount * 0.8) || urls.length);
-            fillIfExists('createBrandMention', Math.floor(10 + Math.random() * 50));
+            // Platform-specific KPI fill (only fill fields that exist for current platform)
+            const kpiByPlatform = {
+                '네이버 카페': () => {
+                    fillIfExists('createPostCount', postCount);
+                    fillIfExists('createCommentCount', totalComments);
+                    fillIfExists('createExposure', exposure);
+                    fillIfExists('createVisits', visits);
+                    fillIfExists('createEngagement', engagement > 0 ? engagement : (3 + Math.random() * 3).toFixed(1));
+                    fillIfExists('createMemberGrowth', Math.floor(50 + Math.random() * 200));
+                },
+                '네이버 블로그': () => {
+                    fillIfExists('createPostCount', postCount);
+                    fillIfExists('createExposure', exposure);
+                    fillIfExists('createSearchInflow', Math.floor(500 + Math.random() * 3000));
+                    fillIfExists('createKeywordRank', Math.floor(2 + Math.random() * 10));
+                    fillIfExists('createEngagement', engagement > 0 ? engagement : (3 + Math.random() * 3).toFixed(1));
+                    fillIfExists('createAvgViews', avgViews || Math.floor(2000 + Math.random() * 4000));
+                },
+                '유튜브': () => {
+                    fillIfExists('createVideoCount', postCount);
+                    fillIfExists('createExposure', exposure);
+                    fillIfExists('createSubscriberGrowth', Math.floor(30 + Math.random() * 300));
+                    fillIfExists('createWatchTime', Math.floor(500 + Math.random() * 5000));
+                    fillIfExists('createEngagement', engagement > 0 ? engagement : (3 + Math.random() * 3).toFixed(1));
+                    fillIfExists('createAvgViews', avgViews || Math.floor(2000 + Math.random() * 4000));
+                },
+                '인스타그램': () => {
+                    fillIfExists('createPostCount', postCount);
+                    fillIfExists('createFollowerGrowth', Math.floor(50 + Math.random() * 500));
+                    fillIfExists('createReelsViews', Math.floor(5000 + Math.random() * 50000));
+                    fillIfExists('createReach', Math.floor(3000 + Math.random() * 30000));
+                    fillIfExists('createEngagement', engagement > 0 ? engagement : (3 + Math.random() * 3).toFixed(1));
+                    fillIfExists('createAvgLikes', avgLikes || Math.floor(50 + Math.random() * 200));
+                },
+                '언론사': () => {
+                    fillIfExists('createArticleCount', postCount);
+                    fillIfExists('createExposure', exposure);
+                    fillIfExists('createPortalSearch', Math.floor(postCount * 0.8));
+                    fillIfExists('createBrandMention', Math.floor(10 + Math.random() * 50));
+                    fillIfExists('createEngagement', engagement > 0 ? engagement : (2 + Math.random() * 2).toFixed(1));
+                    fillIfExists('createAvgViews', avgViews || Math.floor(3000 + Math.random() * 5000));
+                }
+            };
+
+            const fillFn = kpiByPlatform[platform];
+            if (fillFn) {
+                fillFn();
+            } else {
+                // Fallback: fill common fields
+                fillIfExists('createPostCount', postCount);
+                fillIfExists('createExposure', exposure);
+                fillIfExists('createVisits', visits);
+                fillIfExists('createEngagement', engagement > 0 ? engagement : (3 + Math.random() * 3).toFixed(1));
+            }
 
             // Extract keywords from URLs
             const keywordSets = {
