@@ -517,10 +517,7 @@
                             <div class="radar-canvas-wrap">
                                 <canvas id="radarChart" width="400" height="400"></canvas>
                             </div>
-                            <div class="radar-legend" id="radarLegend">
-                                <div class="radar-legend-item"><span class="radar-legend-dot" style="background:#B0B0B0;border-radius:2px;width:12px;height:12px;"></span> 마케팅 미실행</div>
-                                <div class="radar-legend-item"><span class="radar-legend-dot" style="background:#3B82F6;border-radius:2px;width:12px;height:12px;"></span> 마케팅 실행</div>
-                            </div>
+                            <div class="radar-legend" id="radarLegend" style="display:none;"></div>
                         </div>
 
                         <!-- Competition Comparison -->
@@ -685,7 +682,7 @@
                             <h4>&#129302; AI 마케팅 분석</h4>
                             <p><strong>[카페활성화 성과 분석]</strong></p>
                             <p>카페 회원 수 및 게시글 활동량이 <span class="ai-highlight">꾸준한 상승세</span>를 보이고 있으며, 카페 내 <span class="ai-highlight">검색 유입이 안정적으로 증가</span>하는 구조입니다.</p>
-                            <p>댓글·좋아요 반응이 활발하여 <span class="ai-highlight">카페 등급 상승에 긍정적</span>이며, 현재 활성도 추세대로라면 <span class="ai-highlight">다음 등급 달성이 충분히 가능</span>합니다.</p>
+                            <p>댓글·좋아요 반응이 활발하여 <span class="ai-highlight">카페 등급 상승에 긍정적</span>이며, 현재 활성도 추세가 <span class="ai-highlight">안정적인 성장세</span>를 유지하고 있습니다.</p>
                             <p>카페활성화는 지속적인 운영이 핵심이므로, <span class="ai-highlight">연장 진행 시 회원 유입 및 활동량이 더욱 가속화</span>되어 광고 수익 및 제휴 기회가 확대될 것으로 분석됩니다.</p>
                             <p>현재 성장 곡선을 유지하면 <span class="ai-highlight">월 평균 노출 50만+ 달성</span>과 함께 신규 방문자 유입이 <span class="ai-highlight">약 30~40% 추가 증가</span>할 것으로 예상됩니다.</p>
                         </div>
@@ -801,16 +798,24 @@
                             <textarea id="createBonusContent" placeholder="추가 게시글 120개 이상 (300,000원 상당)"></textarea>
                         </div>
                         <div class="form-group">
-                            <label>AI 분석 코멘트 (자동 생성)</label>
-                            <textarea id="createAIComment" rows="5" placeholder="자동 분석 버튼을 누르면 자동으로 생성됩니다"></textarea>
+                            <label>AI 분석 코멘트</label>
+                            <div style="display:flex; gap:8px; margin-bottom:10px; flex-wrap:wrap;">
+                                <input type="text" id="aiKeywordInput" placeholder="키워드 입력 (예: 카페활성화, 맛집)" style="flex:1; min-width:200px;">
+                                <button type="button" class="btn btn-primary" style="padding:8px 18px; font-size:0.82rem; white-space:nowrap;" onclick="generateAIComment()">자동 분석</button>
+                            </div>
+                            <textarea id="createAIComment" rows="5" placeholder="자동 분석 버튼을 누르면 코멘트가 생성됩니다. 생성 후 직접 수정도 가능합니다."></textarea>
+                            <p style="font-size:0.75rem; color:var(--text-muted); margin-top:6px;">* 키워드를 입력하면 더 전문적인 분석 코멘트가 생성됩니다. 생성 후 자유롭게 수정 가능합니다.</p>
                         </div>
 
                         <!-- Dynamic Table -->
                         <div style="display:flex; justify-content:space-between; align-items:center;">
                             <h4 class="form-section-title" style="margin-bottom:0; border:none; padding:0;">작업 내역</h4>
-                            <label style="font-size:0.8rem; color:var(--text-light); display:flex; align-items:center; gap:6px; cursor:pointer;">
-                                <input type="checkbox" id="toggleWorkLogSection" checked> 보고서에 포함
-                            </label>
+                            <div style="display:flex; align-items:center; gap:12px;">
+                                <button type="button" class="btn-add-row" style="margin:0; color:#e74c3c; border-color:#e74c3c;" onclick="clearCreateTable()">초기화</button>
+                                <label style="font-size:0.8rem; color:var(--text-light); display:flex; align-items:center; gap:6px; cursor:pointer;">
+                                    <input type="checkbox" id="toggleWorkLogSection" checked> 보고서에 포함
+                                </label>
+                            </div>
                         </div>
                         <div style="border-bottom:1px solid var(--border); margin-bottom:16px;"></div>
                         <div class="create-table-section">
@@ -938,7 +943,7 @@
         // ===== Radar Chart =====
         const radarLabels = ['노출 확산력', '검색 노출력', '콘텐츠 반응', '브랜드 인지', '전환 가능성'];
         const dataWithout = [25, 18, 15, 20, 12]; // 마케팅 미실행
-        const dataWith = [85, 78, 92, 70, 82];    // 마케팅 실행
+        const dataWith = [62, 55, 68, 50, 58];    // 마케팅 실행
         let currentRadarMode = 'both';
         let radarAnimId = null;
         let radarRepeatTimer = null;
@@ -1462,10 +1467,7 @@
                 return;
             }
 
-            // Clear existing rows
-            document.getElementById('createTableBody').innerHTML = '';
-            createRowCount = 0;
-
+            // Append to existing rows (이어붙이기 - 기존 데이터 유지)
             lines.forEach(line => {
                 const cols = line.split('\t');
                 if (cols.length < 1 || !cols[0].trim()) return;
@@ -1477,15 +1479,20 @@
                 const dateInput = row.querySelector('input[name="rowDate"]');
                 const urlInput = row.querySelector('input[name="rowUrl"]');
 
-                // Expected columns: 날짜, URL
                 if (cols[0] && dateInput) dateInput.value = cols[0].trim();
                 if (cols[1] && urlInput) urlInput.value = cols[1].trim();
             });
 
-            // Hide paste area after parsing
             document.getElementById('sheetPasteArea').style.display = 'none';
             document.getElementById('sheetPasteInput').value = '';
-            alert(`${lines.length}개의 작업 내역이 입력되었습니다.`);
+            alert(`${lines.length}개의 작업 내역이 추가되었습니다. (현재 총 ${createRowCount}건)`);
+        }
+
+        function clearCreateTable() {
+            if (!confirm('작업 내역을 모두 초기화하시겠습니까?')) return;
+            document.getElementById('createTableBody').innerHTML = '';
+            createRowCount = 0;
+            addCreateRow();
         }
 
         // ===== Auto Analyze from URLs =====
@@ -1498,16 +1505,28 @@
                 if (url && url.value) urls.push(url.value);
             });
 
-            if (urls.length === 0) {
-                alert('작업 내역에 URL을 먼저 입력해주세요.');
+            // Also check platform link input
+            const platformLink = document.getElementById('createPlatformLink').value.trim();
+            if (urls.length === 0 && !platformLink) {
+                alert('플랫폼 링크 또는 작업 내역에 URL을 먼저 입력해주세요.');
                 return;
             }
 
-            const postCount = urls.length;
+            // Auto-detect platform from link
+            let detectedPlatform = document.getElementById('createPlatform').value;
+            if (platformLink && !detectedPlatform) {
+                if (platformLink.includes('cafe.naver')) document.getElementById('createPlatform').value = '네이버 카페';
+                else if (platformLink.includes('blog.naver')) document.getElementById('createPlatform').value = '네이버 블로그';
+                else if (platformLink.includes('youtube') || platformLink.includes('youtu.be')) document.getElementById('createPlatform').value = '유튜브';
+                else if (platformLink.includes('instagram') || platformLink.includes('instagr.am')) document.getElementById('createPlatform').value = '인스타그램';
+                document.getElementById('createPlatform').dispatchEvent(new Event('change'));
+            }
+
+            const postCount = Math.max(urls.length, 1);
             // Generate realistic estimates based on URL count
-            const totalViews = urls.length * (2000 + Math.floor(Math.random() * 4000));
-            const totalComments = Math.floor(urls.length * (5 + Math.random() * 30));
-            const totalLikes = Math.floor(urls.length * (20 + Math.random() * 200));
+            const totalViews = postCount * (2000 + Math.floor(Math.random() * 4000));
+            const totalComments = Math.floor(postCount * (5 + Math.random() * 30));
+            const totalLikes = Math.floor(postCount * (20 + Math.random() * 200));
 
             const avgViews = Math.round(totalViews / Math.max(postCount, 1));
             const avgLikes = Math.round(totalLikes / Math.max(postCount, 1));
@@ -1526,7 +1545,7 @@
             };
 
             fillIfExists('createPostCount', postCount || urls.length);
-            fillIfExists('createCommentCount', commentCount || totalComments);
+            fillIfExists('createCommentCount', totalComments);
             fillIfExists('createExposure', exposure);
             fillIfExists('createVisits', visits);
             fillIfExists('createEngagement', engagement > 0 ? engagement : (3 + Math.random() * 3).toFixed(1));
@@ -1565,20 +1584,40 @@
                 if (rankEl) rankEl.value = Math.floor(2 + Math.random() * 12);
             }
 
-            // Auto-generate AI comment (platform-specific, positive, re-engagement focused)
-            const totalContent = postCount || urls.length;
+            alert('자동 분석이 완료되었습니다!\nKPI, 키워드가 자동으로 채워졌습니다.\n\nAI 분석 코멘트는 아래 "자동 분석" 버튼을 눌러 생성하세요.');
+        }
+
+        // ===== Generate AI Comment =====
+        function generateAIComment() {
+            const platform = document.getElementById('createPlatform').value;
+            const service = document.getElementById('createServiceType').value;
+            const company = document.getElementById('createCafeName').value || '브랜드';
+            const userKeywords = document.getElementById('aiKeywordInput').value.trim();
+            const rows = document.getElementById('createTableBody').querySelectorAll('tr');
+            let postCount = 0;
+            rows.forEach(row => { const u = row.querySelector('input[name="rowUrl"]'); if (u && u.value) postCount++; });
+            postCount = Math.max(postCount, 1);
+
+            const exposure = parseInt(document.getElementById('createExposure')?.value) || Math.round(postCount * 5000);
+            const visits = parseInt(document.getElementById('createVisits')?.value) || Math.round(exposure * 0.02);
+
+            // Build keyword-enhanced analysis
+            const kwList = userKeywords ? userKeywords.split(/[,，\s]+/).filter(k => k) : [];
+            const kwText = kwList.length > 0 ? kwList.map(k => '"' + k + '"').join(', ') : '';
+            const kwInsight = kwList.length > 0
+                ? `\n\n[핵심 키워드 분석]\n${kwList.map(k => '- "' + k + '": 해당 키워드 검색 노출이 강화되고 있으며, 경쟁 키워드 대비 콘텐츠 점유율이 상승 추세입니다.').join('\n')}\n\n키워드 기반 콘텐츠 최적화가 진행되어 자연 검색 유입 경로가 다변화되고 있습니다.`
+                : '';
+
             const platformAnalysis = {
-                '네이버 카페': `[카페활성화 성과 분석]\n\n이번 카페활성화 캠페인은 총 ${totalContent}건의 작업이 진행되었으며, 카페 내 활동량이 안정적으로 증가하고 있습니다.\n\n회원 유입과 게시글 반응이 꾸준히 상승하여 카페 등급 향상에 긍정적이며, 현재 추세대로라면 다음 등급 달성이 충분히 가능합니다.\n\n카페활성화는 지속적인 운영이 핵심입니다. 연장 진행 시 회원 활동량이 더욱 가속화되어 검색 유입 및 제휴 광고 기회가 확대될 것으로 분석됩니다.\n\n현재 성장 곡선 유지 시 월 평균 노출 ${Math.round(exposure * 1.3).toLocaleString()}+ 달성이 가능하며, 카페 내 검색 유입이 약 30~40% 추가 증가할 것으로 예상됩니다.`,
-                '네이버 블로그': `[블로그 대행 성과 분석]\n\n이번 블로그 캠페인은 총 ${totalContent}건의 콘텐츠가 발행되었으며, 예상 노출수 ${exposure.toLocaleString()}회를 기록했습니다.\n\n블로그 상위노출 키워드가 안정적으로 확보되고 있으며, "${keywords[0]}" 키워드 검색 노출이 강화되는 추세입니다.\n\n블로그는 누적 콘텐츠가 많을수록 검색 노출이 강화됩니다. 연장 진행 시 상위노출 키워드가 추가 확보되어 자연 유입이 더욱 증가할 것으로 분석됩니다.\n\n현재 추세 유지 시 월 평균 방문자 ${Math.round(visits * 1.4).toLocaleString()}+ 달성과 함께 전환율 상승이 예상됩니다.`,
-                '유튜브': `[유튜브 대행 성과 분석]\n\n이번 유튜브 캠페인은 총 ${totalContent}건의 영상이 제작되었으며, 예상 노출수 ${exposure.toLocaleString()}회를 기록했습니다.\n\n영상 조회수와 구독자 반응이 우수하며, 시청 지속시간이 업종 평균 대비 높은 수준입니다.\n\n유튜브는 꾸준한 영상 업로드가 알고리즘 추천에 핵심적입니다. 연장 진행 시 채널 성장 속도가 가속화되어 추천 영상 노출이 크게 증가할 것으로 분석됩니다.\n\n현재 성장세 유지 시 구독자 및 조회수가 약 50% 이상 추가 성장할 것으로 예상됩니다.`,
-                '인스타그램': `[인스타그램 대행 성과 분석]\n\n이번 인스타그램 캠페인은 총 ${totalContent}건의 콘텐츠가 발행되었으며, 예상 도달수 ${exposure.toLocaleString()}회를 기록했습니다.\n\n팔로워 증가율과 콘텐츠 인게이지먼트가 안정적이며, 릴스 및 피드 콘텐츠의 반응이 우수합니다.\n\n인스타그램은 지속적인 콘텐츠 운영이 브랜드 인지도에 핵심적입니다. 연장 진행 시 팔로워 성장과 함께 브랜드 신뢰도가 더욱 강화될 것으로 분석됩니다.\n\n현재 추세 유지 시 팔로워 및 도달수가 약 40% 추가 성장할 것으로 예상됩니다.`,
-                '언론사': `[언론홍보 성과 분석]\n\n이번 언론홍보 캠페인은 총 ${totalContent}건의 보도자료가 배포되었으며, 예상 노출수 ${exposure.toLocaleString()}회를 기록했습니다.\n\n주요 언론사 게재를 통해 브랜드 신뢰도 및 검색 노출이 크게 강화되었습니다.\n\n언론홍보는 지속적인 노출이 브랜드 권위 확립에 핵심적입니다. 연장 진행 시 검색 결과에 긍정적 기사가 누적되어 브랜드 이미지가 더욱 공고해질 것으로 분석됩니다.\n\n추가 보도 진행 시 브랜드 검색량이 약 30% 이상 증가할 것으로 예상됩니다.`
+                '네이버 카페': `[카페활성화 성과 분석]\n\n이번 카페활성화 캠페인은 총 ${postCount}건의 작업이 진행되었으며, 카페 내 활동량이 안정적으로 증가하고 있습니다.\n\n회원 유입과 게시글 반응이 꾸준히 상승하여 카페 등급 향상에 긍정적이며, 현재 추세가 안정적인 성장세를 유지하고 있습니다.${kwInsight}\n\n카페활성화는 지속적인 운영이 핵심입니다. 연장 진행 시 회원 활동량이 더욱 가속화되어 검색 유입 및 제휴 광고 기회가 확대될 것으로 분석됩니다.\n\n현재 성장 곡선 유지 시 월 평균 노출 ${Math.round(exposure * 1.3).toLocaleString()}+ 달성이 가능하며, 카페 내 검색 유입이 약 30~40% 추가 증가할 것으로 예상됩니다.`,
+                '네이버 블로그': `[블로그 대행 성과 분석]\n\n이번 블로그 캠페인은 총 ${postCount}건의 콘텐츠가 발행되었으며, 예상 노출수 ${exposure.toLocaleString()}회를 기록했습니다.\n\n블로그 상위노출 키워드가 안정적으로 확보되고 있으며, 검색 노출이 강화되는 추세입니다.${kwInsight}\n\n블로그는 누적 콘텐츠가 많을수록 검색 노출이 강화됩니다. 연장 진행 시 상위노출 키워드가 추가 확보되어 자연 유입이 더욱 증가할 것으로 분석됩니다.\n\n현재 추세 유지 시 월 평균 방문자 ${Math.round(visits * 1.4).toLocaleString()}+ 달성과 함께 전환율 상승이 예상됩니다.`,
+                '유튜브': `[유튜브 대행 성과 분석]\n\n이번 유튜브 캠페인은 총 ${postCount}건의 영상이 제작되었으며, 예상 노출수 ${exposure.toLocaleString()}회를 기록했습니다.\n\n영상 조회수와 구독자 반응이 우수하며, 시청 지속시간이 업종 평균 대비 높은 수준입니다.${kwInsight}\n\n유튜브는 꾸준한 영상 업로드가 알고리즘 추천에 핵심적입니다. 연장 진행 시 채널 성장 속도가 가속화되어 추천 영상 노출이 크게 증가할 것으로 분석됩니다.\n\n현재 성장세 유지 시 구독자 및 조회수가 약 50% 이상 추가 성장할 것으로 예상됩니다.`,
+                '인스타그램': `[인스타그램 대행 성과 분석]\n\n이번 인스타그램 캠페인은 총 ${postCount}건의 콘텐츠가 발행되었으며, 예상 도달수 ${exposure.toLocaleString()}회를 기록했습니다.\n\n팔로워 증가율과 콘텐츠 인게이지먼트가 안정적이며, 릴스 및 피드 콘텐츠의 반응이 우수합니다.${kwInsight}\n\n인스타그램은 지속적인 콘텐츠 운영이 브랜드 인지도에 핵심적입니다. 연장 진행 시 팔로워 성장과 함께 브랜드 신뢰도가 더욱 강화될 것으로 분석됩니다.\n\n현재 추세 유지 시 팔로워 및 도달수가 약 40% 추가 성장할 것으로 예상됩니다.`,
+                '언론사': `[언론홍보 성과 분석]\n\n이번 언론홍보 캠페인은 총 ${postCount}건의 보도자료가 배포되었으며, 예상 노출수 ${exposure.toLocaleString()}회를 기록했습니다.\n\n주요 언론사 게재를 통해 브랜드 신뢰도 및 검색 노출이 크게 강화되었습니다.${kwInsight}\n\n언론홍보는 지속적인 노출이 브랜드 권위 확립에 핵심적입니다. 연장 진행 시 검색 결과에 긍정적 기사가 누적되어 브랜드 이미지가 더욱 공고해질 것으로 분석됩니다.\n\n추가 보도 진행 시 브랜드 검색량이 약 30% 이상 증가할 것으로 예상됩니다.`
             };
-            const aiComment = platformAnalysis[platform] || `[${service} 성과 분석]\n\n이번 ${service} 캠페인은 총 ${totalContent}건의 작업이 진행되었으며, 예상 노출수 ${exposure.toLocaleString()}회를 기록했습니다.\n\n콘텐츠 반응률이 업종 평균 대비 우수하며, 전반적인 마케팅 성과가 긍정적입니다.\n\n연장 진행 시 현재의 성장세가 더욱 가속화되어 노출 및 유입이 약 30~40% 추가 증가할 것으로 분석됩니다.\n\n지속적인 마케팅 운영이 안정적인 성과 유지와 추가 성장에 핵심적인 역할을 할 것으로 예상됩니다.`;
+            const aiComment = platformAnalysis[platform] || `[${service || '마케팅'} 성과 분석]\n\n이번 ${service || '마케팅'} 캠페인은 총 ${postCount}건의 작업이 진행되었으며, 예상 노출수 ${exposure.toLocaleString()}회를 기록했습니다.\n\n콘텐츠 반응률이 업종 평균 대비 우수하며, 전반적인 마케팅 성과가 긍정적입니다.${kwInsight}\n\n연장 진행 시 현재의 성장세가 더욱 가속화되어 노출 및 유입이 약 30~40% 추가 증가할 것으로 분석됩니다.\n\n지속적인 마케팅 운영이 안정적인 성과 유지와 추가 성장에 핵심적인 역할을 할 것으로 예상됩니다.`;
 
             document.getElementById('createAIComment').value = aiComment;
-
-            alert('자동 분석이 완료되었습니다!\nKPI, 키워드, AI 분석 코멘트가 자동으로 채워졌습니다.');
         }
     </script>
     <script>
