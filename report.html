@@ -922,7 +922,11 @@
                 animateRadarChart('both');
                 startRadarRepeat();
                 animateExposureChart();
+                startExposureRepeat();
                 animateCompare();
+                startCompareRepeat();
+                animateContentBars();
+                startContentBarRepeat();
                 applySectionVisibility();
             } else {
                 alert('업체명 또는 비밀번호가 올바르지 않습니다.\n전달받은 비밀번호를 확인해주세요.');
@@ -1069,7 +1073,7 @@
             if (radarRepeatTimer) clearInterval(radarRepeatTimer);
             radarRepeatTimer = setInterval(() => {
                 animateRadarChart(currentRadarMode);
-            }, 30000);
+            }, 10000);
         }
 
         // ===== Exposure Line Chart =====
@@ -1198,12 +1202,63 @@
             exposureAnimId = requestAnimationFrame(step);
         }
 
+        // Repeat exposure chart every 10 seconds
+        let exposureRepeatTimer = null;
+        function startExposureRepeat() {
+            if (exposureRepeatTimer) clearInterval(exposureRepeatTimer);
+            exposureRepeatTimer = setInterval(() => {
+                animateExposureChart();
+            }, 10000);
+        }
+
         // ===== Competition Comparison Animation =====
         function animateCompare() {
+            const ours = document.getElementById('compareOurs');
+            const comp = document.getElementById('compareComp');
+            // Reset to 0
+            ours.style.transition = 'none';
+            comp.style.transition = 'none';
+            ours.style.width = '0%';
+            comp.style.width = '0%';
             setTimeout(() => {
-                document.getElementById('compareOurs').style.width = '78%';
-                document.getElementById('compareComp').style.width = '52%';
+                ours.style.transition = 'width 1.5s ease';
+                comp.style.transition = 'width 1.5s ease';
+                ours.style.width = '78%';
+                comp.style.width = '52%';
             }, 300);
+        }
+
+        // Repeat compare every 10 seconds
+        let compareRepeatTimer = null;
+        function startCompareRepeat() {
+            if (compareRepeatTimer) clearInterval(compareRepeatTimer);
+            compareRepeatTimer = setInterval(() => {
+                animateCompare();
+            }, 10000);
+        }
+
+        // ===== Content Bar Animation =====
+        function animateContentBars() {
+            const bars = document.querySelectorAll('.content-bar-fill');
+            const targets = [88, 62, 72, 38]; // target widths
+            bars.forEach((bar, i) => {
+                bar.style.transition = 'none';
+                bar.style.width = '0%';
+            });
+            setTimeout(() => {
+                bars.forEach((bar, i) => {
+                    bar.style.transition = 'width 1.5s ease';
+                    bar.style.width = (targets[i] || 50) + '%';
+                });
+            }, 100);
+        }
+
+        let contentBarRepeatTimer = null;
+        function startContentBarRepeat() {
+            if (contentBarRepeatTimer) clearInterval(contentBarRepeatTimer);
+            contentBarRepeatTimer = setInterval(() => {
+                animateContentBars();
+            }, 10000);
         }
 
         // ===== Generate Report Table =====
