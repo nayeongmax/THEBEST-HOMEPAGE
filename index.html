@@ -47,7 +47,7 @@
                     <div class="hero-stat-card hsc-2"><span class="hsc-num">+170%</span><span class="hsc-label">매출 성장</span></div>
                     <div class="hero-stat-card hsc-3"><span class="hsc-num">1위</span><span class="hsc-label">검색 순위</span></div>
                     <div class="hero-graph">
-                        <svg id="heroGraphSvg" viewBox="0 0 200 100" preserveAspectRatio="none"><path id="heroGraphLine" d="M0,98 Q40,97 80,95 T120,88 T160,60 T185,20 L200,2" fill="none" stroke="#C8A96A" stroke-width="2.5"/><path id="heroGraphFill" d="M0,98 Q40,97 80,95 T120,88 T160,60 T185,20 L200,2 V100 H0Z" fill="url(#heroGrad)" opacity="0.15"/><defs><linearGradient id="heroGrad" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#C8A96A"/><stop offset="100%" stop-color="#C8A96A" stop-opacity="0"/></linearGradient></defs></svg>
+                        <svg id="heroGraphSvg" viewBox="0 0 200 100" preserveAspectRatio="none"><path id="heroGraphLine" d="M0,95 Q30,93 60,88 T100,70 T140,35 T180,8 L200,2" fill="none" stroke="#C8A96A" stroke-width="2.5"/><path id="heroGraphFill" d="M0,95 Q30,93 60,88 T100,70 T140,35 T180,8 L200,2 V100 H0Z" fill="url(#heroGrad)" opacity="0.15"/><defs><linearGradient id="heroGrad" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#C8A96A"/><stop offset="100%" stop-color="#C8A96A" stop-opacity="0"/></linearGradient></defs></svg>
                     </div>
                 </div>
             </div>
@@ -637,24 +637,12 @@
     </script>
 
     <!-- 실시간 접속자 팝업 -->
-    <div id="liveVisitorPopup" style="position:fixed; top:20px; right:20px; background:#fff; color:#333; padding:10px 18px; border-radius:100px; box-shadow:0 4px 20px rgba(0,0,0,0.15); font-size:0.82rem; font-weight:500; z-index:9999; display:none; align-items:center; gap:8px; font-family:var(--font);">
+    <div id="liveVisitorPopup" style="position:fixed; bottom:100px; right:20px; background:#333; color:#fff; padding:12px 20px; border-radius:100px; box-shadow:0 4px 20px rgba(0,0,0,0.3); font-size:0.82rem; font-weight:500; z-index:9998; display:none; align-items:center; gap:8px; font-family:var(--font);">
         <span style="display:inline-block; width:8px; height:8px; background:#e74c3c; border-radius:50%; animation:livePulse 1.5s infinite;"></span>
-        현재 사이트에 <strong id="liveCount">0</strong>명이 접속해 있습니다.
+        현재 사이트에 <strong id="liveCount" style="color:#fff;">0</strong> 명이 접속해 있습니다.
     </div>
     <style>
         @keyframes livePulse { 0%,100% { opacity:1; } 50% { opacity:0.3; } }
-        .partner-badge {
-            position:absolute; top:-10px; right:-18px;
-            background: linear-gradient(135deg, #FF6B6B, #FF8E53);
-            color:#fff; font-size:0.55rem; font-weight:700;
-            padding:3px 7px; border-radius:100px; white-space:nowrap;
-            animation: badgeBounce 2s ease-in-out infinite;
-            box-shadow: 0 2px 8px rgba(255,107,107,0.4);
-        }
-        @keyframes badgeBounce {
-            0%,100% { transform: translateY(0); }
-            50% { transform: translateY(-5px); }
-        }
     </style>
     <script>
         // 실시간 접속자 - 15초마다 자연스러운 숫자 변화
