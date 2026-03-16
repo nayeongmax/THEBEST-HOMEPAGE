@@ -10,16 +10,17 @@
     <link rel="stylesheet" href="styles.css">
     <style>
         .partner-badge {
-            position:absolute; top:-16px; left:50%; transform:translateX(-50%);
+            position:absolute; bottom:-18px; left:50%; transform:translateX(-50%);
             background: linear-gradient(135deg, #FF6B6B, #FF8E53);
-            color:#fff; font-size:0.7rem; font-weight:700;
+            color:#fff; font-size:0.72rem; font-weight:700;
             padding:4px 10px; border-radius:100px; white-space:nowrap;
             animation: badgeBounce 2s ease-in-out infinite;
             box-shadow: 0 2px 8px rgba(255,107,107,0.4);
+            line-height:1;
         }
         @keyframes badgeBounce {
             0%,100% { transform: translateX(-50%) translateY(0); }
-            50% { transform: translateX(-50%) translateY(-5px); }
+            50% { transform: translateX(-50%) translateY(-4px); }
         }
         /* Blue theme overrides for report content */
         .report-page {
@@ -764,11 +765,47 @@
                             <p style="font-size:0.75rem; color:var(--text-muted); margin-top:6px;">* 작업하는 플랫폼(카페, 블로그 등)의 대표 링크를 입력하세요</p>
                         </div>
 
+                        <!-- 카페 활동내역 직접 입력 (네이버 카페 전용) -->
+                        <div id="cafeActivitySection" style="display:none; margin-bottom:20px;">
+                            <div style="display:flex; justify-content:space-between; align-items:center;">
+                                <h4 class="form-section-title" style="margin-bottom:0; border:none; padding:0;">카페 활동내역 입력</h4>
+                            </div>
+                            <p style="font-size:0.75rem; color:var(--text-muted); margin-bottom:12px; margin-top:8px;">* 카페 관리 > 활동내역에서 작성일 이전 2분기 데이터를 입력하세요. 카페등급도 입력해주세요.</p>
+                            <div class="form-row-3" style="margin-bottom:8px;">
+                                <div class="form-group"><label>카페 등급</label><input type="text" id="cafeGrade" placeholder="예: 열매1단계"></div>
+                                <div class="form-group"><label>1분기 기간</label><input type="text" id="cafePeriod1" readonly></div>
+                                <div class="form-group"><label>2분기 기간</label><input type="text" id="cafePeriod2" readonly></div>
+                            </div>
+                            <p style="font-size:0.72rem; color:var(--primary); font-weight:600; margin-bottom:8px;">1분기 데이터</p>
+                            <div class="form-row-3" style="margin-bottom:8px;">
+                                <div class="form-group"><label>게시글 수</label><input type="number" id="cafePost1" placeholder="0" min="0"></div>
+                                <div class="form-group"><label>댓글 수</label><input type="number" id="cafeComment1" placeholder="0" min="0"></div>
+                                <div class="form-group"><label>좋아요 수</label><input type="number" id="cafeLike1" placeholder="0" min="0"></div>
+                            </div>
+                            <div class="form-row-3" style="margin-bottom:14px;">
+                                <div class="form-group"><label>검색 조회 수</label><input type="number" id="cafeSearch1" placeholder="0" min="0"></div>
+                                <div class="form-group"><label>조회 멤버 수</label><input type="number" id="cafeMember1" placeholder="0" min="0"></div>
+                                <div class="form-group"></div>
+                            </div>
+                            <p style="font-size:0.72rem; color:var(--primary); font-weight:600; margin-bottom:8px;">2분기 데이터</p>
+                            <div class="form-row-3" style="margin-bottom:8px;">
+                                <div class="form-group"><label>게시글 수</label><input type="number" id="cafePost2" placeholder="0" min="0"></div>
+                                <div class="form-group"><label>댓글 수</label><input type="number" id="cafeComment2" placeholder="0" min="0"></div>
+                                <div class="form-group"><label>좋아요 수</label><input type="number" id="cafeLike2" placeholder="0" min="0"></div>
+                            </div>
+                            <div class="form-row-3" style="margin-bottom:14px;">
+                                <div class="form-group"><label>검색 조회 수</label><input type="number" id="cafeSearch2" placeholder="0" min="0"></div>
+                                <div class="form-group"><label>조회 멤버 수</label><input type="number" id="cafeMember2" placeholder="0" min="0"></div>
+                                <div class="form-group"></div>
+                            </div>
+                            <button type="button" class="btn btn-primary" style="padding:10px 24px; font-size:0.82rem; margin-bottom:10px;" onclick="applyCafeActivity()">활동내역 → KPI 자동 반영</button>
+                        </div>
+
                         <div style="display:flex; justify-content:space-between; align-items:center;">
                             <h4 class="form-section-title" style="margin-bottom:0; border:none; padding:0;">KPI 성과 수치</h4>
                             <button type="button" class="btn btn-primary" style="padding:10px 24px; font-size:0.82rem;" onclick="autoAnalyze()">작업 내역 기반 자동 분석</button>
                         </div>
-                        <p style="font-size:0.75rem; color:var(--text-muted); margin-bottom:16px; margin-top:8px;">* 아래 작업 내역에 URL을 입력한 후 "자동 분석" 버튼을 누르면 KPI, 키워드, AI 분석이 자동으로 채워집니다</p>
+                        <p style="font-size:0.75rem; color:var(--text-muted); margin-bottom:16px; margin-top:8px;">* 아래 작업 내역에 URL을 입력한 후 "자동 분석" 버튼을 누르면 KPI, 키워드가 자동으로 채워집니다</p>
                         <div id="kpiFieldsContainer"></div>
 
                         <div style="display:flex; justify-content:space-between; align-items:center;">
@@ -935,7 +972,15 @@
                 document.getElementById('accessSection').style.display = 'none';
                 document.getElementById('reportView').classList.add('active');
                 document.getElementById('rptCompanyName').textContent = company;
-                generateReportTable();
+
+                // Load saved report data if exists
+                const savedData = localStorage.getItem('rpt_data_' + company);
+                if (savedData) {
+                    loadSavedReport(JSON.parse(savedData));
+                } else {
+                    generateReportTable();
+                }
+
                 animateRadarChart('both');
                 startRadarRepeat();
                 animateExposureChart();
@@ -1300,6 +1345,170 @@
             tbody.innerHTML = data.join('');
         }
 
+        // ===== Load Saved Report into View =====
+        function loadSavedReport(data) {
+            // Update header info
+            const infoPairs = document.querySelectorAll('#reportView .info-pair');
+            if (infoPairs[0]) infoPairs[0].querySelector('.ip-value').textContent = data.companyName || '';
+            if (infoPairs[1]) infoPairs[1].querySelector('.ip-value').textContent = data.platform || '';
+            if (infoPairs[2]) infoPairs[2].querySelector('.ip-value').textContent = data.teamName || '';
+            if (infoPairs[3]) infoPairs[3].querySelector('.ip-value').textContent = (data.startDate || '') + ' ~ ' + (data.endDate || '');
+            if (infoPairs[4]) infoPairs[4].querySelector('.ip-value').textContent = data.serviceType || '';
+            if (infoPairs[5]) infoPairs[5].querySelector('.ip-value').textContent = '월간 보고서 (' + (data.startDate || '') + ' ~ ' + (data.endDate || '') + ')';
+
+            // Update report title
+            const titleMap = { '네이버 카페': '카페활성화', '네이버 블로그': '블로그', '유튜브': '유튜브', '인스타그램': '인스타그램', '언론사': '언론홍보' };
+            const titleH3 = document.querySelector('#reportView .rpt-section-header h3');
+            if (titleH3) titleH3.textContent = (titleMap[data.platform] || data.platform || '') + ' 마케팅 결과보고서';
+
+            // Update KPI cards with saved data
+            const kpiCards = document.querySelectorAll('#reportView .kpi-card');
+            const kpiKeys = Object.keys(data.kpiData || {});
+            const kpiConfig = {
+                'createPostCount': { label: '총 게시글', unit: '건', icon: '&#128221;' },
+                'createCommentCount': { label: '총 댓글', unit: '개', icon: '&#128172;' },
+                'createExposure': { label: '예상 노출', unit: '+', icon: '&#128065;' },
+                'createVisits': { label: '예상 방문', unit: '+', icon: '&#128100;' },
+                'createEngagement': { label: '콘텐츠 참여율', unit: '%', icon: '&#128200;' },
+                'createMemberGrowth': { label: '회원 증가', unit: '명', icon: '&#128101;' },
+                'createSearchInflow': { label: '검색 유입', unit: '회', icon: '&#128269;' },
+                'createKeywordRank': { label: '키워드 순위', unit: '위', icon: '&#127942;' },
+                'createAvgViews': { label: '평균 조회', unit: '회', icon: '&#128293;' },
+                'createVideoCount': { label: '총 영상', unit: '건', icon: '&#127909;' },
+                'createSubscriberGrowth': { label: '구독자 증가', unit: '명', icon: '&#128101;' },
+                'createFollowerGrowth': { label: '팔로워 증가', unit: '명', icon: '&#128101;' },
+                'createReelsViews': { label: '릴스 조회', unit: '회', icon: '&#127909;' },
+                'createReach': { label: '도달 수', unit: '+', icon: '&#128065;' },
+                'createArticleCount': { label: '기사 수', unit: '건', icon: '&#128240;' },
+                'createAvgLikes': { label: '평균 좋아요', unit: '개', icon: '&#10084;' },
+                'createWatchTime': { label: '시청 시간', unit: '분', icon: '&#9201;' },
+                'createPortalSearch': { label: '포털 검색', unit: '건', icon: '&#128269;' },
+                'createBrandMention': { label: '브랜드 언급', unit: '건', icon: '&#128172;' }
+            };
+
+            const kpiGrid = document.querySelector('#reportView .kpi-grid');
+            if (kpiGrid && kpiKeys.length > 0) {
+                kpiGrid.innerHTML = '';
+                kpiKeys.forEach(key => {
+                    const cfg = kpiConfig[key] || { label: key, unit: '', icon: '&#128200;' };
+                    const val = Number(data.kpiData[key]);
+                    kpiGrid.innerHTML += `<div class="kpi-card">
+                        <div class="kpi-icon">${cfg.icon}</div>
+                        <div class="kpi-label">${cfg.label}</div>
+                        <div class="kpi-value">${val.toLocaleString()}</div>
+                        <div class="kpi-unit">${cfg.unit}</div>
+                    </div>`;
+                });
+            }
+
+            // Update work log table
+            const tbody = document.getElementById('reportTableBody');
+            if (data.workLog && data.workLog.length > 0) {
+                tbody.innerHTML = '';
+                data.workLog.forEach((row, i) => {
+                    tbody.innerHTML += `<tr><td>${i + 1}</td><td>${row.date || ''}</td><td><a href="${row.url || '#'}" target="_blank">${row.url || ''}</a></td></tr>`;
+                });
+            } else {
+                generateReportTable();
+            }
+
+            // Update AI analysis box
+            if (data.aiComment) {
+                const aiBox = document.querySelector('#reportView .ai-analysis-box');
+                if (aiBox) {
+                    const paragraphs = data.aiComment.split('\n').filter(p => p.trim());
+                    let html = '<h4>&#129302; AI 마케팅 분석</h4>';
+                    paragraphs.forEach(p => {
+                        if (p.startsWith('[')) html += `<p><strong>${p}</strong></p>`;
+                        else html += `<p>${p}</p>`;
+                    });
+                    aiBox.innerHTML = html;
+                }
+            }
+
+            // Update keyword section
+            if (data.keywords && data.keywords.length > 0) {
+                const kwSection = document.querySelectorAll('#reportView .rpt-section')[4];
+                if (kwSection) {
+                    const kwBody = kwSection.querySelector('.rpt-section-body');
+                    if (kwBody) {
+                        let html = '<div class="keyword-table"><table><thead><tr><th>키워드</th><th>노출수</th><th>순위</th></tr></thead><tbody>';
+                        data.keywords.forEach(k => {
+                            html += `<tr><td>${k.keyword}</td><td>${Number(k.exposure).toLocaleString()}</td><td>${k.rank}위</td></tr>`;
+                        });
+                        html += '</tbody></table></div>';
+                        kwBody.innerHTML = html;
+                    }
+                }
+            }
+
+            // Apply section toggles
+            if (data.toggles) {
+                sectionToggles.keyword = data.toggles.keyword !== false;
+                sectionToggles.content = data.toggles.content !== false;
+                sectionToggles.worklog = data.toggles.worklog !== false;
+            }
+        }
+
+        // ===== Cafe Activity Periods =====
+        function calculateCafePeriods() {
+            const dateInput = document.getElementById('createStartDate').value || new Date().toISOString().split('T')[0];
+            const d = new Date(dateInput);
+            const year = d.getFullYear();
+            const month = d.getMonth(); // 0-indexed
+
+            // Previous month, two half-month periods
+            const prevMonth = month === 0 ? 11 : month - 1;
+            const prevYear = month === 0 ? year - 1 : year;
+            const yy = String(prevYear).slice(2);
+            const mm = String(prevMonth + 1).padStart(2, '0');
+
+            const lastDay = new Date(prevYear, prevMonth + 1, 0).getDate();
+            const period1 = yy + '/' + mm + '/01 ~ ' + yy + '/' + mm + '/15';
+            const period2 = yy + '/' + mm + '/16 ~ ' + yy + '/' + mm + '/' + lastDay;
+
+            document.getElementById('cafePeriod1').value = period1;
+            document.getElementById('cafePeriod2').value = period2;
+        }
+
+        function applyCafeActivity() {
+            const q1 = {
+                posts: parseInt(document.getElementById('cafePost1').value) || 0,
+                comments: parseInt(document.getElementById('cafeComment1').value) || 0,
+                likes: parseInt(document.getElementById('cafeLike1').value) || 0,
+                searches: parseInt(document.getElementById('cafeSearch1').value) || 0,
+                members: parseInt(document.getElementById('cafeMember1').value) || 0
+            };
+            const q2 = {
+                posts: parseInt(document.getElementById('cafePost2').value) || 0,
+                comments: parseInt(document.getElementById('cafeComment2').value) || 0,
+                likes: parseInt(document.getElementById('cafeLike2').value) || 0,
+                searches: parseInt(document.getElementById('cafeSearch2').value) || 0,
+                members: parseInt(document.getElementById('cafeMember2').value) || 0
+            };
+
+            // Sum both quarters into KPI
+            const totalPosts = q1.posts + q2.posts;
+            const totalComments = q1.comments + q2.comments;
+            const totalLikes = q1.likes + q2.likes;
+            const totalSearches = q1.searches + q2.searches;
+            const totalMembers = q1.members + q2.members;
+            const exposure = totalSearches;
+            const engagement = totalPosts > 0 ? ((totalComments + totalLikes) / totalPosts).toFixed(1) : '0';
+
+            // Update KPI fields (make sure they're for 카페)
+            updateKPIFields();
+            const fill = (id, val) => { const el = document.getElementById(id); if (el) el.value = val; };
+            fill('createPostCount', totalPosts);
+            fill('createCommentCount', totalComments);
+            fill('createExposure', exposure);
+            fill('createVisits', totalMembers);
+            fill('createEngagement', engagement);
+            fill('createMemberGrowth', Math.abs(q2.members - q1.members));
+
+            alert('카페 활동내역이 KPI에 반영되었습니다.\n\n게시글: ' + totalPosts + '건 / 댓글: ' + totalComments + '건\n검색조회: ' + totalSearches.toLocaleString() + '회 / 조회멤버: ' + totalMembers + '명');
+        }
+
         // ===== Create Form Logic =====
         let createRowCount = 0;
         let createRowIdCounter = 0; // Unique ID counter (never decreases)
@@ -1355,15 +1564,82 @@
             e.preventDefault();
             const companyName = document.getElementById('createCafeName').value.trim();
             const pw = document.getElementById('createPassword').value.trim();
-            if (companyName && pw) {
-                localStorage.setItem('rpt_pw_' + companyName, pw);
+            if (!companyName || !pw) { alert('업체명과 비밀번호를 입력하세요.'); return; }
+
+            // Collect all form data
+            const platform = document.getElementById('createPlatform').value;
+            const serviceType = document.getElementById('createServiceType').value;
+            const startDate = document.getElementById('createStartDate').value;
+            const endDate = document.getElementById('createEndDate').value;
+            const teamName = document.getElementById('createTeamName').value;
+            const platformLink = document.getElementById('createPlatformLink').value;
+
+            // Collect KPI values from current visible fields
+            const kpiData = {};
+            document.querySelectorAll('#kpiFieldsContainer input').forEach(input => {
+                if (input.id && input.value) kpiData[input.id] = input.value;
+            });
+
+            // Collect keywords
+            const keywords = [];
+            for (let i = 1; i <= 5; i++) {
+                const kw = document.getElementById('kw' + i);
+                const exp = document.getElementById('kwExp' + i);
+                const rank = document.getElementById('kwRank' + i);
+                if (kw && kw.value) keywords.push({ keyword: kw.value, exposure: exp?.value || '', rank: rank?.value || '' });
             }
-            alert('보고서가 저장되었습니다.\n\n조회 정보:\n업체명: ' + companyName + '\n비밀번호: ' + pw + '\n\n(데모 모드 - 실제 저장 기능은 백엔드 연동이 필요합니다)');
+
+            // Collect work log
+            const workLog = [];
+            document.getElementById('createTableBody').querySelectorAll('tr').forEach(row => {
+                const dateInput = row.querySelector('input[name="rowDate"]');
+                const urlInput = row.querySelector('input[name="rowUrl"]');
+                if (dateInput && urlInput && (dateInput.value || urlInput.value)) {
+                    workLog.push({ date: dateInput.value, url: urlInput.value });
+                }
+            });
+
+            // AI comment
+            const aiComment = document.getElementById('createAIComment').value;
+
+            // Cafe activity data
+            const cafeActivity = {
+                grade: document.getElementById('cafeGrade')?.value || '',
+                period1: document.getElementById('cafePeriod1')?.value || '',
+                period2: document.getElementById('cafePeriod2')?.value || '',
+                q1: { posts: document.getElementById('cafePost1')?.value, comments: document.getElementById('cafeComment1')?.value, likes: document.getElementById('cafeLike1')?.value, searches: document.getElementById('cafeSearch1')?.value, members: document.getElementById('cafeMember1')?.value },
+                q2: { posts: document.getElementById('cafePost2')?.value, comments: document.getElementById('cafeComment2')?.value, likes: document.getElementById('cafeLike2')?.value, searches: document.getElementById('cafeSearch2')?.value, members: document.getElementById('cafeMember2')?.value }
+            };
+
+            // Section toggles
+            const toggles = {
+                keyword: document.getElementById('toggleKeywordSection').checked,
+                content: document.getElementById('toggleContentSection').checked,
+                worklog: document.getElementById('toggleWorkLogSection').checked
+            };
+
+            const reportData = {
+                companyName, platform, serviceType, startDate, endDate, teamName, platformLink,
+                kpiData, keywords, workLog, aiComment, cafeActivity, toggles
+            };
+
+            localStorage.setItem('rpt_pw_' + companyName, pw);
+            localStorage.setItem('rpt_data_' + companyName, JSON.stringify(reportData));
+
+            alert('보고서가 저장되었습니다.\n\n조회 정보:\n업체명: ' + companyName + '\n비밀번호: ' + pw);
         });
 
         // ===== Platform Custom Input Toggle =====
         document.getElementById('createPlatform').addEventListener('change', function() {
             const customInput = document.getElementById('createPlatformCustom');
+            // Show/hide cafe activity section
+            const cafeSection = document.getElementById('cafeActivitySection');
+            if (this.value === '네이버 카페') {
+                cafeSection.style.display = '';
+                calculateCafePeriods();
+            } else {
+                cafeSection.style.display = 'none';
+            }
             if (this.value === '직접입력') {
                 customInput.style.display = '';
                 customInput.required = true;
@@ -1651,29 +1927,91 @@
             const service = document.getElementById('createServiceType').value;
             const company = document.getElementById('createCafeName').value || '브랜드';
             const userKeywords = document.getElementById('aiKeywordInput').value.trim();
-            const rows = document.getElementById('createTableBody').querySelectorAll('tr');
-            let postCount = 0;
-            rows.forEach(row => { const u = row.querySelector('input[name="rowUrl"]'); if (u && u.value) postCount++; });
-            postCount = Math.max(postCount, 1);
 
-            const exposure = parseInt(document.getElementById('createExposure')?.value) || Math.round(postCount * 5000);
-            const visits = parseInt(document.getElementById('createVisits')?.value) || Math.round(exposure * 0.02);
+            // Read actual KPI values from form
+            const kpiValues = {};
+            document.querySelectorAll('#kpiFieldsContainer input').forEach(input => {
+                if (input.id && input.value) kpiValues[input.id] = Number(input.value);
+            });
+
+            const postCount = kpiValues.createPostCount || kpiValues.createVideoCount || kpiValues.createArticleCount || 1;
+            const exposure = kpiValues.createExposure || kpiValues.createReach || 0;
+            const visits = kpiValues.createVisits || 0;
+            const comments = kpiValues.createCommentCount || 0;
+            const engagement = kpiValues.createEngagement || 0;
+            const memberGrowth = kpiValues.createMemberGrowth || 0;
+            const cafeGrade = document.getElementById('cafeGrade')?.value || '';
 
             // Build keyword-enhanced analysis
             const kwList = userKeywords ? userKeywords.split(/[,，\s]+/).filter(k => k) : [];
-            const kwText = kwList.length > 0 ? kwList.map(k => '"' + k + '"').join(', ') : '';
             const kwInsight = kwList.length > 0
-                ? `\n\n[핵심 키워드 분석]\n${kwList.map(k => '- "' + k + '": 해당 키워드 검색 노출이 강화되고 있으며, 경쟁 키워드 대비 콘텐츠 점유율이 상승 추세입니다.').join('\n')}\n\n키워드 기반 콘텐츠 최적화가 진행되어 자연 검색 유입 경로가 다변화되고 있습니다.`
+                ? `\n\n[핵심 키워드 분석]\n${kwList.map(k => '- "' + k + '": 해당 키워드의 검색 노출이 강화되고 있으며, 콘텐츠 점유율이 상승하고 있습니다.').join('\n')}\n\n키워드 기반 콘텐츠 최적화를 통해 자연 검색 유입 경로가 다변화되고 있습니다.`
                 : '';
 
+            // KPI-based positive message generation
             const platformAnalysis = {
-                '네이버 카페': `[카페활성화 성과 분석]\n\n이번 카페활성화 캠페인은 총 ${postCount}건의 작업이 진행되었으며, 카페 내 활동량이 안정적으로 증가하고 있습니다.\n\n회원 유입과 게시글 반응이 꾸준히 상승하여 카페 등급 향상에 긍정적이며, 현재 추세가 안정적인 성장세를 유지하고 있습니다.${kwInsight}\n\n카페활성화는 지속적인 운영이 핵심입니다. 연장 진행 시 회원 활동량이 더욱 가속화되어 검색 유입 및 제휴 광고 기회가 확대될 것으로 분석됩니다.\n\n현재 성장 곡선 유지 시 월 평균 노출 ${Math.round(exposure * 1.3).toLocaleString()}+ 달성이 가능하며, 카페 내 검색 유입이 약 30~40% 추가 증가할 것으로 예상됩니다.`,
-                '네이버 블로그': `[블로그 대행 성과 분석]\n\n이번 블로그 캠페인은 총 ${postCount}건의 콘텐츠가 발행되었으며, 예상 노출수 ${exposure.toLocaleString()}회를 기록했습니다.\n\n블로그 상위노출 키워드가 안정적으로 확보되고 있으며, 검색 노출이 강화되는 추세입니다.${kwInsight}\n\n블로그는 누적 콘텐츠가 많을수록 검색 노출이 강화됩니다. 연장 진행 시 상위노출 키워드가 추가 확보되어 자연 유입이 더욱 증가할 것으로 분석됩니다.\n\n현재 추세 유지 시 월 평균 방문자 ${Math.round(visits * 1.4).toLocaleString()}+ 달성과 함께 전환율 상승이 예상됩니다.`,
-                '유튜브': `[유튜브 대행 성과 분석]\n\n이번 유튜브 캠페인은 총 ${postCount}건의 영상이 제작되었으며, 예상 노출수 ${exposure.toLocaleString()}회를 기록했습니다.\n\n영상 조회수와 구독자 반응이 우수하며, 시청 지속시간이 업종 평균 대비 높은 수준입니다.${kwInsight}\n\n유튜브는 꾸준한 영상 업로드가 알고리즘 추천에 핵심적입니다. 연장 진행 시 채널 성장 속도가 가속화되어 추천 영상 노출이 크게 증가할 것으로 분석됩니다.\n\n현재 성장세 유지 시 구독자 및 조회수가 약 50% 이상 추가 성장할 것으로 예상됩니다.`,
-                '인스타그램': `[인스타그램 대행 성과 분석]\n\n이번 인스타그램 캠페인은 총 ${postCount}건의 콘텐츠가 발행되었으며, 예상 도달수 ${exposure.toLocaleString()}회를 기록했습니다.\n\n팔로워 증가율과 콘텐츠 인게이지먼트가 안정적이며, 릴스 및 피드 콘텐츠의 반응이 우수합니다.${kwInsight}\n\n인스타그램은 지속적인 콘텐츠 운영이 브랜드 인지도에 핵심적입니다. 연장 진행 시 팔로워 성장과 함께 브랜드 신뢰도가 더욱 강화될 것으로 분석됩니다.\n\n현재 추세 유지 시 팔로워 및 도달수가 약 40% 추가 성장할 것으로 예상됩니다.`,
-                '언론사': `[언론홍보 성과 분석]\n\n이번 언론홍보 캠페인은 총 ${postCount}건의 보도자료가 배포되었으며, 예상 노출수 ${exposure.toLocaleString()}회를 기록했습니다.\n\n주요 언론사 게재를 통해 브랜드 신뢰도 및 검색 노출이 크게 강화되었습니다.${kwInsight}\n\n언론홍보는 지속적인 노출이 브랜드 권위 확립에 핵심적입니다. 연장 진행 시 검색 결과에 긍정적 기사가 누적되어 브랜드 이미지가 더욱 공고해질 것으로 분석됩니다.\n\n추가 보도 진행 시 브랜드 검색량이 약 30% 이상 증가할 것으로 예상됩니다.`
+                '네이버 카페': () => {
+                    let msg = `[카페활성화 성과 분석]\n\n`;
+                    msg += `이번 캠페인에서 총 게시글 ${postCount.toLocaleString()}건, 댓글 ${comments.toLocaleString()}건이 작성되었습니다.`;
+                    if (exposure > 0) msg += ` 검색 조회수 ${exposure.toLocaleString()}회를 기록하며 카페 검색 노출이 크게 향상되었습니다.`;
+                    if (cafeGrade) msg += `\n\n현재 카페 등급은 "${cafeGrade}"이며, `;
+                    else msg += `\n\n`;
+                    msg += `게시글과 댓글 활동이 활발하게 이루어져 카페 활성도가 안정적으로 상승하고 있습니다.`;
+                    if (engagement > 0) msg += ` 콘텐츠 참여율 ${engagement}%로 회원들의 적극적인 반응을 확인할 수 있습니다.`;
+                    if (memberGrowth > 0) msg += `\n\n회원이 ${memberGrowth}명 증가하여 카페 성장세가 뚜렷합니다.`;
+                    msg += kwInsight;
+                    msg += `\n\n카페활성화는 지속적인 운영이 핵심입니다. 연장 진행 시 검색 유입 및 제휴 광고 기회가 더욱 확대될 것으로 분석됩니다.`;
+                    if (exposure > 0) msg += `\n\n현재 성장세 유지 시 월 검색 조회수 ${Math.round(exposure * 1.3).toLocaleString()}+ 달성이 기대됩니다.`;
+                    return msg;
+                },
+                '네이버 블로그': () => {
+                    let msg = `[블로그 대행 성과 분석]\n\n총 ${postCount.toLocaleString()}건의 콘텐츠가 발행되었으며`;
+                    if (exposure > 0) msg += `, 예상 노출수 ${exposure.toLocaleString()}회를 기록했습니다.`;
+                    else msg += `.`;
+                    const searchInflow = kpiValues.createSearchInflow || 0;
+                    const keywordRank = kpiValues.createKeywordRank || 0;
+                    if (searchInflow > 0) msg += `\n\n검색 유입 ${searchInflow.toLocaleString()}회로 블로그를 통한 자연 유입이 꾸준히 이루어지고 있습니다.`;
+                    if (keywordRank > 0) msg += ` 주요 키워드 평균 ${keywordRank}위권에 안정적으로 노출되고 있습니다.`;
+                    msg += kwInsight;
+                    msg += `\n\n블로그는 누적 콘텐츠가 많을수록 검색 노출이 강화됩니다. 연장 진행 시 상위노출 키워드가 추가 확보되어 자연 유입이 더욱 증가할 것으로 분석됩니다.`;
+                    if (visits > 0) msg += `\n\n현재 추세 유지 시 월 방문자 ${Math.round(visits * 1.4).toLocaleString()}+ 달성이 예상됩니다.`;
+                    return msg;
+                },
+                '유튜브': () => {
+                    let msg = `[유튜브 대행 성과 분석]\n\n총 ${postCount.toLocaleString()}건의 영상이 제작되었으며`;
+                    if (exposure > 0) msg += `, 예상 노출수 ${exposure.toLocaleString()}회를 기록했습니다.`;
+                    const watchTime = kpiValues.createWatchTime || 0;
+                    const subGrowth = kpiValues.createSubscriberGrowth || 0;
+                    if (watchTime > 0) msg += `\n\n총 시청시간 ${watchTime.toLocaleString()}분으로 시청 지속시간이 업종 평균 대비 높은 수준입니다.`;
+                    if (subGrowth > 0) msg += ` 구독자가 ${subGrowth}명 증가하여 채널 성장이 순조롭습니다.`;
+                    msg += kwInsight;
+                    msg += `\n\n유튜브는 꾸준한 영상 업로드가 알고리즘 추천에 핵심적입니다. 연장 진행 시 채널 성장이 가속화될 것으로 분석됩니다.`;
+                    return msg;
+                },
+                '인스타그램': () => {
+                    let msg = `[인스타그램 대행 성과 분석]\n\n총 ${postCount.toLocaleString()}건의 콘텐츠가 발행되었으며`;
+                    const reach = kpiValues.createReach || exposure;
+                    const follower = kpiValues.createFollowerGrowth || 0;
+                    if (reach > 0) msg += `, 도달수 ${reach.toLocaleString()}회를 기록했습니다.`;
+                    if (follower > 0) msg += `\n\n팔로워가 ${follower}명 증가하여 브랜드 인지도가 꾸준히 확장되고 있습니다.`;
+                    if (engagement > 0) msg += ` 인게이지먼트율 ${engagement}%로 콘텐츠 반응이 우수합니다.`;
+                    msg += kwInsight;
+                    msg += `\n\n인스타그램은 지속적인 콘텐츠 운영이 핵심입니다. 연장 진행 시 팔로워 성장과 함께 브랜드 신뢰도가 더욱 강화될 것으로 분석됩니다.`;
+                    return msg;
+                },
+                '언론사': () => {
+                    let msg = `[언론홍보 성과 분석]\n\n총 ${postCount.toLocaleString()}건의 보도자료가 배포되었으며`;
+                    if (exposure > 0) msg += `, 예상 노출수 ${exposure.toLocaleString()}회를 기록했습니다.`;
+                    const brandMention = kpiValues.createBrandMention || 0;
+                    if (brandMention > 0) msg += `\n\n브랜드 언급 ${brandMention}건으로 언론 노출이 활발히 이루어지고 있습니다.`;
+                    msg += kwInsight;
+                    msg += `\n\n언론홍보는 지속적인 노출이 브랜드 권위 확립에 핵심적입니다. 연장 진행 시 브랜드 이미지가 더욱 공고해질 것으로 분석됩니다.`;
+                    return msg;
+                }
             };
-            const aiComment = platformAnalysis[platform] || `[${service || '마케팅'} 성과 분석]\n\n이번 ${service || '마케팅'} 캠페인은 총 ${postCount}건의 작업이 진행되었으며, 예상 노출수 ${exposure.toLocaleString()}회를 기록했습니다.\n\n콘텐츠 반응률이 업종 평균 대비 우수하며, 전반적인 마케팅 성과가 긍정적입니다.${kwInsight}\n\n연장 진행 시 현재의 성장세가 더욱 가속화되어 노출 및 유입이 약 30~40% 추가 증가할 것으로 분석됩니다.\n\n지속적인 마케팅 운영이 안정적인 성과 유지와 추가 성장에 핵심적인 역할을 할 것으로 예상됩니다.`;
+
+            const generator = platformAnalysis[platform];
+            const aiComment = generator ? generator() : `[${service || '마케팅'} 성과 분석]\n\n총 ${postCount}건의 작업이 진행되었으며, 전반적인 마케팅 성과가 긍정적입니다.${kwInsight}\n\n연장 진행 시 현재의 성장세가 더욱 가속화될 것으로 분석됩니다.`;
 
             document.getElementById('createAIComment').value = aiComment;
         }
