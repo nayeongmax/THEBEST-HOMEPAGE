@@ -89,29 +89,137 @@ document.querySelectorAll('.stat-number').forEach(el => {
     counterObserver.observe(el);
 });
 
-// ===== Hero Graph Rising Animation =====
-// Steep upward graph - starts flat then shoots up steeply (급경사 유지)
-function animateHeroGraph() {
-    const line = document.getElementById('heroGraphLine');
-    const fill = document.getElementById('heroGraphFill');
-    if (!line || !fill) return;
+// ===== Hero Bar+Line Chart (Canvas) =====
+function initHeroChart() {
+    const canvas = document.getElementById('heroBarChart');
+    if (!canvas) return;
+    const ctx = canvas.getContext('2d');
 
-    // All paths maintain steep upward trajectory - only subtle variation
-    const paths = [
-        { line: 'M0,99 Q25,99 50,98 T90,96 T130,90 T160,72 T185,30 L200,2', fill: 'M0,99 Q25,99 50,98 T90,96 T130,90 T160,72 T185,30 L200,2 V100 H0Z' },
-        { line: 'M0,99 Q25,99 50,98 T90,95 T130,88 T160,68 T185,26 L200,1', fill: 'M0,99 Q25,99 50,98 T90,95 T130,88 T160,68 T185,26 L200,1 V100 H0Z' },
-        { line: 'M0,99 Q25,99 50,98 T90,96 T130,91 T160,74 T185,32 L200,3', fill: 'M0,99 Q25,99 50,98 T90,96 T130,91 T160,74 T185,32 L200,3 V100 H0Z' }
-    ];
-
-    let step = 0;
-    function nextStep() {
-        step = (step + 1) % paths.length;
-        line.setAttribute('d', paths[step].line);
-        fill.setAttribute('d', paths[step].fill);
+    function resize() {
+        const rect = canvas.parentElement.getBoundingClientRect();
+        canvas.width = rect.width * 2;
+        canvas.height = rect.height * 2;
     }
-    setInterval(nextStep, 10000);
+    resize();
+    window.addEventListener('resize', resize);
+
+    // Bar data - ascending pattern
+    const barCount = 14;
+    let barHeights = [];
+    let targetHeights = [];
+    let lineProgress = 0;
+
+    function generateTargets() {
+        const arr = [];
+        for (let i = 0; i < barCount; i++) {
+            const base = 15 + (i / barCount) * 70;
+            arr.push(base + Math.random() * 12 - 4);
+        }
+        return arr;
+    }
+
+    targetHeights = generateTargets();
+    barHeights = targetHeights.map(() => 0);
+
+    function draw() {
+        const w = canvas.width;
+        const h = canvas.height;
+        ctx.clearRect(0, 0, w, h);
+
+        const gap = w / (barCount + 1);
+        const barW = gap * 0.5;
+        const maxH = h * 0.85;
+
+        // Draw bars with gradient
+        for (let i = 0; i < barCount; i++) {
+            const x = gap * (i + 0.75);
+            const bh = (barHeights[i] / 100) * maxH;
+            const y = h - bh;
+
+            const grad = ctx.createLinearGradient(x, y, x, h);
+            grad.addColorStop(0, 'rgba(100, 160, 255, 0.7)');
+            grad.addColorStop(1, 'rgba(60, 120, 220, 0.2)');
+            ctx.fillStyle = grad;
+            ctx.beginPath();
+            ctx.roundRect(x - barW / 2, y, barW, bh, [4, 4, 0, 0]);
+            ctx.fill();
+        }
+
+        // Draw line over bars (glowing)
+        if (lineProgress > 0) {
+            const pts = [];
+            for (let i = 0; i < barCount; i++) {
+                const x = gap * (i + 0.75);
+                const bh = (barHeights[i] / 100) * maxH;
+                pts.push({ x, y: h - bh - 4 });
+            }
+
+            // Glow
+            ctx.shadowColor = 'rgba(100, 200, 255, 0.6)';
+            ctx.shadowBlur = 12;
+            ctx.strokeStyle = 'rgba(180, 220, 255, 0.9)';
+            ctx.lineWidth = 3;
+            ctx.beginPath();
+            const visiblePts = Math.floor(pts.length * lineProgress);
+            for (let i = 0; i <= visiblePts && i < pts.length; i++) {
+                if (i === 0) ctx.moveTo(pts[i].x, pts[i].y);
+                else ctx.lineTo(pts[i].x, pts[i].y);
+            }
+            ctx.stroke();
+            ctx.shadowBlur = 0;
+
+            // Dots
+            for (let i = 0; i <= visiblePts && i < pts.length; i++) {
+                ctx.beginPath();
+                ctx.arc(pts[i].x, pts[i].y, 3, 0, Math.PI * 2);
+                ctx.fillStyle = '#fff';
+                ctx.fill();
+            }
+
+            // Arrow at end
+            if (visiblePts >= pts.length - 1) {
+                const last = pts[pts.length - 1];
+                ctx.beginPath();
+                ctx.moveTo(last.x + 6, last.y - 10);
+                ctx.lineTo(last.x + 16, last.y - 20);
+                ctx.lineTo(last.x + 10, last.y - 20);
+                ctx.moveTo(last.x + 16, last.y - 20);
+                ctx.lineTo(last.x + 16, last.y - 14);
+                ctx.strokeStyle = 'rgba(180, 220, 255, 0.8)';
+                ctx.lineWidth = 2;
+                ctx.stroke();
+            }
+        }
+    }
+
+    // Animate bars growing
+    let animStart = null;
+    function animateBars(timestamp) {
+        if (!animStart) animStart = timestamp;
+        const elapsed = timestamp - animStart;
+        const duration = 2000;
+        const progress = Math.min(elapsed / duration, 1);
+        const eased = 1 - Math.pow(1 - progress, 3);
+
+        for (let i = 0; i < barCount; i++) {
+            barHeights[i] = targetHeights[i] * eased;
+        }
+        lineProgress = Math.max(0, (progress - 0.3) / 0.7);
+
+        draw();
+        if (progress < 1) requestAnimationFrame(animateBars);
+    }
+    requestAnimationFrame(animateBars);
+
+    // Repeat every 10 seconds with new subtle targets
+    setInterval(() => {
+        targetHeights = generateTargets();
+        animStart = null;
+        lineProgress = 0;
+        requestAnimationFrame(animateBars);
+    }, 10000);
 }
-animateHeroGraph();
+initHeroChart();
 
 // ===== Case Bar After Animation =====
 const caseBarTargets = [75, 50, 65];
