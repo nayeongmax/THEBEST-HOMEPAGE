@@ -112,7 +112,7 @@ function initHeroChart() {
     function generateTargets() {
         const arr = [];
         for (let i = 0; i < barCount; i++) {
-            const base = 15 + (i / barCount) * 70;
+            const base = 33 + (i / barCount) * 55;
             arr.push(base + Math.random() * 12 - 4);
         }
         return arr;
