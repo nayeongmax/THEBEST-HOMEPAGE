@@ -3,6 +3,9 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
+    <meta http-equiv="Pragma" content="no-cache">
+    <meta http-equiv="Expires" content="0">
     <title>AI 맞춤견적서 | 더베스트마케팅</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -265,7 +268,14 @@
         </div>
     </footer>
 
-    <script src="estimate.js?v=20260316"></script>
+    <script>
+        // 캐시 방지: 동적 타임스탬프로 estimate.js 로드
+        (function() {
+            var s = document.createElement('script');
+            s.src = 'estimate.js?v=' + Date.now();
+            document.currentScript.parentNode.insertBefore(s, document.currentScript.nextSibling);
+        })();
+    </script>
     <script>
         document.addEventListener('contextmenu', function(e) { e.preventDefault(); });
         document.addEventListener('keydown', function(e) {
