@@ -112,8 +112,16 @@ function initHeroChart() {
     function generateTargets() {
         const arr = [];
         for (let i = 0; i < barCount; i++) {
-            const base = 33 + (i / barCount) * 55;
-            arr.push(base + Math.random() * 12 - 4);
+            let base;
+            if (i < barCount - 4) {
+                // First 10 bars: start at 33% (1/3) and gradually rise to ~55%
+                base = 33 + (i / (barCount - 4)) * 22;
+            } else {
+                // Last 4 bars: steep climb from ~60% up to ~95%
+                const idx = i - (barCount - 4);
+                base = 60 + idx * 12;
+            }
+            arr.push(base + Math.random() * 6 - 2);
         }
         return arr;
     }
