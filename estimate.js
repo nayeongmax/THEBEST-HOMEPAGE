@@ -213,20 +213,20 @@ function toggleTierCard(header) {
     card.classList.toggle('expanded');
 }
 
-// ===== Industry Radar Data =====
+// ===== Industry Radar Data (realistic 1-month improvement) =====
 const industryRadarData = {
-    '뷰티/미용': { labels: ['온라인 노출', '고객 유입', '브랜드 신뢰도', '전환율', '재방문율'], before: [25, 20, 30, 15, 20], after: [90, 85, 88, 75, 80] },
-    '맛집/요식업': { labels: ['온라인 노출', '고객 유입', '브랜드 신뢰도', '전환율', '재방문율'], before: [30, 25, 25, 20, 35], after: [92, 88, 85, 70, 82] },
-    '숙박/펜션': { labels: ['온라인 노출', '예약 전환', '브랜드 신뢰도', '객실 가동률', '재방문율'], before: [20, 15, 25, 30, 15], after: [88, 80, 90, 85, 75] },
-    '병원/의료': { labels: ['온라인 노출', '신규 환자', '브랜드 신뢰도', '예약 전환', '재방문율'], before: [20, 15, 35, 15, 30], after: [85, 80, 95, 72, 85] },
-    '학원/교육': { labels: ['온라인 노출', '학생 유입', '브랜드 신뢰도', '등록 전환', '재등록율'], before: [25, 20, 30, 20, 25], after: [88, 82, 90, 75, 80] },
-    '인테리어/건설': { labels: ['온라인 노출', '문의량', '브랜드 신뢰도', '계약 전환', '소개율'], before: [15, 15, 25, 10, 20], after: [85, 78, 88, 65, 75] },
-    '쇼핑몰/이커머스': { labels: ['온라인 노출', '트래픽', '브랜드 신뢰도', '구매 전환', '재구매율'], before: [30, 25, 20, 15, 20], after: [95, 90, 85, 78, 72] },
-    '부동산': { labels: ['온라인 노출', '문의량', '브랜드 신뢰도', '계약 전환', '소개율'], before: [20, 15, 30, 10, 25], after: [82, 75, 90, 60, 78] },
-    'IT/스타트업': { labels: ['온라인 노출', '유저 유입', '브랜드 신뢰도', '전환율', '리텐션'], before: [30, 20, 15, 15, 15], after: [92, 85, 80, 72, 70] },
-    '프랜차이즈': { labels: ['온라인 노출', '고객 유입', '브랜드 신뢰도', '전환율', '충성도'], before: [35, 30, 35, 20, 25], after: [92, 88, 92, 78, 82] },
-    '제조업': { labels: ['온라인 노출', '문의량', '브랜드 신뢰도', '계약 전환', 'B2B 인지도'], before: [15, 10, 30, 10, 15], after: [78, 70, 88, 55, 75] },
-    '기타': { labels: ['온라인 노출', '고객 유입', '브랜드 신뢰도', '전환율', '재방문율'], before: [20, 18, 25, 15, 18], after: [85, 80, 85, 70, 72] }
+    '뷰티/미용': { labels: ['온라인 노출', '고객 유입', '브랜드 신뢰도', '전환율', '재방문율'], before: [25, 20, 30, 15, 20], after: [42, 35, 45, 28, 32] },
+    '맛집/요식업': { labels: ['온라인 노출', '고객 유입', '브랜드 신뢰도', '전환율', '재방문율'], before: [30, 25, 25, 20, 35], after: [48, 40, 40, 33, 48] },
+    '숙박/펜션': { labels: ['온라인 노출', '예약 전환', '브랜드 신뢰도', '객실 가동률', '재방문율'], before: [20, 15, 25, 30, 15], after: [38, 28, 40, 44, 26] },
+    '병원/의료': { labels: ['온라인 노출', '신규 환자', '브랜드 신뢰도', '예약 전환', '재방문율'], before: [20, 15, 35, 15, 30], after: [36, 28, 50, 26, 42] },
+    '학원/교육': { labels: ['온라인 노출', '학생 유입', '브랜드 신뢰도', '등록 전환', '재등록율'], before: [25, 20, 30, 20, 25], after: [42, 34, 44, 32, 36] },
+    '인테리어/건설': { labels: ['온라인 노출', '문의량', '브랜드 신뢰도', '계약 전환', '소개율'], before: [15, 15, 25, 10, 20], after: [32, 28, 40, 20, 32] },
+    '쇼핑몰/이커머스': { labels: ['온라인 노출', '트래픽', '브랜드 신뢰도', '구매 전환', '재구매율'], before: [30, 25, 20, 15, 20], after: [50, 42, 35, 28, 32] },
+    '부동산': { labels: ['온라인 노출', '문의량', '브랜드 신뢰도', '계약 전환', '소개율'], before: [20, 15, 30, 10, 25], after: [36, 28, 44, 20, 36] },
+    'IT/스타트업': { labels: ['온라인 노출', '유저 유입', '브랜드 신뢰도', '전환율', '리텐션'], before: [30, 20, 15, 15, 15], after: [48, 35, 28, 26, 25] },
+    '프랜차이즈': { labels: ['온라인 노출', '고객 유입', '브랜드 신뢰도', '전환율', '충성도'], before: [35, 30, 35, 20, 25], after: [52, 44, 48, 32, 36] },
+    '제조업': { labels: ['온라인 노출', '문의량', '브랜드 신뢰도', '계약 전환', 'B2B 인지도'], before: [15, 10, 30, 10, 15], after: [30, 22, 44, 18, 28] },
+    '기타': { labels: ['온라인 노출', '고객 유입', '브랜드 신뢰도', '전환율', '재방문율'], before: [20, 18, 25, 15, 18], after: [36, 32, 38, 26, 28] }
 };
 
 const industryImages = {
@@ -248,103 +248,96 @@ const industryImages = {
 const industryAnalysisData = {
     '뷰티/미용': {
         competition: '높음',
-        channels: ['SEO', 'SNS', '리뷰'],
-        analysisText: '뷰티 업종은 SNS 기반 비주얼 콘텐츠가 핵심이며 리뷰와 후기가 신규 고객 유입에 결정적 영향을 줍니다.',
-        strategies: ['인스타그램 콘텐츠 강화', '블로그 리뷰 확대', 'SEO 키워드 최적화'],
-        problems: ['SNS 콘텐츠 경쟁 과열', '리뷰 콘텐츠 부족', '검색 노출 순위 하락'],
-        topStrategy: { name: 'SNS', metric: '노출 +85%' },
-        bestStrategy: { name: '리뷰', metric: '신뢰도 +70%' },
-        packageStrategy: { name: 'SEO', metric: '전환 +45%' },
+        channels: ['인스타그램', '네이버 블로그', '유튜브'],
+        analysisText: '뷰티 업종은 비주얼 중심의 SNS 콘텐츠와 블로그 후기가 신규 고객 유입과 예약 전환의 핵심 동력입니다. 인스타그램 릴스를 통한 바이럴과 블로그 체험단 리뷰를 동시에 운영해야 합니다.',
+        strategies: ['인스타그램 릴스 + 피드를 활용한 비포/애프터 콘텐츠로 MZ세대 유입 극대화', '네이버 블로그 체험단 20명 이상 운영으로 후기 장악 및 검색 상위노출', '유튜브 숏폼으로 시술 과정 공개하여 신뢰도와 바이럴 동시 확보'],
+        topStrategy: { name: '인스타그램', metric: '노출 +85%' },
+        bestStrategy: { name: '블로그', metric: '신뢰도 +70%' },
+        packageStrategy: { name: '유튜브', metric: '전환 +45%' },
         contents: [
             { name: '인스타 콘텐츠', desc: '비주얼 브랜딩' },
-            { name: '블로그 리뷰', desc: '후기 마케팅' },
+            { name: '블로그 체험단', desc: '후기 마케팅' },
             { name: '숏폼 콘텐츠', desc: '바이럴 확산' }
         ]
     },
     '맛집/요식업': {
         competition: '매우 높음',
-        channels: ['SEO', 'SNS', '리뷰'],
-        analysisText: '요식업은 지역 기반 검색 노출과 리뷰 콘텐츠가 방문 전환에 가장 중요한 요소입니다.',
-        strategies: ['블로그 체험단 운영', '인스타그램 맛집 콘텐츠', '네이버 플레이스 최적화'],
-        problems: ['지역 검색 노출 부족', '리뷰 수 경쟁 열세', 'SNS 브랜드 인지도 부족'],
-        topStrategy: { name: 'SEO', metric: '노출 +90%' },
-        bestStrategy: { name: '리뷰', metric: '방문 +65%' },
-        packageStrategy: { name: 'SNS', metric: '전환 +40%' },
+        channels: ['네이버 블로그', '인스타그램', '네이버 플레이스'],
+        analysisText: '요식업은 지역 기반 블로그 검색과 인스타그램 맛집 태그가 방문 전환의 핵심입니다. 체험단 리뷰와 릴스 콘텐츠를 병행해야 경쟁 업체를 이길 수 있습니다.',
+        strategies: ['블로그 체험단 30명 이상 동시 운영으로 네이버 검색 상위 5개 장악', '인스타그램 맛집 태그 + 릴스로 로컬 MZ세대 유입 파이프라인 구축', '네이버 플레이스 리뷰 관리 + 사진 최적화로 지역 검색 1페이지 확보'],
+        topStrategy: { name: '블로그', metric: '노출 +90%' },
+        bestStrategy: { name: '인스타그램', metric: '방문 +65%' },
+        packageStrategy: { name: '네이버 플레이스', metric: '전환 +40%' },
         contents: [
             { name: '블로그 체험단', desc: '리뷰 확보' },
             { name: '인스타 콘텐츠', desc: '맛집 브랜딩' },
-            { name: '네이버 플레이스', desc: '지역 노출' }
+            { name: '플레이스 최적화', desc: '지역 노출' }
         ]
     },
     '숙박/펜션': {
         competition: '중간',
-        channels: ['SEO', 'SNS', '리뷰'],
-        analysisText: '숙박 업종은 검색 기반 유입이 높고 리뷰 콘텐츠가 예약 전환에 중요한 영향을 줍니다.',
-        strategies: ['SEO 콘텐츠 강화', '리뷰 콘텐츠 확장', 'SNS 노출 확대'],
-        problems: ['검색 노출 부족', '리뷰 콘텐츠 부족', 'SNS 브랜드 인지도 부족'],
-        topStrategy: { name: 'SEO', metric: '노출 +80%' },
-        bestStrategy: { name: 'SNS', metric: '노출 +60%' },
-        packageStrategy: { name: '리뷰', metric: '전환 +40%' },
+        channels: ['네이버 블로그', '인스타그램', '유튜브'],
+        analysisText: '숙박 업종은 블로그 검색 기반 유입이 높고 인스타그램 감성 사진이 예약 전환에 결정적 역할을 합니다. 시즌별 콘텐츠 전략이 필수입니다.',
+        strategies: ['블로그 체험단으로 객실별 상세 후기 확보 → 네이버 검색 상위노출', '인스타그램 감성 숙소 사진 + 릴스로 예약 전환율 극대화', '유튜브 브이로그 형식의 숙박 체험 영상으로 신뢰도 구축'],
+        topStrategy: { name: '블로그', metric: '노출 +80%' },
+        bestStrategy: { name: '인스타그램', metric: '예약 +60%' },
+        packageStrategy: { name: '유튜브', metric: '전환 +40%' },
         contents: [
-            { name: '블로그 콘텐츠', desc: 'SEO 최적화' },
-            { name: '인스타 콘텐츠', desc: '브랜드 노출' },
-            { name: '리뷰 콘텐츠', desc: '예약 전환 강화' }
+            { name: '블로그 체험단', desc: '숙소 후기' },
+            { name: '인스타 콘텐츠', desc: '감성 브랜딩' },
+            { name: '유튜브 브이로그', desc: '체험 영상' }
         ]
     },
     '병원/의료': {
         competition: '높음',
-        channels: ['SEO', '블로그', '언론'],
-        analysisText: '의료 업종은 전문성과 신뢰도가 핵심이며 블로그와 언론 홍보가 환자 유입에 큰 영향을 줍니다.',
-        strategies: ['전문 블로그 콘텐츠 강화', '언론 홍보 확대', '네이버 검색 최적화'],
-        problems: ['전문 콘텐츠 부족', '온라인 신뢰도 미흡', '검색 상위노출 경쟁'],
-        topStrategy: { name: 'SEO', metric: '노출 +75%' },
-        bestStrategy: { name: '블로그', metric: '신뢰도 +80%' },
-        packageStrategy: { name: '언론', metric: '전환 +35%' },
+        channels: ['네이버 블로그', '유튜브', '네이버 카페'],
+        analysisText: '의료 업종은 전문성과 신뢰도가 핵심이며, 블로그 전문 콘텐츠와 유튜브 의료정보 영상이 환자 유입에 결정적 영향을 줍니다. 카페 커뮤니티도 활용해야 합니다.',
+        strategies: ['네이버 블로그에 전문 의료 콘텐츠 20건/월 발행 → 검색 상위 장악', '유튜브 의료 정보 영상으로 원장 개인 브랜딩 + 환자 신뢰도 확보', '네이버 카페 건강 커뮤니티에 전문가 답변으로 잠재 환자 유입'],
+        topStrategy: { name: '블로그', metric: '노출 +75%' },
+        bestStrategy: { name: '유튜브', metric: '신뢰도 +80%' },
+        packageStrategy: { name: '카페', metric: '유입 +35%' },
         contents: [
             { name: '전문 블로그', desc: '의료 콘텐츠' },
-            { name: '언론 홍보', desc: '신뢰도 구축' },
-            { name: '사이트 제작', desc: '예약 시스템' }
+            { name: '유튜브 영상', desc: '원장 브랜딩' },
+            { name: '카페 활동', desc: '환자 유입' }
         ]
     },
     '학원/교육': {
         competition: '중간',
-        channels: ['SEO', '카페', 'SNS'],
-        analysisText: '교육 업종은 학부모 커뮤니티와 블로그 검색이 등록 전환에 핵심적인 역할을 합니다.',
-        strategies: ['네이버 카페 활성화', '블로그 SEO 강화', '학부모 타겟 콘텐츠'],
-        problems: ['카페/커뮤니티 노출 부족', '블로그 콘텐츠 경쟁', 'SNS 인지도 부족'],
-        topStrategy: { name: 'SEO', metric: '노출 +80%' },
-        bestStrategy: { name: '카페', metric: '유입 +65%' },
-        packageStrategy: { name: 'SNS', metric: '전환 +40%' },
+        channels: ['네이버 카페', '네이버 블로그', '인스타그램'],
+        analysisText: '교육 업종은 학부모 커뮤니티(카페)와 블로그 후기가 등록 전환의 핵심입니다. 인스타그램으로 학원 분위기를 전달하면 상담 문의가 증가합니다.',
+        strategies: ['네이버 카페 학부모 커뮤니티 활성화로 입소문 + 자연 유입 확보', '블로그 학원 후기/합격 사례 콘텐츠로 검색 노출 및 신뢰도 구축', '인스타그램으로 수업 현장/학생 성과를 시각적으로 전달하여 상담 유도'],
+        topStrategy: { name: '카페', metric: '유입 +80%' },
+        bestStrategy: { name: '블로그', metric: '신뢰도 +65%' },
+        packageStrategy: { name: '인스타그램', metric: '상담 +40%' },
         contents: [
-            { name: '블로그 콘텐츠', desc: 'SEO 최적화' },
-            { name: '카페 활성화', desc: '커뮤니티 노출' },
-            { name: '숏폼 콘텐츠', desc: '학원 홍보' }
+            { name: '카페 활성화', desc: '커뮤니티 운영' },
+            { name: '블로그 콘텐츠', desc: '합격 후기' },
+            { name: '인스타 콘텐츠', desc: '학원 홍보' }
         ]
     },
     '인테리어/건설': {
         competition: '중간',
-        channels: ['SEO', '블로그', '포트폴리오'],
-        analysisText: '인테리어 업종은 포트폴리오 중심의 콘텐츠와 블로그 SEO가 문의 전환에 핵심입니다.',
-        strategies: ['포트폴리오 블로그 강화', 'SEO 키워드 최적화', '시공 사례 콘텐츠'],
-        problems: ['포트폴리오 노출 부족', '검색 상위노출 경쟁', '브랜드 신뢰도 미흡'],
-        topStrategy: { name: 'SEO', metric: '노출 +80%' },
-        bestStrategy: { name: '블로그', metric: '문의 +60%' },
-        packageStrategy: { name: '언론', metric: '신뢰도 +45%' },
+        channels: ['네이버 블로그', '인스타그램', '유튜브'],
+        analysisText: '인테리어 업종은 시공 사례 포트폴리오가 문의 전환의 핵심입니다. 블로그와 인스타로 비포/애프터를 보여주고, 유튜브로 시공 과정을 공개해야 합니다.',
+        strategies: ['블로그에 시공 비포/애프터 + 견적 사례 콘텐츠로 검색 상위노출', '인스타그램 포트폴리오 피드로 시각적 신뢰도 구축 + 문의 유도', '유튜브 시공 현장 타임랩스 영상으로 기술력과 전문성 어필'],
+        topStrategy: { name: '블로그', metric: '문의 +80%' },
+        bestStrategy: { name: '인스타그램', metric: '신뢰도 +60%' },
+        packageStrategy: { name: '유튜브', metric: '전환 +45%' },
         contents: [
             { name: '블로그 콘텐츠', desc: '시공 사례' },
-            { name: '포트폴리오', desc: '작업 실적' },
-            { name: '언론 홍보', desc: '브랜드 신뢰' }
+            { name: '인스타 포트폴리오', desc: '작업 실적' },
+            { name: '유튜브 영상', desc: '시공 과정' }
         ]
     },
     '쇼핑몰/이커머스': {
         competition: '매우 높음',
-        channels: ['SEO', 'SNS', '광고'],
-        analysisText: '이커머스는 검색 트래픽과 SNS 바이럴이 매출에 직접적 영향을 미치는 업종입니다.',
-        strategies: ['인스타그램 쇼핑 콘텐츠', '블로그 체험단 확대', 'SEO 트래픽 강화'],
-        problems: ['검색 트래픽 부족', 'SNS 팔로워 경쟁', '구매 전환율 저조'],
-        topStrategy: { name: 'SNS', metric: '노출 +90%' },
-        bestStrategy: { name: 'SEO', metric: '트래픽 +70%' },
-        packageStrategy: { name: '리뷰', metric: '전환 +50%' },
+        channels: ['인스타그램', '네이버 블로그', '유튜브'],
+        analysisText: '이커머스는 인스타그램 쇼핑 태그와 블로그 체험단 리뷰가 구매 전환에 직접적 영향을 미칩니다. 숏폼 콘텐츠로 바이럴을 만들어야 합니다.',
+        strategies: ['인스타그램 쇼핑 태그 + 릴스 제품 리뷰로 즉시 구매 전환 유도', '블로그 체험단 대량 운영으로 제품별 검색 상위노출 장악', '유튜브 숏폼으로 제품 언박싱/사용 후기 바이럴 콘텐츠 제작'],
+        topStrategy: { name: '인스타그램', metric: '노출 +90%' },
+        bestStrategy: { name: '블로그', metric: '트래픽 +70%' },
+        packageStrategy: { name: '유튜브', metric: '전환 +50%' },
         contents: [
             { name: '인스타 콘텐츠', desc: '쇼핑 마케팅' },
             { name: '블로그 체험단', desc: '리뷰 확보' },
@@ -353,77 +346,72 @@ const industryAnalysisData = {
     },
     '부동산': {
         competition: '중간',
-        channels: ['SEO', '블로그', '언론'],
-        analysisText: '부동산 업종은 전문 콘텐츠와 지역 기반 SEO가 고객 문의에 핵심적 역할을 합니다.',
-        strategies: ['지역 SEO 콘텐츠 강화', '전문 블로그 운영', '언론 홍보 확대'],
-        problems: ['지역 검색 노출 부족', '전문 콘텐츠 부족', '온라인 신뢰도 미흡'],
-        topStrategy: { name: 'SEO', metric: '노출 +75%' },
-        bestStrategy: { name: '블로그', metric: '문의 +60%' },
-        packageStrategy: { name: '언론', metric: '신뢰도 +40%' },
+        channels: ['네이버 블로그', '유튜브', '네이버 카페'],
+        analysisText: '부동산 업종은 전문 정보 콘텐츠와 지역 기반 블로그가 고객 문의에 핵심적 역할을 합니다. 유튜브로 매물 투어 영상을 제공하면 신뢰도가 급상승합니다.',
+        strategies: ['네이버 블로그에 지역 부동산 시세/정보 콘텐츠로 전문가 포지셔닝', '유튜브 매물 투어 영상으로 비대면 방문 효과 + 문의 전환', '네이버 카페 지역 커뮤니티 활동으로 중개 신뢰도 및 소개율 확보'],
+        topStrategy: { name: '블로그', metric: '노출 +75%' },
+        bestStrategy: { name: '유튜브', metric: '문의 +60%' },
+        packageStrategy: { name: '카페', metric: '신뢰도 +40%' },
         contents: [
             { name: '블로그 콘텐츠', desc: '부동산 정보' },
-            { name: '카페 활성화', desc: '지역 노출' },
-            { name: '언론 홍보', desc: '전문성 강화' }
+            { name: '유튜브 영상', desc: '매물 투어' },
+            { name: '카페 활동', desc: '지역 네트워크' }
         ]
     },
     'IT/스타트업': {
         competition: '높음',
-        channels: ['SEO', 'SNS', '콘텐츠'],
-        analysisText: 'IT 업종은 기술 콘텐츠 마케팅과 SNS 브랜딩이 유저 확보에 핵심적입니다.',
-        strategies: ['기술 블로그 SEO 강화', 'SNS 브랜딩 확대', '콘텐츠 마케팅 강화'],
-        problems: ['기술 콘텐츠 노출 부족', 'SNS 브랜딩 미흡', '유저 전환율 저조'],
-        topStrategy: { name: 'SEO', metric: '노출 +85%' },
-        bestStrategy: { name: 'SNS', metric: '브랜딩 +70%' },
-        packageStrategy: { name: '콘텐츠', metric: '전환 +45%' },
+        channels: ['인스타그램', '유튜브', '네이버 블로그'],
+        analysisText: 'IT 업종은 서비스/제품의 가치를 콘텐츠로 전달하는 것이 핵심입니다. 인스타그램 브랜딩과 유튜브 서비스 소개 영상이 유저 확보에 결정적입니다.',
+        strategies: ['인스타그램 브랜드 피드 + 릴스로 MZ타겟 인지도 및 앱 다운로드 유도', '유튜브 서비스 소개/튜토리얼 영상으로 사용자 온보딩 및 리텐션 강화', '네이버 블로그 기술 콘텐츠로 B2B 검색 유입 및 기업 신뢰도 확보'],
+        topStrategy: { name: '인스타그램', metric: '브랜딩 +85%' },
+        bestStrategy: { name: '유튜브', metric: '유입 +70%' },
+        packageStrategy: { name: '블로그', metric: '전환 +45%' },
         contents: [
-            { name: '기술 블로그', desc: 'SEO 최적화' },
-            { name: 'SNS 콘텐츠', desc: '브랜드 노출' },
-            { name: '영상 콘텐츠', desc: '서비스 소개' }
+            { name: '인스타 브랜딩', desc: '서비스 홍보' },
+            { name: '유튜브 영상', desc: '서비스 소개' },
+            { name: '기술 블로그', desc: 'B2B 유입' }
         ]
     },
     '프랜차이즈': {
         competition: '높음',
-        channels: ['SEO', 'SNS', '언론'],
-        analysisText: '프랜차이즈는 브랜드 통일성과 지역별 마케팅 전략이 가맹점 매출에 직결됩니다.',
-        strategies: ['통합 브랜드 콘텐츠', '지역별 SEO 최적화', 'SNS 통합 운영'],
-        problems: ['브랜드 통일성 부족', '지역별 노출 격차', 'SNS 통합 관리 미흡'],
-        topStrategy: { name: 'SEO', metric: '노출 +80%' },
-        bestStrategy: { name: 'SNS', metric: '인지도 +65%' },
-        packageStrategy: { name: '리뷰', metric: '전환 +45%' },
+        channels: ['인스타그램', '네이버 블로그', '유튜브'],
+        analysisText: '프랜차이즈는 본사 브랜드 통일성과 지역별 가맹점 개별 마케팅을 동시에 운영해야 합니다. 통합 SNS 전략이 가맹점 매출에 직결됩니다.',
+        strategies: ['인스타그램 본사 통합 피드 + 가맹점별 지역 릴스로 이중 전략 운영', '블로그 지역별 키워드 최적화로 각 가맹점 검색 상위노출 확보', '유튜브 브랜드 스토리 + 가맹 안내 영상으로 신규 가맹 문의 확대'],
+        topStrategy: { name: '인스타그램', metric: '인지도 +80%' },
+        bestStrategy: { name: '블로그', metric: '노출 +65%' },
+        packageStrategy: { name: '유튜브', metric: '가맹 +45%' },
         contents: [
-            { name: '블로그 콘텐츠', desc: '브랜드 통합' },
-            { name: 'SNS 콘텐츠', desc: '통합 운영' },
-            { name: '리뷰 관리', desc: '평판 관리' }
+            { name: '인스타 통합운영', desc: '브랜드 통일' },
+            { name: '블로그 지역 SEO', desc: '가맹점 노출' },
+            { name: '유튜브 브랜딩', desc: '가맹 홍보' }
         ]
     },
     '제조업': {
         competition: '낮음',
-        channels: ['SEO', '블로그', '언론'],
-        analysisText: '제조업은 B2B 특성상 전문 콘텐츠와 언론 홍보가 거래처 확보에 핵심입니다.',
-        strategies: ['전문 블로그 콘텐츠', '언론 홍보 강화', '사이트 SEO 최적화'],
-        problems: ['온라인 노출 전무', '전문 콘텐츠 부족', 'B2B 인지도 미흡'],
-        topStrategy: { name: 'SEO', metric: '노출 +70%' },
-        bestStrategy: { name: '언론', metric: '신뢰도 +65%' },
-        packageStrategy: { name: '블로그', metric: '문의 +40%' },
+        channels: ['네이버 블로그', '유튜브', '네이버 카페'],
+        analysisText: '제조업은 B2B 특성상 전문 콘텐츠와 기업 신뢰도가 거래처 확보의 핵심입니다. 블로그 기술 콘텐츠와 유튜브 공장 투어 영상이 효과적입니다.',
+        strategies: ['네이버 블로그에 기술력/생산 과정 콘텐츠로 B2B 검색 유입 확보', '유튜브 공장 투어/생산 과정 영상으로 바이어 신뢰도 극대화', '네이버 카페 업계 커뮤니티 전문가 활동으로 거래처 네트워크 확대'],
+        topStrategy: { name: '블로그', metric: '노출 +70%' },
+        bestStrategy: { name: '유튜브', metric: '신뢰도 +65%' },
+        packageStrategy: { name: '카페', metric: '문의 +40%' },
         contents: [
-            { name: '전문 블로그', desc: '기술 콘텐츠' },
-            { name: '언론 홍보', desc: '기업 PR' },
-            { name: '사이트 제작', desc: 'B2B 전용' }
+            { name: '기술 블로그', desc: 'B2B 콘텐츠' },
+            { name: '유튜브 영상', desc: '공장 투어' },
+            { name: '카페 활동', desc: '업계 네트워크' }
         ]
     },
     '기타': {
         competition: '중간',
-        channels: ['SEO', 'SNS', '블로그'],
-        analysisText: '업종 특성에 맞는 맞춤형 마케팅 전략으로 온라인 노출과 전환율을 극대화합니다.',
-        strategies: ['SEO 콘텐츠 강화', 'SNS 노출 확대', '블로그 마케팅 운영'],
-        problems: ['검색 노출 부족', 'SNS 인지도 부족', '콘텐츠 경쟁력 미흡'],
-        topStrategy: { name: 'SEO', metric: '노출 +75%' },
-        bestStrategy: { name: 'SNS', metric: '인지도 +60%' },
-        packageStrategy: { name: '블로그', metric: '전환 +40%' },
+        channels: ['네이버 블로그', '인스타그램', '유튜브'],
+        analysisText: '업종 특성에 맞는 맞춤형 마케팅 전략으로 온라인 노출과 전환율을 극대화합니다. 블로그와 인스타 병행이 가장 효과적입니다.',
+        strategies: ['네이버 블로그 키워드 최적화 콘텐츠로 검색 유입 파이프라인 구축', '인스타그램 브랜드 피드 + 릴스로 타겟 고객 인지도 확보', '유튜브 서비스/제품 소개 영상으로 신뢰도와 전환율 동시 확보'],
+        topStrategy: { name: '블로그', metric: '노출 +75%' },
+        bestStrategy: { name: '인스타그램', metric: '인지도 +60%' },
+        packageStrategy: { name: '유튜브', metric: '전환 +40%' },
         contents: [
-            { name: '블로그 콘텐츠', desc: 'SEO 최적화' },
-            { name: 'SNS 콘텐츠', desc: '브랜드 노출' },
-            { name: '리뷰 콘텐츠', desc: '전환 강화' }
+            { name: '블로그 콘텐츠', desc: '검색 노출' },
+            { name: '인스타 콘텐츠', desc: '브랜드 노출' },
+            { name: '유튜브 영상', desc: '전환 강화' }
         ]
     }
 };
@@ -591,7 +579,6 @@ function getChecklistAnswers() {
     const questions = [
         { name: 'purpose', label: '마케팅 목적' },
         { name: 'target', label: '타겟 고객층' },
-        { name: 'channel', label: '운영 채널' },
         { name: 'experience', label: '대행 경험' },
         { name: 'budget', label: '월 예산' },
         { name: 'revenue', label: '매출 목표' },
@@ -602,7 +589,193 @@ function getChecklistAnswers() {
         const checked = document.querySelector(`input[name="${q.name}"]:checked`);
         if (checked) answers.push({ label: q.label, value: checked.value });
     });
+    // Multi-select platforms
+    const platforms = getSelectedPlatforms();
+    if (platforms.length > 0) {
+        answers.push({ label: '사용 중 플랫폼', value: platforms.join(', ') });
+    }
     return answers;
+}
+
+// ===== Get Selected Platforms (multi-select) =====
+function getSelectedPlatforms() {
+    const checked = document.querySelectorAll('input[name="platforms"]:checked');
+    return Array.from(checked).map(c => c.value);
+}
+
+// ===== Smart Recommendation Engine =====
+function generateSmartRecommendation(industry, platforms, budgetAnswer, revenueAnswer) {
+    const isProfessional = ['병원/의료'].includes(industry);
+
+    // Platform to service mapping
+    const platformServiceMap = {
+        '네이버 블로그': ['블로그대행', '블로그체험단'],
+        '인스타그램': ['인스타대행', '숏폼제작'],
+        '유튜브': ['유튜브대행', '롱폼제작', '숏폼제작'],
+        '네이버 카페': ['카페활성화'],
+        '홈페이지/쇼핑몰': ['사이트제작'],
+        '없음': ['블로그대행', '인스타대행']
+    };
+
+    // Build recommended services from platforms
+    const recommendedServices = [];
+    const addedServices = new Set();
+
+    if (platforms.length === 0 || platforms.includes('없음')) {
+        // Default recommendations based on industry
+        const defaults = industryAnalysisData[industry]?.contents || industryAnalysisData['기타'].contents;
+        defaults.forEach(c => {
+            const name = c.name.includes('블로그') ? '블로그대행' :
+                         c.name.includes('인스타') ? '인스타대행' :
+                         c.name.includes('유튜브') || c.name.includes('영상') ? '유튜브대행' :
+                         c.name.includes('카페') ? '카페활성화' :
+                         c.name.includes('숏폼') ? '숏폼제작' : '블로그대행';
+            if (!addedServices.has(name) && serviceConfig[name]) {
+                addedServices.add(name);
+                recommendedServices.push(name);
+            }
+        });
+    } else {
+        platforms.forEach(p => {
+            const services = platformServiceMap[p] || [];
+            services.forEach(s => {
+                if (!addedServices.has(s) && serviceConfig[s]) {
+                    addedServices.add(s);
+                    recommendedServices.push(s);
+                }
+            });
+        });
+    }
+
+    // Determine tier based on budget and revenue goal
+    let tierIndex = 0; // default: 소규모
+
+    // Budget-based tier
+    if (budgetAnswer) {
+        if (budgetAnswer.includes('300') || budgetAnswer.includes('500만원 이상')) tierIndex = 2;
+        else if (budgetAnswer.includes('100')) tierIndex = 1;
+    }
+
+    // Revenue goal can push tier up
+    if (revenueAnswer) {
+        if (revenueAnswer.includes('3,000') || revenueAnswer.includes('5,000만원 이상')) tierIndex = Math.max(tierIndex, 2);
+        else if (revenueAnswer.includes('1,000')) tierIndex = Math.max(tierIndex, 1);
+    }
+
+    // Professional industries: ensure minimum spend 50~150만원
+    if (isProfessional && tierIndex === 0) tierIndex = 1;
+
+    // Build final recommendations with prices
+    const recommendations = recommendedServices.slice(0, 4).map(name => {
+        const cfg = serviceConfig[name];
+        const tier = cfg.tiers[Math.min(tierIndex, cfg.tiers.length - 1)];
+        return {
+            name,
+            tierName: tier.name,
+            price: tier.price,
+            desc: tier.desc,
+            workItems: cfg.workItems
+        };
+    });
+
+    // Ensure minimum 50만원 total
+    const recTotal = recommendations.reduce((sum, r) => sum + r.price, 0);
+    if (recTotal < 500000 && recommendations.length > 0) {
+        // Upgrade first service tier
+        const first = recommendations[0];
+        const cfg = serviceConfig[first.name];
+        const nextTier = cfg.tiers[1] || cfg.tiers[0];
+        recommendations[0] = {
+            ...first,
+            tierName: nextTier.name,
+            price: nextTier.price,
+            desc: nextTier.desc
+        };
+    }
+
+    // If high revenue goal, add more services
+    if (revenueAnswer && (revenueAnswer.includes('3,000') || revenueAnswer.includes('5,000만원 이상'))) {
+        if (recommendations.length < 3) {
+            const extras = ['언론홍보', '숏폼제작', '카페활성화'];
+            for (const name of extras) {
+                if (!addedServices.has(name) && serviceConfig[name] && recommendations.length < 4) {
+                    const cfg = serviceConfig[name];
+                    const tier = cfg.tiers[tierIndex] || cfg.tiers[0];
+                    recommendations.push({ name, tierName: tier.name, price: tier.price, desc: tier.desc, workItems: cfg.workItems });
+                    addedServices.add(name);
+                }
+            }
+        }
+    }
+
+    // Generate platform-specific problems
+    const problems = generatePlatformProblems(platforms, industry);
+
+    return { recommendations, problems };
+}
+
+// ===== Generate Platform-Specific Problems =====
+function generatePlatformProblems(platforms, industry) {
+    const problemMap = {
+        '네이버 블로그': [
+            '블로그 포스팅 키워드 최적화 미흡으로 검색 노출 저조',
+            '경쟁 업체 대비 블로그 콘텐츠 품질 및 발행 빈도 부족',
+            '블로그 상위노출 알고리즘 변화에 대한 대응 전략 부재'
+        ],
+        '인스타그램': [
+            '인스타그램 팔로워 대비 게시물 참여율(좋아요/댓글) 저조',
+            '릴스/스토리 등 알고리즘 우선 콘텐츠 활용 미흡',
+            '해시태그 전략 부재로 탐색 탭 노출 기회 상실'
+        ],
+        '유튜브': [
+            '유튜브 채널 구독자 대비 조회수/시청 시간 저조',
+            '숏폼(쇼츠) 콘텐츠 미활용으로 신규 유입 기회 놓침',
+            '썸네일/제목 최적화 부족으로 클릭률(CTR) 저하'
+        ],
+        '네이버 카페': [
+            '카페 게시글 활성도 저조로 커뮤니티 유입 부족',
+            '상위노출 키워드 미세팅으로 검색 유입 없음',
+            '카페 운영 일관성 부족으로 신뢰도 하락'
+        ],
+        '홈페이지/쇼핑몰': [
+            '홈페이지 SEO 미최적화로 오가닉 트래픽 부족',
+            '모바일 반응형/페이지 속도 저하로 이탈률 증가',
+            '랜딩 페이지 전환율 최적화(CRO) 미적용'
+        ],
+        '없음': [
+            '온라인 마케팅 채널이 전무하여 잠재 고객 접점 부재',
+            '경쟁 업체 대비 온라인 가시성 현저히 부족',
+            '브랜드 온라인 인지도 구축 기반 자체가 미확보'
+        ]
+    };
+
+    const problems = [];
+    if (platforms.length === 0 || platforms.includes('없음')) {
+        return problemMap['없음'];
+    }
+
+    platforms.forEach(p => {
+        const pProblems = problemMap[p];
+        if (pProblems && problems.length < 3) {
+            problems.push(pProblems[0]);
+        }
+    });
+
+    // Fill to 3 if needed
+    while (problems.length < 3) {
+        for (const p of platforms) {
+            const pProblems = problemMap[p];
+            if (pProblems) {
+                for (let i = 1; i < pProblems.length && problems.length < 3; i++) {
+                    if (!problems.includes(pProblems[i])) problems.push(pProblems[i]);
+                }
+            }
+            if (problems.length >= 3) break;
+        }
+        break;
+    }
+
+    return problems.slice(0, 3);
 }
 
 // ===== Event Listeners =====
@@ -687,18 +860,22 @@ function drawRadarCanvas(canvas, data, w, h) {
     }
 }
 
-// ===== PDF Download (Portrait Marketing Proposal) =====
+// ===== PDF Download (Landscape White+Blue Marketing Proposal) =====
 function downloadPDF() {
     const company = document.getElementById('companyName').value || '-';
-    const manager = document.getElementById('contactName') ? document.getElementById('contactName').value || '-' : '-';
-    const phone = document.getElementById('phone') ? document.getElementById('phone').value || '-' : '-';
-    const email = document.getElementById('email') ? document.getElementById('email').value || '-' : '-';
     const industry = document.getElementById('industry').value || '-';
     const today = new Date().toLocaleDateString('ko-KR');
     const todayFile = new Date().toISOString().slice(0, 10);
 
     const selected = getSelectedServices();
     const total = selected.reduce((sum, s) => sum + s.price, 0);
+    const platforms = getSelectedPlatforms();
+
+    // Get budget and revenue answers for smart recommendations
+    const budgetEl = document.querySelector('input[name="budget"]:checked');
+    const revenueEl = document.querySelector('input[name="revenue"]:checked');
+    const budgetAnswer = budgetEl ? budgetEl.value : '';
+    const revenueAnswer = revenueEl ? revenueEl.value : '';
 
     // AI analysis data
     const radarData = industryRadarData[industry] || industryRadarData['기타'];
@@ -711,221 +888,203 @@ function downloadPDF() {
     const improvement = avgAfter - avgBefore;
     const exposureBoost = Math.round(improvement / avgBefore * 100);
 
-    // ===== Portrait A4 dimensions =====
-    const W = 680, H = 960;
-    const totalPages = 6;
-    const S = `width:${W}px;height:${H}px;position:relative;overflow:hidden;box-sizing:border-box;font-family:'Noto Sans KR',sans-serif;`;
+    // Smart recommendations
+    const smart = generateSmartRecommendation(industry, platforms, budgetAnswer, revenueAnswer);
 
-    // Channel icon mapping
-    const channelIcons = {
-        'SEO': '&#128269;',
-        'SNS': '&#128241;',
-        '리뷰': '&#11088;',
-        '블로그': '&#128221;',
-        '언론': '&#128240;',
-        '카페': '&#9749;',
-        '광고': '&#128226;',
-        '콘텐츠': '&#127916;',
-        '포트폴리오': '&#128444;'
-    };
+    // ===== Landscape dimensions =====
+    const W = 960, H = 540;
+    const totalPages = 6;
+    const S = `width:${W}px;height:${H}px;position:relative;overflow:hidden;box-sizing:border-box;font-family:'Noto Sans KR',sans-serif;color:#111111;`;
+    const pageNum = (n) => `<div style="position:absolute;bottom:14px;right:36px;font-size:8px;color:#999999;">${n} / ${totalPages}</div>`;
+    const topBlue = `<div style="position:absolute;top:0;left:0;right:0;height:4px;background:linear-gradient(90deg,#2a5298,#4A6FA5,#2a5298);"></div>`;
+    const logoMark = `<div style="position:absolute;top:16px;left:36px;font-size:12px;font-weight:800;color:#2a5298;">THEBEST</div>`;
 
     const pages = [];
 
-    // ====== PAGE 1: COVER (Dark with Blue Gradient) ======
-    pages.push(`<div style="${S}background:#111111;color:#ffffff;">
-        <!-- Top blue gradient band -->
-        <div style="position:absolute;top:0;left:0;right:0;height:180px;background:linear-gradient(180deg,#1e3a5f 0%,#2a5298 40%,transparent 100%);opacity:0.6;"></div>
+    // ====== PAGE 1: COVER (White + Blue) ======
+    pages.push(`<div style="${S}background:#ffffff;">
+        <!-- Top blue gradient -->
+        <div style="position:absolute;top:0;left:0;right:0;height:100px;background:linear-gradient(180deg,#1e3a5f 0%,#2a5298 50%,#4A6FA5 80%,transparent 100%);"></div>
 
-        <!-- THE BEST logo -->
-        <div style="position:relative;z-index:1;text-align:center;padding-top:80px;">
-            <div style="font-size:28px;font-weight:800;letter-spacing:8px;margin-bottom:60px;">
-                <span style="color:#ffffff;">THE </span><span style="color:#C8A96A;">BEST</span>
-            </div>
-        </div>
+        <div style="position:relative;z-index:1;display:flex;flex-direction:column;justify-content:center;align-items:center;height:100%;text-align:center;">
+            <!-- Logo -->
+            <div style="font-size:24px;font-weight:800;color:#2a5298;letter-spacing:5px;margin-bottom:40px;">THEBEST</div>
 
-        <!-- Center content -->
-        <div style="position:relative;z-index:1;text-align:center;padding:0 60px;">
-            <div style="font-size:13px;font-weight:500;color:#C8A96A;letter-spacing:6px;margin-bottom:16px;">AI MARKETING PROPOSAL</div>
-            <div style="font-size:32px;font-weight:800;color:#ffffff;margin-bottom:40px;line-height:1.3;">AI 맞춤 마케팅 전략 제안서</div>
+            <div style="font-size:11px;font-weight:500;color:#C8A96A;letter-spacing:5px;margin-bottom:12px;">AI MARKETING PROPOSAL</div>
+            <div style="font-size:30px;font-weight:800;color:#111111;margin-bottom:32px;">AI 맞춤 마케팅 전략 제안서</div>
 
             <!-- Info boxes -->
-            <div style="display:flex;justify-content:center;gap:24px;margin-bottom:50px;">
-                <div style="background:rgba(255,255,255,0.08);border:1px solid rgba(255,255,255,0.15);border-radius:10px;padding:18px 36px;text-align:center;min-width:140px;">
-                    <div style="font-size:10px;color:#999999;margin-bottom:6px;">업종</div>
-                    <div style="font-size:16px;font-weight:700;color:#ffffff;">${industry}</div>
+            <div style="display:flex;gap:20px;margin-bottom:36px;">
+                <div style="background:#F5F7FA;border:1px solid #D8DEE8;border-radius:10px;padding:14px 36px;text-align:center;min-width:130px;">
+                    <div style="font-size:9px;color:#888888;margin-bottom:4px;">업종</div>
+                    <div style="font-size:15px;font-weight:700;color:#111111;">${industry}</div>
                 </div>
-                <div style="background:rgba(255,255,255,0.08);border:1px solid rgba(255,255,255,0.15);border-radius:10px;padding:18px 36px;text-align:center;min-width:140px;">
-                    <div style="font-size:10px;color:#999999;margin-bottom:6px;">예상 예산</div>
-                    <div style="font-size:16px;font-weight:700;color:#ffffff;">${total.toLocaleString()}원</div>
+                <div style="background:#F5F7FA;border:1px solid #D8DEE8;border-radius:10px;padding:14px 36px;text-align:center;min-width:130px;">
+                    <div style="font-size:9px;color:#888888;margin-bottom:4px;">예상 예산</div>
+                    <div style="font-size:15px;font-weight:700;color:#111111;">${total.toLocaleString()}원</div>
                 </div>
             </div>
 
-            <!-- KPI Highlight -->
-            <div style="margin-bottom:50px;">
-                <div style="font-size:11px;color:#888888;margin-bottom:8px;">예상 노출 상승</div>
-                <div style="font-size:48px;font-weight:900;color:#C8A96A;letter-spacing:2px;">+${exposureBoost}%</div>
+            <!-- KPI -->
+            <div>
+                <div style="font-size:10px;color:#888888;margin-bottom:6px;">예상 노출 상승</div>
+                <div style="font-size:42px;font-weight:900;color:#C8A96A;">+${exposureBoost}%</div>
             </div>
         </div>
 
-        <!-- Bottom branding -->
-        <div style="position:absolute;bottom:50px;left:0;right:0;text-align:center;">
-            <div style="width:60px;height:1px;background:#C8A96A;margin:0 auto 16px;"></div>
-            <div style="font-size:12px;font-weight:600;color:#888888;letter-spacing:4px;">THE BEST MARKETING</div>
+        <div style="position:absolute;bottom:20px;left:0;right:0;text-align:center;">
+            <div style="font-size:10px;font-weight:600;color:#2a5298;letter-spacing:3px;">THEBEST MARKETING</div>
         </div>
     </div>`);
 
     // ====== PAGE 2: AI 마케팅 분석 ======
-    const channelHTML = analysisData.channels.map(ch =>
-        `<div style="display:flex;align-items:center;gap:6px;font-size:12px;color:#333333;margin-bottom:4px;">
-            <span style="font-size:14px;">${channelIcons[ch] || '&#128205;'}</span> ${ch}
+    const channelHTML = analysisData.channels.map((ch, i) =>
+        `<div style="display:flex;align-items:center;gap:8px;font-size:12px;color:#333333;margin-bottom:6px;">
+            <span style="font-size:10px;font-weight:700;color:#2a5298;background:#EBF0F7;border-radius:4px;padding:2px 7px;">${i + 1}순위</span> ${ch}
         </div>`
     ).join('');
 
     const strategyHTML = analysisData.strategies.map(s =>
-        `<div style="display:flex;align-items:center;gap:6px;font-size:12px;color:#333333;margin-bottom:6px;">
-            <span style="color:#C8A96A;font-weight:700;">&#10003;</span> ${s}
+        `<div style="display:flex;align-items:flex-start;gap:6px;font-size:11px;color:#333333;margin-bottom:8px;line-height:1.5;">
+            <span style="color:#C8A96A;font-weight:700;flex-shrink:0;">&#10003;</span> ${s}
         </div>`
     ).join('');
 
-    pages.push(`<div style="${S}background:#ffffff;color:#111111;padding:50px;">
-        <!-- Page header -->
-        <div style="margin-bottom:8px;">
-            <div style="font-size:11px;font-weight:600;color:#C8A96A;letter-spacing:3px;margin-bottom:6px;">AI MARKETING ANALYSIS</div>
-            <div style="font-size:22px;font-weight:800;color:#111111;margin-bottom:4px;">AI 기반 업종 맞춤 마케팅 분석</div>
-            <div style="width:40px;height:3px;background:#C8A96A;margin-top:10px;margin-bottom:30px;"></div>
-        </div>
+    pages.push(`<div style="${S}background:#ffffff;padding:36px 40px;">
+        ${topBlue}${logoMark}
+        <div style="margin-top:28px;">
+            <div style="font-size:10px;font-weight:600;color:#C8A96A;letter-spacing:2px;margin-bottom:4px;">AI MARKETING ANALYSIS</div>
+            <div style="font-size:18px;font-weight:800;color:#111111;margin-bottom:20px;">AI 기반 업종 맞춤 마케팅 분석</div>
 
-        <!-- Two column layout -->
-        <div style="display:flex;gap:28px;">
-            <!-- Left column: 업종 분석 -->
-            <div style="flex:1;background:#F8F6F2;border:1px solid #E8E2DB;border-radius:12px;padding:28px;">
-                <div style="margin-bottom:24px;">
-                    <div style="font-size:13px;font-weight:700;color:#111111;margin-bottom:10px;">업종 분석</div>
-                    <div style="font-size:18px;font-weight:800;color:#C8A96A;">${industry}</div>
+            <div style="display:flex;gap:20px;">
+                <!-- Left: 업종 분석 -->
+                <div style="flex:1;background:#F8F6F2;border:1px solid #E8E2DB;border-radius:10px;padding:22px;display:flex;flex-direction:column;">
+                    <div style="margin-bottom:16px;">
+                        <div style="font-size:11px;font-weight:700;color:#111111;margin-bottom:6px;">업종 분석</div>
+                        <div style="font-size:16px;font-weight:800;color:#C8A96A;">${industry}</div>
+                    </div>
+                    <div style="margin-bottom:16px;display:flex;align-items:center;gap:10px;">
+                        <div style="font-size:11px;font-weight:700;color:#111111;">경쟁도</div>
+                        <div style="background:#111111;color:#C8A96A;font-size:11px;font-weight:700;padding:3px 12px;border-radius:5px;">${analysisData.competition}</div>
+                    </div>
+                    <div>
+                        <div style="font-size:11px;font-weight:700;color:#111111;margin-bottom:8px;">추천 채널</div>
+                        ${channelHTML}
+                    </div>
                 </div>
-                <div style="margin-bottom:24px;">
-                    <div style="font-size:13px;font-weight:700;color:#111111;margin-bottom:8px;">경쟁도</div>
-                    <div style="display:inline-block;background:#111111;color:#C8A96A;font-size:13px;font-weight:700;padding:4px 14px;border-radius:6px;">${analysisData.competition}</div>
-                </div>
-                <div>
-                    <div style="font-size:13px;font-weight:700;color:#111111;margin-bottom:10px;">추천 채널</div>
-                    ${channelHTML}
-                </div>
-            </div>
 
-            <!-- Right column: AI 분석 결과 -->
-            <div style="flex:1;display:flex;flex-direction:column;gap:20px;">
-                <div style="background:#F8F6F2;border:1px solid #E8E2DB;border-radius:12px;padding:28px;flex:1;">
-                    <div style="font-size:13px;font-weight:700;color:#111111;margin-bottom:12px;">AI 분석 결과</div>
-                    <div style="font-size:13px;color:#444444;line-height:1.8;background:#ffffff;border:1px solid #E8E2DB;border-radius:8px;padding:18px;">${analysisData.analysisText}</div>
-                </div>
-                <div style="background:#F8F6F2;border:1px solid #E8E2DB;border-radius:12px;padding:28px;flex:1;">
-                    <div style="font-size:13px;font-weight:700;color:#111111;margin-bottom:12px;">추천 전략</div>
-                    ${strategyHTML}
+                <!-- Right: AI 분석 결과 + 추천 전략 -->
+                <div style="flex:1.2;display:flex;flex-direction:column;gap:14px;">
+                    <div style="background:#F8F6F2;border:1px solid #E8E2DB;border-radius:10px;padding:22px;flex:1;">
+                        <div style="font-size:11px;font-weight:700;color:#111111;margin-bottom:8px;">AI 분석 결과</div>
+                        <div style="font-size:11px;color:#444444;line-height:1.8;">${analysisData.analysisText}</div>
+                    </div>
+                    <div style="background:#F8F6F2;border:1px solid #E8E2DB;border-radius:10px;padding:22px;flex:1;">
+                        <div style="font-size:11px;font-weight:700;color:#111111;margin-bottom:8px;">THEBEST 추천 전략</div>
+                        ${strategyHTML}
+                    </div>
                 </div>
             </div>
         </div>
-
-        <!-- Page number -->
-        <div style="position:absolute;bottom:30px;right:50px;font-size:9px;color:#999999;">2 / ${totalPages}</div>
+        ${pageNum(2)}
     </div>`);
 
-    // ====== PAGE 3: 업종 문제 분석 (Radar Chart) ======
-    const problemHTML = analysisData.problems.map((p, i) => {
-        const icons = ['&#128269;', '&#11088;', '&#128241;'];
-        return `<div style="display:flex;align-items:center;gap:10px;margin-bottom:10px;">
-            <span style="font-size:16px;">${icons[i] || '&#128204;'}</span>
-            <span style="font-size:13px;font-weight:600;color:#333333;">${p}</span>
-        </div>`;
-    }).join('');
+    // ====== PAGE 3: 업종 문제 분석 ======
+    const problemHTML = smart.problems.map((p, i) =>
+        `<div style="display:flex;align-items:flex-start;gap:8px;margin-bottom:10px;">
+            <span style="font-size:10px;font-weight:700;color:#fff;background:#2a5298;border-radius:50%;width:18px;height:18px;display:flex;align-items:center;justify-content:center;flex-shrink:0;">${i + 1}</span>
+            <span style="font-size:11px;font-weight:500;color:#333333;line-height:1.5;">${p}</span>
+        </div>`
+    ).join('');
 
-    pages.push(`<div style="${S}background:#ffffff;color:#111111;padding:50px;">
-        <!-- Page header -->
-        <div style="margin-bottom:8px;">
-            <div style="font-size:11px;font-weight:600;color:#C8A96A;letter-spacing:3px;margin-bottom:6px;">INDUSTRY PROBLEM ANALYSIS</div>
-            <div style="font-size:22px;font-weight:800;color:#111111;margin-bottom:4px;">업종 마케팅 문제 분석</div>
-            <div style="width:40px;height:3px;background:#C8A96A;margin-top:10px;margin-bottom:30px;"></div>
-        </div>
+    pages.push(`<div style="${S}background:#ffffff;padding:36px 40px;">
+        ${topBlue}${logoMark}
+        <div style="margin-top:28px;">
+            <div style="font-size:10px;font-weight:600;color:#C8A96A;letter-spacing:2px;margin-bottom:4px;">INDUSTRY PROBLEM ANALYSIS</div>
+            <div style="font-size:18px;font-weight:800;color:#111111;margin-bottom:18px;">업종 마케팅 문제 분석</div>
 
-        <!-- Radar chart section -->
-        <div style="background:#F8F6F2;border:1px solid #E8E2DB;border-radius:12px;padding:30px;margin-bottom:28px;">
-            <div style="font-size:14px;font-weight:700;color:#111111;margin-bottom:6px;">레이더 차트 (5각형 분석)</div>
-            <div style="font-size:11px;color:#888888;margin-bottom:16px;">${radarData.labels.join(' / ')}</div>
-            <div style="display:flex;justify-content:center;">
-                <canvas id="pdfRadarCanvas" style="display:block;"></canvas>
+            <div style="display:flex;gap:20px;">
+                <!-- Radar chart -->
+                <div style="flex:1.3;background:#F8F6F2;border:1px solid #E8E2DB;border-radius:10px;padding:18px;">
+                    <div style="font-size:12px;font-weight:700;color:#111111;margin-bottom:4px;">레이더 차트 (5각형 분석)</div>
+                    <div style="font-size:9px;color:#888888;margin-bottom:8px;">${radarData.labels.join(' / ')}</div>
+                    <div style="display:flex;justify-content:center;">
+                        <canvas id="pdfRadarCanvas" style="display:block;"></canvas>
+                    </div>
+                    <div style="display:flex;justify-content:center;gap:16px;margin-top:6px;">
+                        <div style="display:flex;align-items:center;gap:4px;font-size:8px;color:#888888;"><span style="width:12px;height:3px;background:#CFCFCF;border-radius:2px;display:inline-block;"></span>현재 (미진행)</div>
+                        <div style="display:flex;align-items:center;gap:4px;font-size:8px;color:#888888;"><span style="width:12px;height:3px;background:#C8A96A;border-radius:2px;display:inline-block;"></span>진행 후 (예상)</div>
+                    </div>
+                </div>
+
+                <!-- Problems -->
+                <div style="flex:1;background:#F8F6F2;border:1px solid #E8E2DB;border-radius:10px;padding:22px;">
+                    <div style="font-size:12px;font-weight:700;color:#111111;margin-bottom:14px;">주요 문제</div>
+                    ${problemHTML}
+                </div>
             </div>
-            <div style="display:flex;justify-content:center;gap:20px;margin-top:12px;">
-                <div style="display:flex;align-items:center;gap:5px;font-size:10px;color:#888888;"><span style="width:14px;height:4px;background:#CFCFCF;border-radius:2px;display:inline-block;"></span>현재 (미진행)</div>
-                <div style="display:flex;align-items:center;gap:5px;font-size:10px;color:#888888;"><span style="width:14px;height:4px;background:#C8A96A;border-radius:2px;display:inline-block;"></span>진행 후 (예상)</div>
-            </div>
         </div>
-
-        <!-- Key problems -->
-        <div style="background:#F8F6F2;border:1px solid #E8E2DB;border-radius:12px;padding:28px;">
-            <div style="font-size:14px;font-weight:700;color:#111111;margin-bottom:16px;">주요 문제</div>
-            ${problemHTML}
-        </div>
-
-        <!-- Page number -->
-        <div style="position:absolute;bottom:30px;right:50px;font-size:9px;color:#999999;">3 / ${totalPages}</div>
+        ${pageNum(3)}
     </div>`);
 
-    // ====== PAGE 4: AI 추천 전략 ======
+    // ====== PAGE 4: AI 추천 전략 + THEBEST 강점 ======
     const ts = analysisData.topStrategy;
     const bs = analysisData.bestStrategy;
     const ps = analysisData.packageStrategy;
     const cts = analysisData.contents;
 
-    pages.push(`<div style="${S}background:#ffffff;color:#111111;padding:50px;">
-        <!-- Page header -->
-        <div style="margin-bottom:8px;">
-            <div style="font-size:11px;font-weight:600;color:#C8A96A;letter-spacing:3px;margin-bottom:6px;">AI RECOMMENDED STRATEGY</div>
-            <div style="font-size:22px;font-weight:800;color:#111111;margin-bottom:4px;">AI 추천 마케팅 전략</div>
-            <div style="width:40px;height:3px;background:#C8A96A;margin-top:10px;margin-bottom:30px;"></div>
-        </div>
+    pages.push(`<div style="${S}background:#ffffff;padding:36px 40px;">
+        ${topBlue}${logoMark}
+        <div style="margin-top:28px;">
+            <div style="font-size:10px;font-weight:600;color:#C8A96A;letter-spacing:2px;margin-bottom:4px;">AI RECOMMENDED STRATEGY</div>
+            <div style="font-size:18px;font-weight:800;color:#111111;margin-bottom:16px;">AI 추천 마케팅 전략</div>
 
-        <!-- Top 3 strategy cards -->
-        <div style="display:flex;gap:16px;margin-bottom:20px;">
-            <div style="flex:1;background:#F8F6F2;border:1px solid #E8E2DB;border-radius:12px;padding:24px;text-align:center;">
-                <div style="font-size:11px;font-weight:600;color:#C8A96A;margin-bottom:6px;">AI 추천</div>
-                <div style="font-size:14px;margin-bottom:2px;">&#128269;</div>
-                <div style="font-size:16px;font-weight:800;color:#111111;margin-bottom:6px;">${ts.name}</div>
-                <div style="font-size:14px;font-weight:700;color:#C8A96A;">${ts.metric}</div>
-            </div>
-            <div style="flex:1;background:#F8F6F2;border:1px solid #E8E2DB;border-radius:12px;padding:24px;text-align:center;">
-                <div style="font-size:11px;font-weight:600;color:#C8A96A;margin-bottom:6px;">BEST 전략</div>
-                <div style="font-size:14px;margin-bottom:2px;">&#128241;</div>
-                <div style="font-size:16px;font-weight:800;color:#111111;margin-bottom:6px;">${bs.name}</div>
-                <div style="font-size:14px;font-weight:700;color:#C8A96A;">${bs.metric}</div>
-            </div>
-            <div style="flex:1;background:#F8F6F2;border:1px solid #E8E2DB;border-radius:12px;padding:24px;text-align:center;">
-                <div style="font-size:11px;font-weight:600;color:#C8A96A;margin-bottom:6px;">추천 패키지</div>
-                <div style="font-size:14px;margin-bottom:2px;">&#11088;</div>
-                <div style="font-size:16px;font-weight:800;color:#111111;margin-bottom:6px;">${ps.name}</div>
-                <div style="font-size:14px;font-weight:700;color:#C8A96A;">${ps.metric}</div>
-            </div>
-        </div>
-
-        <!-- Bottom 3 content cards -->
-        <div style="display:flex;gap:16px;">
-            ${cts.map(c => `
-                <div style="flex:1;background:#111111;border-radius:12px;padding:24px;text-align:center;">
-                    <div style="font-size:15px;font-weight:800;color:#ffffff;margin-bottom:6px;">${c.name}</div>
-                    <div style="font-size:12px;color:#C8A96A;">${c.desc}</div>
+            <!-- Top 3 strategy cards -->
+            <div style="display:flex;gap:12px;margin-bottom:14px;">
+                <div style="flex:1;background:#F5F7FA;border:1px solid #D8DEE8;border-radius:10px;padding:16px;text-align:center;">
+                    <div style="font-size:9px;font-weight:600;color:#2a5298;margin-bottom:4px;">AI 추천</div>
+                    <div style="font-size:14px;font-weight:800;color:#111111;margin-bottom:3px;">${ts.name}</div>
+                    <div style="font-size:12px;font-weight:700;color:#C8A96A;">${ts.metric}</div>
                 </div>
-            `).join('')}
-        </div>
+                <div style="flex:1;background:#F5F7FA;border:1px solid #D8DEE8;border-radius:10px;padding:16px;text-align:center;">
+                    <div style="font-size:9px;font-weight:600;color:#2a5298;margin-bottom:4px;">BEST 전략</div>
+                    <div style="font-size:14px;font-weight:800;color:#111111;margin-bottom:3px;">${bs.name}</div>
+                    <div style="font-size:12px;font-weight:700;color:#C8A96A;">${bs.metric}</div>
+                </div>
+                <div style="flex:1;background:#F5F7FA;border:1px solid #D8DEE8;border-radius:10px;padding:16px;text-align:center;">
+                    <div style="font-size:9px;font-weight:600;color:#2a5298;margin-bottom:4px;">추천 패키지</div>
+                    <div style="font-size:14px;font-weight:800;color:#111111;margin-bottom:3px;">${ps.name}</div>
+                    <div style="font-size:12px;font-weight:700;color:#C8A96A;">${ps.metric}</div>
+                </div>
+            </div>
 
-        <!-- Page number -->
-        <div style="position:absolute;bottom:30px;right:50px;font-size:9px;color:#999999;">4 / ${totalPages}</div>
+            <!-- Bottom: content cards + THEBEST 강점 -->
+            <div style="display:flex;gap:12px;">
+                ${cts.map(c => `
+                    <div style="flex:1;background:#2a5298;border-radius:10px;padding:16px;text-align:center;">
+                        <div style="font-size:13px;font-weight:800;color:#ffffff;margin-bottom:4px;">${c.name}</div>
+                        <div style="font-size:10px;color:#B8CCE8;">${c.desc}</div>
+                    </div>
+                `).join('')}
+                <!-- THEBEST 강점 -->
+                <div style="flex:1.5;background:#111111;border-radius:10px;padding:16px;">
+                    <div style="font-size:10px;font-weight:700;color:#C8A96A;margin-bottom:8px;">THEBEST만의 차별점</div>
+                    <div style="font-size:9px;color:#cccccc;line-height:1.7;">
+                        <div style="margin-bottom:3px;"><span style="color:#C8A96A;">01</span> 업종별 맞춤 키워드 분석 후 콘텐츠 기획</div>
+                        <div style="margin-bottom:3px;"><span style="color:#C8A96A;">02</span> 월간 성과 리포트 + 전략 수정 미팅 제공</div>
+                        <div style="margin-bottom:3px;"><span style="color:#C8A96A;">03</span> 담당 매니저 1:1 전담 관리 시스템</div>
+                        <div style="margin-bottom:3px;"><span style="color:#C8A96A;">04</span> 9년차 마케팅 전문가의 직접 전략 설계</div>
+                        <div><span style="color:#C8A96A;">05</span> 대기업/지자체 제휴 경험 기반 실전 노하우</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        ${pageNum(4)}
     </div>`);
 
     // ====== PAGE 5: 마케팅 견적 + 예상 효과 ======
-    // Determine main service name for display
     const mainServiceName = selected.length > 0 ? selected.map(s => s.name).join(' + ') : '마케팅 서비스';
-    const mainServiceDesc = selected.length > 0 ? selected.map(s => `${s.name} (${s.tierName})`).join(', ') : '-';
 
-    // Work items from selected services
     let workItemsHTML = '';
     const uniqueSvcs = [...new Set(selected.map(s => s.name))];
     const allWorkItems = [];
@@ -935,113 +1094,105 @@ function downloadPDF() {
     });
     if (allWorkItems.length === 0) allWorkItems.push('키워드 분석', '콘텐츠 제작', 'SEO 최적화', '성과 리포트 제공');
     workItemsHTML = allWorkItems.slice(0, 6).map(w =>
-        `<div style="display:flex;align-items:center;gap:8px;margin-bottom:8px;">
-            <span style="color:#C8A96A;font-weight:700;font-size:13px;">&#10003;</span>
-            <span style="font-size:13px;color:#333333;">${w}</span>
+        `<div style="display:flex;align-items:center;gap:6px;margin-bottom:5px;">
+            <span style="color:#C8A96A;font-weight:700;font-size:11px;">&#10003;</span>
+            <span style="font-size:11px;color:#333333;">${w}</span>
         </div>`
     ).join('');
 
-    // Metric values from analysis data
     const metricLabels = radarData.labels;
     const metric1Diff = displayAfter[0] - radarData.before[0];
     const metric2Diff = displayAfter[2] - radarData.before[2];
     const metric3Diff = displayAfter[3] - radarData.before[3];
 
-    pages.push(`<div style="${S}background:#ffffff;color:#111111;padding:50px;">
-        <!-- Page header -->
-        <div style="margin-bottom:8px;">
-            <div style="font-size:11px;font-weight:600;color:#C8A96A;letter-spacing:3px;margin-bottom:6px;">MARKETING PROPOSAL</div>
-            <div style="font-size:22px;font-weight:800;color:#111111;margin-bottom:4px;">마케팅 견적 및 예상 효과</div>
-            <div style="width:40px;height:3px;background:#C8A96A;margin-top:10px;margin-bottom:30px;"></div>
-        </div>
+    pages.push(`<div style="${S}background:#ffffff;padding:36px 40px;">
+        ${topBlue}${logoMark}
+        <div style="margin-top:28px;">
+            <div style="font-size:10px;font-weight:600;color:#C8A96A;letter-spacing:2px;margin-bottom:4px;">MARKETING PROPOSAL</div>
+            <div style="font-size:18px;font-weight:800;color:#111111;margin-bottom:16px;">마케팅 견적 및 예상 효과</div>
 
-        <!-- Service info -->
-        <div style="background:#F8F6F2;border:1px solid #E8E2DB;border-radius:12px;padding:28px;margin-bottom:20px;">
-            <div style="font-size:13px;font-weight:700;color:#111111;margin-bottom:6px;">서비스</div>
-            <div style="font-size:16px;font-weight:800;color:#C8A96A;margin-bottom:20px;">${mainServiceName}</div>
-
-            <div style="font-size:13px;font-weight:700;color:#111111;margin-bottom:12px;">포함 서비스</div>
-            ${workItemsHTML}
-        </div>
-
-        <!-- Expected effects - 3 metric boxes -->
-        <div style="display:flex;gap:16px;margin-bottom:20px;">
-            <div style="flex:1;background:#F8F6F2;border:1px solid #E8E2DB;border-radius:12px;padding:20px;text-align:center;">
-                <div style="font-size:12px;font-weight:600;color:#111111;margin-bottom:8px;">${metricLabels[0] || '노출 증가'}</div>
-                <div style="font-size:26px;font-weight:900;color:#C8A96A;">+${metric1Diff}%</div>
-            </div>
-            <div style="flex:1;background:#F8F6F2;border:1px solid #E8E2DB;border-radius:12px;padding:20px;text-align:center;">
-                <div style="font-size:12px;font-weight:600;color:#111111;margin-bottom:8px;">${metricLabels[2] || '브랜드 인지도'}</div>
-                <div style="font-size:26px;font-weight:900;color:#C8A96A;">+${metric2Diff}%</div>
-            </div>
-            <div style="flex:1;background:#F8F6F2;border:1px solid #E8E2DB;border-radius:12px;padding:20px;text-align:center;">
-                <div style="font-size:12px;font-weight:600;color:#111111;margin-bottom:8px;">${metricLabels[3] || '전환율'}</div>
-                <div style="font-size:26px;font-weight:900;color:#C8A96A;">+${metric3Diff}%</div>
-            </div>
-        </div>
-
-        <!-- Monthly cost -->
-        <div style="background:#111111;border-radius:12px;padding:24px 28px;display:flex;justify-content:space-between;align-items:center;">
-            <div>
-                <div style="font-size:13px;font-weight:600;color:#999999;">월 마케팅 비용</div>
-            </div>
-            <div style="font-size:28px;font-weight:900;color:#C8A96A;">${total.toLocaleString()}원</div>
-        </div>
-
-        <!-- Page number -->
-        <div style="position:absolute;bottom:30px;right:50px;font-size:9px;color:#999999;">5 / ${totalPages}</div>
-    </div>`);
-
-    // ====== PAGE 6: LET'S START MARKETING ======
-    pages.push(`<div style="${S}background:#ffffff;color:#111111;padding:50px;">
-        <!-- Page header -->
-        <div style="margin-bottom:8px;">
-            <div style="font-size:11px;font-weight:600;color:#C8A96A;letter-spacing:3px;margin-bottom:6px;">LET'S START MARKETING</div>
-            <div style="font-size:22px;font-weight:800;color:#111111;margin-bottom:4px;">성공적인 마케팅을 시작하세요</div>
-            <div style="width:40px;height:3px;background:#C8A96A;margin-top:10px;margin-bottom:20px;"></div>
-        </div>
-
-        <!-- Description -->
-        <div style="background:#F8F6F2;border:1px solid #E8E2DB;border-radius:12px;padding:24px;margin-bottom:28px;">
-            <div style="font-size:14px;color:#444444;line-height:1.8;text-align:center;">
-                AI 분석 기반 맞춤 마케팅 전략을 제공합니다
-            </div>
-        </div>
-
-        <!-- 무료 상담 신청 -->
-        <div style="background:#111111;border-radius:12px;padding:20px;text-align:center;margin-bottom:28px;">
-            <div style="font-size:16px;font-weight:800;color:#C8A96A;">무료 상담 신청</div>
-        </div>
-
-        <!-- Contact info -->
-        <div style="text-align:center;margin-bottom:30px;">
-            <div style="font-size:14px;font-weight:600;color:#333333;margin-bottom:8px;">TEL  010-XXXX-XXXX</div>
-            <div style="font-size:14px;font-weight:600;color:#333333;margin-bottom:8px;">EMAIL  thebest@marketing.com</div>
-            <div style="font-size:14px;font-weight:600;color:#333333;margin-bottom:0;">KAKAO  @THEBEST</div>
-        </div>
-
-        <!-- QR Code for Kakao Channel -->
-        <div style="text-align:center;margin-bottom:20px;">
-            <div style="display:inline-block;background:#4A6FA5;border-radius:16px;padding:24px;">
-                <div style="background:#ffffff;border-radius:10px;padding:12px;margin-bottom:10px;">
-                    <canvas id="pdfQrCanvas" style="display:block;margin:0 auto;"></canvas>
+            <div style="display:flex;gap:20px;">
+                <!-- Left: Service info -->
+                <div style="flex:1;background:#F8F6F2;border:1px solid #E8E2DB;border-radius:10px;padding:22px;">
+                    <div style="font-size:11px;font-weight:700;color:#111111;margin-bottom:4px;">서비스</div>
+                    <div style="font-size:14px;font-weight:800;color:#C8A96A;margin-bottom:14px;">${mainServiceName}</div>
+                    <div style="font-size:11px;font-weight:700;color:#111111;margin-bottom:8px;">포함 서비스</div>
+                    ${workItemsHTML}
                 </div>
-                <div style="font-size:13px;font-weight:700;color:#ffffff;">더베스트(THEBEST)</div>
+
+                <!-- Right: Metrics + Cost -->
+                <div style="flex:1;display:flex;flex-direction:column;gap:12px;">
+                    <div style="display:flex;gap:10px;">
+                        <div style="flex:1;background:#F5F7FA;border:1px solid #D8DEE8;border-radius:10px;padding:14px;text-align:center;">
+                            <div style="font-size:10px;font-weight:600;color:#111111;margin-bottom:4px;">${metricLabels[0] || '노출 증가'}</div>
+                            <div style="font-size:22px;font-weight:900;color:#C8A96A;">+${metric1Diff}%</div>
+                        </div>
+                        <div style="flex:1;background:#F5F7FA;border:1px solid #D8DEE8;border-radius:10px;padding:14px;text-align:center;">
+                            <div style="font-size:10px;font-weight:600;color:#111111;margin-bottom:4px;">${metricLabels[2] || '브랜드 인지도'}</div>
+                            <div style="font-size:22px;font-weight:900;color:#C8A96A;">+${metric2Diff}%</div>
+                        </div>
+                        <div style="flex:1;background:#F5F7FA;border:1px solid #D8DEE8;border-radius:10px;padding:14px;text-align:center;">
+                            <div style="font-size:10px;font-weight:600;color:#111111;margin-bottom:4px;">${metricLabels[3] || '전환율'}</div>
+                            <div style="font-size:22px;font-weight:900;color:#C8A96A;">+${metric3Diff}%</div>
+                        </div>
+                    </div>
+                    <div style="background:#111111;border-radius:10px;padding:18px 22px;display:flex;justify-content:space-between;align-items:center;flex:1;">
+                        <div style="font-size:11px;font-weight:600;color:#999999;">월 마케팅 비용</div>
+                        <div style="font-size:24px;font-weight:900;color:#C8A96A;">${total.toLocaleString()}원</div>
+                    </div>
+                </div>
             </div>
         </div>
-
-        <!-- THE BEST branding -->
-        <div style="text-align:center;">
-            <div style="font-size:20px;font-weight:800;letter-spacing:3px;">
-                <span style="color:#111111;">THE </span><span style="color:#C8A96A;">BEST</span>
-            </div>
-        </div>
-
-        <!-- Page number -->
-        <div style="position:absolute;bottom:30px;right:50px;font-size:9px;color:#999999;">6 / ${totalPages}</div>
+        ${pageNum(5)}
     </div>`);
 
-    // ===== RENDER: html2canvas each page -> jsPDF combine =====
+    // ====== PAGE 6: THEBEST 소개 + 연락처 ======
+    pages.push(`<div style="${S}background:#ffffff;padding:36px 40px;">
+        ${topBlue}${logoMark}
+        <div style="margin-top:28px;">
+            <div style="font-size:10px;font-weight:600;color:#C8A96A;letter-spacing:2px;margin-bottom:4px;">ABOUT THEBEST</div>
+            <div style="font-size:18px;font-weight:800;color:#111111;margin-bottom:16px;">더베스트만의 차별화 안내드립니다</div>
+
+            <div style="display:flex;gap:20px;">
+                <!-- Left: THEBEST 이력 -->
+                <div style="flex:1.2;background:#F5F7FA;border:1px solid #D8DEE8;border-radius:10px;padding:22px;">
+                    <div style="font-size:14px;font-weight:800;color:#2a5298;margin-bottom:4px;font-style:italic;">I'll make you the best.</div>
+                    <div style="width:30px;height:2px;background:#C8A96A;margin:10px 0 16px;"></div>
+                    <div style="font-size:11px;color:#333333;line-height:2.2;">
+                        <div><span style="color:#2a5298;font-weight:700;">현)</span> 9년차 마케팅업체 더베스트 운영</div>
+                        <div><span style="color:#2a5298;font-weight:700;">현)</span> 대기업 제휴 업무협약 체결 (요식업, IT, 제품군 등)</div>
+                        <div><span style="color:#2a5298;font-weight:700;">현)</span> 지자체 관광홍보 업무협약 체결</div>
+                        <div><span style="color:#2a5298;font-weight:700;">현)</span> SNS 마케팅 전문가 1급 자격증 보유</div>
+                        <div><span style="color:#2a5298;font-weight:700;">전)</span> 대형법인 마케팅기업 근무</div>
+                        <div><span style="color:#2a5298;font-weight:700;">전)</span> 정부지원사업 홍보 마케팅 담당업무</div>
+                    </div>
+                </div>
+
+                <!-- Right: Contact + QR -->
+                <div style="flex:1;display:flex;flex-direction:column;gap:12px;">
+                    <div style="background:#F8F6F2;border:1px solid #E8E2DB;border-radius:10px;padding:22px;text-align:center;">
+                        <div style="font-size:11px;font-weight:700;color:#111111;margin-bottom:12px;">무료 상담 신청</div>
+                        <div style="font-size:12px;font-weight:600;color:#333333;margin-bottom:6px;">EMAIL  jointhebest@naver.com</div>
+                        <div style="font-size:12px;font-weight:600;color:#333333;">KAKAO  @더베스트마케팅</div>
+                    </div>
+                    <div style="background:#4A6FA5;border-radius:10px;padding:18px;text-align:center;flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;">
+                        <div style="background:#ffffff;border-radius:8px;padding:10px;margin-bottom:8px;">
+                            <canvas id="pdfQrCanvas" style="display:block;margin:0 auto;"></canvas>
+                        </div>
+                        <div style="font-size:11px;font-weight:700;color:#ffffff;">@더베스트마케팅</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div style="position:absolute;bottom:20px;left:0;right:0;text-align:center;">
+            <div style="font-size:14px;font-weight:800;color:#2a5298;letter-spacing:3px;">THEBEST</div>
+            <div style="font-size:8px;color:#999999;margin-top:2px;">본 견적서는 발행일로부터 30일간 유효합니다.</div>
+        </div>
+        ${pageNum(6)}
+    </div>`);
+
+    // ===== RENDER =====
     const container = document.createElement('div');
     container.style.cssText = `position:absolute;left:-9999px;top:0;`;
     container.innerHTML = pages.join('');
@@ -1049,53 +1200,56 @@ function downloadPDF() {
 
     const slides = container.children;
 
-    // Draw radar chart on canvas element inside the rendered DOM
+    // Radar chart
     const radarCanvas = container.querySelector('#pdfRadarCanvas');
     if (radarCanvas) {
-        drawRadarCanvas(radarCanvas, { labels: radarData.labels, before: radarData.before, after: displayAfter }, 420, 320);
+        drawRadarCanvas(radarCanvas, { labels: radarData.labels, before: radarData.before, after: displayAfter }, 300, 240);
     }
 
-    // Draw QR code for Kakao channel
+    // QR code
     const qrCanvas = container.querySelector('#pdfQrCanvas');
     if (qrCanvas && typeof qrcode !== 'undefined') {
-        const qr = qrcode(0, 'M');
-        qr.addData('https://pf.kakao.com/_xonYQn');
-        qr.make();
-        const moduleCount = qr.getModuleCount();
-        const cellSize = 4;
-        const size = moduleCount * cellSize;
-        qrCanvas.width = size;
-        qrCanvas.height = size;
-        qrCanvas.style.width = size + 'px';
-        qrCanvas.style.height = size + 'px';
-        const qrCtx = qrCanvas.getContext('2d');
-        qrCtx.fillStyle = '#ffffff';
-        qrCtx.fillRect(0, 0, size, size);
-        qrCtx.fillStyle = '#000000';
-        for (let row = 0; row < moduleCount; row++) {
-            for (let col = 0; col < moduleCount; col++) {
-                if (qr.isDark(row, col)) {
-                    qrCtx.fillRect(col * cellSize, row * cellSize, cellSize, cellSize);
+        try {
+            const qr = qrcode(0, 'M');
+            qr.addData('https://pf.kakao.com/_xonYQn');
+            qr.make();
+            const moduleCount = qr.getModuleCount();
+            const cellSize = 3;
+            const size = moduleCount * cellSize;
+            qrCanvas.setAttribute('width', size);
+            qrCanvas.setAttribute('height', size);
+            qrCanvas.style.width = size + 'px';
+            qrCanvas.style.height = size + 'px';
+            const qrCtx = qrCanvas.getContext('2d');
+            qrCtx.fillStyle = '#ffffff';
+            qrCtx.fillRect(0, 0, size, size);
+            qrCtx.fillStyle = '#000000';
+            for (let row = 0; row < moduleCount; row++) {
+                for (let col = 0; col < moduleCount; col++) {
+                    if (qr.isDark(row, col)) {
+                        qrCtx.fillRect(col * cellSize, row * cellSize, cellSize, cellSize);
+                    }
                 }
             }
+        } catch (e) {
+            console.warn('QR code generation failed:', e);
         }
     }
 
-    // Wait for rendering, then generate PDF
+    // Generate PDF
     setTimeout(async () => {
         try {
             const { jsPDF } = window.jspdf;
-            const pdf = new jsPDF({ orientation: 'portrait', unit: 'mm', format: 'a4' });
-            const pdfW = 210, pdfH = 297;
+            const pdf = new jsPDF({ orientation: 'landscape', unit: 'mm', format: 'a4' });
+            const pdfW = 297, pdfH = 210;
 
             for (let i = 0; i < slides.length; i++) {
                 if (i > 0) pdf.addPage();
-                const bgColor = (i === 0) ? '#111111' : '#ffffff';
                 const canvas = await html2canvas(slides[i], {
                     scale: 2,
                     useCORS: true,
                     allowTaint: true,
-                    backgroundColor: bgColor,
+                    backgroundColor: '#ffffff',
                     logging: false,
                     width: W,
                     height: H
