@@ -90,36 +90,26 @@ document.querySelectorAll('.stat-number').forEach(el => {
 });
 
 // ===== Hero Graph Rising Animation =====
+// Steep upward graph - starts flat then shoots up steeply (급경사 유지)
 function animateHeroGraph() {
     const line = document.getElementById('heroGraphLine');
     const fill = document.getElementById('heroGraphFill');
     if (!line || !fill) return;
 
-    // Smooth rising path stages
+    // All paths maintain steep upward trajectory - only subtle variation
     const paths = [
-        { line: 'M0,98 Q30,97 60,95 T100,92 T140,88 T180,84 L200,82', fill: 'M0,98 Q30,97 60,95 T100,92 T140,88 T180,84 L200,82 V100 H0Z' },
-        { line: 'M0,95 Q30,93 60,88 T100,78 T140,55 T180,30 L200,18', fill: 'M0,95 Q30,93 60,88 T100,78 T140,55 T180,30 L200,18 V100 H0Z' },
-        { line: 'M0,95 Q30,93 60,88 T100,70 T140,35 T180,8 L200,2', fill: 'M0,95 Q30,93 60,88 T100,70 T140,35 T180,8 L200,2 V100 H0Z' },
-        { line: 'M0,92 Q30,88 60,78 T100,55 T140,22 T180,5 L200,1', fill: 'M0,92 Q30,88 60,78 T100,55 T140,22 T180,5 L200,1 V100 H0Z' }
+        { line: 'M0,99 Q25,99 50,98 T90,96 T130,90 T160,72 T185,30 L200,2', fill: 'M0,99 Q25,99 50,98 T90,96 T130,90 T160,72 T185,30 L200,2 V100 H0Z' },
+        { line: 'M0,99 Q25,99 50,98 T90,95 T130,88 T160,68 T185,26 L200,1', fill: 'M0,99 Q25,99 50,98 T90,95 T130,88 T160,68 T185,26 L200,1 V100 H0Z' },
+        { line: 'M0,99 Q25,99 50,98 T90,96 T130,91 T160,74 T185,32 L200,3', fill: 'M0,99 Q25,99 50,98 T90,96 T130,91 T160,74 T185,32 L200,3 V100 H0Z' }
     ];
 
     let step = 0;
-    // Start from flat, rise through stages
-    line.setAttribute('d', paths[0].line);
-    fill.setAttribute('d', paths[0].fill);
-
     function nextStep() {
         step = (step + 1) % paths.length;
-        line.style.transition = 'd 1.5s ease-in-out';
-        fill.style.transition = 'd 1.5s ease-in-out';
         line.setAttribute('d', paths[step].line);
         fill.setAttribute('d', paths[step].fill);
     }
-
-    // Rise every 10 seconds
     setInterval(nextStep, 10000);
-    // Initial rise after 500ms
-    setTimeout(nextStep, 500);
 }
 animateHeroGraph();
 
