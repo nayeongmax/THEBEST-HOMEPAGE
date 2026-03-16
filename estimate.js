@@ -992,32 +992,53 @@ function downloadPDF() {
         <div style="position:absolute;bottom:30px;right:50px;font-size:9px;color:#999999;">5 / ${totalPages}</div>
     </div>`);
 
-    // ====== PAGE 6: THANK YOU / CLOSING ======
-    pages.push(`<div style="${S}background:#111111;color:#ffffff;">
-        <!-- Top blue gradient band -->
-        <div style="position:absolute;top:0;left:0;right:0;height:120px;background:linear-gradient(180deg,#1e3a5f 0%,#2a5298 30%,transparent 100%);opacity:0.5;"></div>
-
-        <div style="position:relative;z-index:1;display:flex;flex-direction:column;justify-content:center;align-items:center;height:100%;text-align:center;">
-            <div style="font-size:36px;font-weight:800;color:#ffffff;margin-bottom:10px;">감사합니다</div>
-            <div style="font-size:13px;color:#888888;margin-bottom:40px;">더베스트마케팅과 함께 성공적인 마케팅을 시작하세요</div>
-            <div style="width:60px;height:2px;background:#C8A96A;margin-bottom:40px;"></div>
-
-            <div style="display:flex;gap:36px;margin-bottom:40px;">
-                <div><div style="font-size:9px;color:#666666;margin-bottom:4px;">TEL</div><div style="font-size:13px;font-weight:600;color:#ffffff;">010-1234-5678</div></div>
-                <div><div style="font-size:9px;color:#666666;margin-bottom:4px;">EMAIL</div><div style="font-size:13px;font-weight:600;color:#ffffff;">thebest@marketing.com</div></div>
-                <div><div style="font-size:9px;color:#666666;margin-bottom:4px;">KAKAO</div><div style="font-size:13px;font-weight:600;color:#ffffff;">@THEBEST</div></div>
-            </div>
-
-            <div style="font-size:22px;font-weight:800;letter-spacing:4px;">
-                <span style="color:#ffffff;">THE </span><span style="color:#C8A96A;">BEST</span>
-            </div>
-            <div style="font-size:10px;color:#666666;margin-top:4px;">더베스트마케팅</div>
+    // ====== PAGE 6: LET'S START MARKETING ======
+    pages.push(`<div style="${S}background:#ffffff;color:#111111;padding:50px;">
+        <!-- Page header -->
+        <div style="margin-bottom:8px;">
+            <div style="font-size:11px;font-weight:600;color:#C8A96A;letter-spacing:3px;margin-bottom:6px;">LET'S START MARKETING</div>
+            <div style="font-size:22px;font-weight:800;color:#111111;margin-bottom:4px;">성공적인 마케팅을 시작하세요</div>
+            <div style="width:40px;height:3px;background:#C8A96A;margin-top:10px;margin-bottom:20px;"></div>
         </div>
 
-        <div style="position:absolute;bottom:30px;left:0;right:0;text-align:center;font-size:9px;color:#555555;">
-            본 견적서는 발행일로부터 30일간 유효합니다.
+        <!-- Description -->
+        <div style="background:#F8F6F2;border:1px solid #E8E2DB;border-radius:12px;padding:24px;margin-bottom:28px;">
+            <div style="font-size:14px;color:#444444;line-height:1.8;text-align:center;">
+                AI 분석 기반 맞춤 마케팅 전략을 제공합니다
+            </div>
         </div>
-        <div style="position:absolute;bottom:30px;right:50px;font-size:9px;color:#555555;">6 / ${totalPages}</div>
+
+        <!-- 무료 상담 신청 -->
+        <div style="background:#111111;border-radius:12px;padding:20px;text-align:center;margin-bottom:28px;">
+            <div style="font-size:16px;font-weight:800;color:#C8A96A;">무료 상담 신청</div>
+        </div>
+
+        <!-- Contact info -->
+        <div style="text-align:center;margin-bottom:30px;">
+            <div style="font-size:14px;font-weight:600;color:#333333;margin-bottom:8px;">TEL  010-XXXX-XXXX</div>
+            <div style="font-size:14px;font-weight:600;color:#333333;margin-bottom:8px;">EMAIL  thebest@marketing.com</div>
+            <div style="font-size:14px;font-weight:600;color:#333333;margin-bottom:0;">KAKAO  @THEBEST</div>
+        </div>
+
+        <!-- QR Code for Kakao Channel -->
+        <div style="text-align:center;margin-bottom:20px;">
+            <div style="display:inline-block;background:#4A6FA5;border-radius:16px;padding:24px;">
+                <div style="background:#ffffff;border-radius:10px;padding:12px;margin-bottom:10px;">
+                    <canvas id="pdfQrCanvas" style="display:block;margin:0 auto;"></canvas>
+                </div>
+                <div style="font-size:13px;font-weight:700;color:#ffffff;">더베스트(THEBEST)</div>
+            </div>
+        </div>
+
+        <!-- THE BEST branding -->
+        <div style="text-align:center;">
+            <div style="font-size:20px;font-weight:800;letter-spacing:3px;">
+                <span style="color:#111111;">THE </span><span style="color:#C8A96A;">BEST</span>
+            </div>
+        </div>
+
+        <!-- Page number -->
+        <div style="position:absolute;bottom:30px;right:50px;font-size:9px;color:#999999;">6 / ${totalPages}</div>
     </div>`);
 
     // ===== RENDER: html2canvas each page -> jsPDF combine =====
@@ -1034,6 +1055,32 @@ function downloadPDF() {
         drawRadarCanvas(radarCanvas, { labels: radarData.labels, before: radarData.before, after: displayAfter }, 420, 320);
     }
 
+    // Draw QR code for Kakao channel
+    const qrCanvas = container.querySelector('#pdfQrCanvas');
+    if (qrCanvas && typeof qrcode !== 'undefined') {
+        const qr = qrcode(0, 'M');
+        qr.addData('https://pf.kakao.com/_xonYQn');
+        qr.make();
+        const moduleCount = qr.getModuleCount();
+        const cellSize = 4;
+        const size = moduleCount * cellSize;
+        qrCanvas.width = size;
+        qrCanvas.height = size;
+        qrCanvas.style.width = size + 'px';
+        qrCanvas.style.height = size + 'px';
+        const qrCtx = qrCanvas.getContext('2d');
+        qrCtx.fillStyle = '#ffffff';
+        qrCtx.fillRect(0, 0, size, size);
+        qrCtx.fillStyle = '#000000';
+        for (let row = 0; row < moduleCount; row++) {
+            for (let col = 0; col < moduleCount; col++) {
+                if (qr.isDark(row, col)) {
+                    qrCtx.fillRect(col * cellSize, row * cellSize, cellSize, cellSize);
+                }
+            }
+        }
+    }
+
     // Wait for rendering, then generate PDF
     setTimeout(async () => {
         try {
@@ -1043,7 +1090,7 @@ function downloadPDF() {
 
             for (let i = 0; i < slides.length; i++) {
                 if (i > 0) pdf.addPage();
-                const bgColor = (i === 0 || i === 5) ? '#111111' : '#ffffff';
+                const bgColor = (i === 0) ? '#111111' : '#ffffff';
                 const canvas = await html2canvas(slides[i], {
                     scale: 2,
                     useCORS: true,
