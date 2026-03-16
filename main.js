@@ -114,14 +114,14 @@ function initHeroChart() {
         for (let i = 0; i < barCount; i++) {
             let base;
             if (i < barCount - 4) {
-                // First 10 bars: start at 33% (1/3) and gradually rise to ~55%
-                base = 33 + (i / (barCount - 4)) * 22;
+                // First 10 bars: start at 40% (1/3 of visible area) and gently rise to ~50%
+                base = 40 + (i / (barCount - 4)) * 10;
             } else {
-                // Last 4 bars: steep climb from ~60% up to ~95%
+                // Last 4 bars: dramatic steep climb 55% → 70% → 82% → 97%
                 const idx = i - (barCount - 4);
-                base = 60 + idx * 12;
+                base = 55 + idx * 15;
             }
-            arr.push(base + Math.random() * 6 - 2);
+            arr.push(base + Math.random() * 4 - 2);
         }
         return arr;
     }
