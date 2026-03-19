@@ -707,12 +707,17 @@
                     </div>
                 </div>
 
+                <!-- Edit Button -->
+                <div style="text-align:center; margin-top:24px; padding:20px 0;">
+                    <button type="button" class="btn btn-primary" onclick="editCurrentReport()" style="padding:14px 40px; font-size:0.95rem;">보고서 수정하기</button>
+                </div>
+
             </div>
 
             <!-- ===== Report Creation Form ===== -->
             <div class="report-create-section" id="createSection">
                 <div class="create-card">
-                    <h2>보고서 작성</h2>
+                    <h2 id="createFormTitle">보고서 작성</h2>
                     <form id="createForm">
                         <h4 class="form-section-title">기본 정보</h4>
                         <div class="form-row-3">
@@ -1019,6 +1024,158 @@
                 reportView.classList.remove('active');
                 createSection.classList.add('active');
             }
+        }
+
+        // ===== Edit Existing Report =====
+        let editingCompanyName = null;
+
+        function editCurrentReport() {
+            if (!adminAuthenticated) {
+                const pw = prompt('관리자 비밀번호를 입력하세요:');
+                if (pw !== ADMIN_PASSWORD) {
+                    alert('비밀번호가 올바르지 않습니다.');
+                    return;
+                }
+                adminAuthenticated = true;
+            }
+
+            const companyName = document.getElementById('rptCompanyName').textContent.trim();
+            const savedData = localStorage.getItem('rpt_data_' + companyName);
+            if (!savedData) {
+                alert('저장된 보고서 데이터를 찾을 수 없습니다.');
+                return;
+            }
+
+            const data = JSON.parse(savedData);
+            const savedPw = localStorage.getItem('rpt_pw_' + companyName) || '';
+            editingCompanyName = companyName;
+
+            // Switch to create tab
+            document.getElementById('tabCreate').classList.add('active');
+            document.getElementById('tabView').classList.remove('active');
+            document.getElementById('accessSection').style.display = 'none';
+            document.getElementById('reportView').classList.remove('active');
+            document.getElementById('createSection').classList.add('active');
+            document.getElementById('createFormTitle').textContent = '보고서 수정 — ' + companyName;
+
+            // Fill basic info
+            document.getElementById('createCafeName').value = data.companyName || '';
+            document.getElementById('createPassword').value = savedPw;
+            document.getElementById('createPlatform').value = data.platform || '네이버 카페';
+            document.getElementById('createPlatform').dispatchEvent(new Event('change'));
+            document.getElementById('createServiceType').value = data.serviceType || '';
+            document.getElementById('createStartDate').value = data.startDate || '';
+            document.getElementById('createEndDate').value = data.endDate || '';
+            const teamEl = document.getElementById('createTeam');
+            if (teamEl) teamEl.value = data.teamName || '';
+            document.getElementById('createPlatformLink').value = data.platformLink || '';
+
+            // Fill KPI fields after platform change triggers field rebuild
+            setTimeout(function() {
+                if (data.kpiData) {
+                    Object.keys(data.kpiData).forEach(function(key) {
+                        const el = document.getElementById(key);
+                        if (el) el.value = data.kpiData[key];
+                    });
+                }
+            }, 100);
+
+            // Fill keywords
+            if (data.keywords && data.keywords.length > 0) {
+                data.keywords.forEach(function(kw, i) {
+                    const idx = i + 1;
+                    const kwEl = document.getElementById('kw' + idx);
+                    const expEl = document.getElementById('kwExp' + idx);
+                    const rankEl = document.getElementById('kwRank' + idx);
+                    if (kwEl) kwEl.value = kw.keyword || '';
+                    if (expEl) expEl.value = kw.exposure || '';
+                    if (rankEl) rankEl.value = kw.rank || '';
+                });
+            }
+
+            // Fill cafe activity
+            if (data.cafeActivity) {
+                const ca = data.cafeActivity;
+                if (document.getElementById('cafeGrade')) document.getElementById('cafeGrade').value = ca.grade || '';
+                if (ca.q1) {
+                    if (document.getElementById('cafePost1')) document.getElementById('cafePost1').value = ca.q1.posts || '';
+                    if (document.getElementById('cafeComment1')) document.getElementById('cafeComment1').value = ca.q1.comments || '';
+                    if (document.getElementById('cafeLike1')) document.getElementById('cafeLike1').value = ca.q1.likes || '';
+                    if (document.getElementById('cafeSearch1')) document.getElementById('cafeSearch1').value = ca.q1.searches || '';
+                    if (document.getElementById('cafeMember1')) document.getElementById('cafeMember1').value = ca.q1.members || '';
+                }
+                if (ca.q2) {
+                    if (document.getElementById('cafePost2')) document.getElementById('cafePost2').value = ca.q2.posts || '';
+                    if (document.getElementById('cafeComment2')) document.getElementById('cafeComment2').value = ca.q2.comments || '';
+                    if (document.getElementById('cafeLike2')) document.getElementById('cafeLike2').value = ca.q2.likes || '';
+                    if (document.getElementById('cafeSearch2')) document.getElementById('cafeSearch2').value = ca.q2.searches || '';
+                    if (document.getElementById('cafeMember2')) document.getElementById('cafeMember2').value = ca.q2.members || '';
+                }
+            }
+
+            // Fill AI comment
+            if (data.aiComment) {
+                document.getElementById('createAIComment').value = data.aiComment;
+            }
+
+            // Fill toggles
+            if (data.toggles) {
+                document.getElementById('toggleMarketingSection').checked = data.toggles.marketing !== false;
+                document.getElementById('toggleExposureSection').checked = data.toggles.exposure !== false;
+                document.getElementById('toggleKeywordSection').checked = data.toggles.keyword !== false;
+                document.getElementById('toggleContentSection').checked = data.toggles.content !== false;
+                document.getElementById('toggleWorkLogSection').checked = data.toggles.worklog !== false;
+            }
+
+            // Fill radar/exposure gap
+            if (data.radarGap) document.getElementById('radarGapSize').value = data.radarGap;
+            if (data.exposureGap) document.getElementById('exposureGapSize').value = data.exposureGap;
+
+            // Fill exposure periods
+            if (data.startDate || data.endDate) {
+                generateExposurePeriods();
+                setTimeout(function() {
+                    if (data.exposurePeriods) {
+                        data.exposurePeriods.forEach(function(ep) {
+                            const rows = document.querySelectorAll('#exposurePeriodsContainer .exp-period-row');
+                            rows.forEach(function(row) {
+                                if (row.querySelector('.exp-period-label')?.textContent === ep.label) {
+                                    const expInput = row.querySelector('input[name="expExposure"]');
+                                    const clickInput = row.querySelector('input[name="expClicks"]');
+                                    if (expInput) expInput.value = ep.exposure || '';
+                                    if (clickInput) clickInput.value = ep.clicks || '';
+                                }
+                            });
+                        });
+                    }
+                }, 150);
+            }
+
+            // Fill work log
+            document.getElementById('createTableBody').innerHTML = '';
+            createRowCount = 0;
+            createRowIdCounter = 0;
+            if (data.workLog && data.workLog.length > 0) {
+                data.workLog.forEach(function(item) {
+                    createRowIdCounter++;
+                    const tbody = document.getElementById('createTableBody');
+                    const rowNum = tbody.querySelectorAll('tr').length + 1;
+                    const tr = document.createElement('tr');
+                    tr.id = 'createRow-' + createRowIdCounter;
+                    tr.innerHTML = '<td class="row-num">' + rowNum + '</td>' +
+                        '<td><input type="text" name="rowDate" placeholder="2026-01-06" style="width:100px;" value="' + (item.date || '') + '"></td>' +
+                        '<td><input type="text" name="rowUrl" placeholder="URL 입력" value="' + (item.url || '').replace(/"/g, '&quot;') + '"></td>' +
+                        '<td><button type="button" class="btn-remove-row" onclick="removeCreateRow(\'createRow-' + createRowIdCounter + '\')">&times;</button></td>';
+                    tbody.appendChild(tr);
+                });
+                createRowCount = document.getElementById('createTableBody').querySelectorAll('tr').length;
+                renderCreateTablePage(1);
+            } else {
+                addCreateRow();
+            }
+
+            // Scroll to top of form
+            document.getElementById('createSection').scrollIntoView({ behavior: 'smooth', block: 'start' });
         }
 
         // Access form - password is set by admin during report creation
@@ -1967,7 +2124,36 @@
             localStorage.setItem('rpt_pw_' + companyName, pw);
             localStorage.setItem('rpt_data_' + companyName, JSON.stringify(reportData));
 
-            alert('보고서가 저장되었습니다.\n\n조회 정보:\n업체명: ' + companyName + '\n비밀번호: ' + pw);
+            const isEdit = !!editingCompanyName;
+            editingCompanyName = null;
+            document.getElementById('createFormTitle').textContent = '보고서 작성';
+
+            if (isEdit) {
+                // After edit: switch to view and show updated report
+                alert('보고서가 수정되었습니다.');
+                document.getElementById('createSection').classList.remove('active');
+                document.getElementById('reportView').classList.add('active');
+                document.getElementById('tabView').classList.add('active');
+                document.getElementById('tabCreate').classList.remove('active');
+                document.getElementById('rptCompanyName').textContent = companyName;
+                loadSavedReport(reportData);
+                animateRadarChart('both');
+                startRadarRepeat();
+                if (reportData.exposurePeriods && reportData.exposurePeriods.length > 0) {
+                    drawExposureChartFromData(reportData.exposurePeriods);
+                } else {
+                    animateExposureChart();
+                }
+                startExposureRepeat();
+                animateCompare();
+                startCompareRepeat();
+                animateContentBars();
+                startContentBarRepeat();
+                applySectionVisibility();
+                document.getElementById('reportView').scrollIntoView({ behavior: 'smooth', block: 'start' });
+            } else {
+                alert('보고서가 저장되었습니다.\n\n조회 정보:\n업체명: ' + companyName + '\n비밀번호: ' + pw);
+            }
         });
 
         // ===== Platform Custom Input Toggle =====
