@@ -470,25 +470,13 @@
                         <!-- 견적 정보 표시 -->
                         <div id="estInfoDisplay" style="display:none; margin-top:16px; padding-top:16px; border-top:1px solid var(--border);">
                             <div style="display:flex; gap:12px; flex-wrap:wrap;">
-                                <div class="est-badge" style="flex:1; min-width:120px; text-align:center; background:#f0f7ff; padding:12px; border-radius:10px;">
+                                <div style="flex:1; min-width:120px; text-align:center; background:#f0f7ff; padding:12px; border-radius:10px;">
                                     <div style="font-size:0.72rem; color:var(--text-muted); margin-bottom:4px;">게시글</div>
                                     <div style="font-size:1.1rem; font-weight:700; color:var(--primary);" id="estPostDisplay">-</div>
                                 </div>
-                                <div class="est-badge" style="flex:1; min-width:120px; text-align:center; background:#f0f7ff; padding:12px; border-radius:10px;">
+                                <div style="flex:1; min-width:120px; text-align:center; background:#f0f7ff; padding:12px; border-radius:10px;">
                                     <div style="font-size:0.72rem; color:var(--text-muted); margin-bottom:4px;">댓글</div>
                                     <div style="font-size:1.1rem; font-weight:700; color:var(--primary);" id="estCommentDisplay">-</div>
-                                </div>
-                                <div class="est-badge" style="flex:1; min-width:120px; text-align:center; background:#f0f7ff; padding:12px; border-radius:10px;">
-                                    <div style="font-size:0.72rem; color:var(--text-muted); margin-bottom:4px;">검색조회</div>
-                                    <div style="font-size:1.1rem; font-weight:700; color:var(--primary);" id="estSearchDisplay">-</div>
-                                </div>
-                                <div class="est-badge" style="flex:1; min-width:120px; text-align:center; background:#f0f7ff; padding:12px; border-radius:10px;">
-                                    <div style="font-size:0.72rem; color:var(--text-muted); margin-bottom:4px;">앱구동</div>
-                                    <div style="font-size:1.1rem; font-weight:700; color:var(--primary);" id="estAppDisplay">-</div>
-                                </div>
-                                <div class="est-badge" style="flex:1; min-width:120px; text-align:center; background:#f0f7ff; padding:12px; border-radius:10px;">
-                                    <div style="font-size:0.72rem; color:var(--text-muted); margin-bottom:4px;">게시글 조회수</div>
-                                    <div style="font-size:1.1rem; font-weight:700; color:var(--primary);" id="estPostViewsDisplay">-</div>
                                 </div>
                             </div>
                         </div>
@@ -762,7 +750,7 @@
 
                         <!-- 견적 정보 -->
                         <h4 class="form-section-title">견적 정보</h4>
-                        <div class="form-row" style="margin-bottom:8px;">
+                        <div class="form-row" style="margin-bottom:16px;">
                             <div class="form-group">
                                 <label>게시글 수</label>
                                 <input type="number" id="estPostCount" placeholder="예: 374" min="0">
@@ -771,24 +759,6 @@
                                 <label>댓글 수</label>
                                 <input type="number" id="estCommentCount" placeholder="예: 500" min="0">
                             </div>
-                        </div>
-                        <div class="form-row" style="margin-bottom:8px;">
-                            <div class="form-group">
-                                <label>검색조회 수</label>
-                                <input type="number" id="estSearchCount" placeholder="예: 10000" min="0">
-                            </div>
-                            <div class="form-group">
-                                <label>앱구동 수</label>
-                                <input type="number" id="estAppCount" placeholder="예: 200" min="0">
-                            </div>
-                        </div>
-                        <div class="form-row" style="margin-bottom:16px;">
-                            <div class="form-group">
-                                <label>게시글 조회수</label>
-                                <input type="number" id="estPostViews" placeholder="예: 150" min="0">
-                                <p style="font-size:0.72rem; color:var(--text-muted); margin-top:4px;">* 보고서에 고정 표시됩니다</p>
-                            </div>
-                            <div class="form-group"></div>
                         </div>
 
                         <div class="form-group">
@@ -902,8 +872,7 @@
                             </label>
                         </div>
                         <div style="border-bottom:1px solid var(--border); margin-bottom:16px;"></div>
-                        <p style="font-size:0.75rem; color:var(--text-muted); margin-bottom:12px;">* 카페 활동내역의 분기별 등급/점수 데이터가 자동으로 반영됩니다.</p>
-                        <div id="exposurePeriodsContainer"></div>
+                        <p style="font-size:0.75rem; color:var(--text-muted); margin-bottom:12px;">* 카페 활동내역의 분기별 등급/점수 데이터가 자동으로 반영됩니다. (별도 입력 불필요)</p>
 
                         <div style="display:flex; justify-content:space-between; align-items:center; margin-top:20px;">
                             <h4 class="form-section-title" style="margin-bottom:0; border:none; padding:0;">키워드 분석 (자동 분석)</h4>
@@ -1173,9 +1142,6 @@
                 const fill = (id, val) => { const el = document.getElementById(id); if (el && val) el.value = val; };
                 fill('estPostCount', data.estimate.posts);
                 fill('estCommentCount', data.estimate.comments);
-                fill('estSearchCount', data.estimate.searches);
-                fill('estAppCount', data.estimate.app);
-                fill('estPostViews', data.estimate.postViews);
             }
 
             // Fill AI comment
@@ -2154,14 +2120,11 @@
             if (data.estimate) {
                 const est = data.estimate;
                 const estSection = document.getElementById('estInfoDisplay');
-                const hasAny = est.posts || est.comments || est.searches || est.app || est.postViews;
+                const hasAny = est.posts || est.comments;
                 if (estSection && hasAny) {
                     estSection.style.display = '';
                     if (est.posts) document.getElementById('estPostDisplay').textContent = Number(est.posts).toLocaleString() + '건';
                     if (est.comments) document.getElementById('estCommentDisplay').textContent = Number(est.comments).toLocaleString() + '건';
-                    if (est.searches) document.getElementById('estSearchDisplay').textContent = Number(est.searches).toLocaleString() + '회';
-                    if (est.app) document.getElementById('estAppDisplay').textContent = Number(est.app).toLocaleString() + '회';
-                    if (est.postViews) document.getElementById('estPostViewsDisplay').textContent = Number(est.postViews).toLocaleString() + '회';
                 }
             }
 
@@ -2440,10 +2403,7 @@
             // Estimate data
             const estimate = {
                 posts: document.getElementById('estPostCount')?.value || '',
-                comments: document.getElementById('estCommentCount')?.value || '',
-                searches: document.getElementById('estSearchCount')?.value || '',
-                app: document.getElementById('estAppCount')?.value || '',
-                postViews: document.getElementById('estPostViews')?.value || ''
+                comments: document.getElementById('estCommentCount')?.value || ''
             };
 
             const reportData = {
