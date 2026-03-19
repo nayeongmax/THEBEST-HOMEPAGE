@@ -997,6 +997,127 @@
         </div>
     </footer>
 
+    <!-- ===== Custom Modal System ===== -->
+    <div id="customModal" style="display:none; position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.5); z-index:99999; backdrop-filter:blur(4px); align-items:center; justify-content:center;">
+        <div style="background:#fff; border-radius:20px; padding:36px 40px; text-align:center; max-width:420px; width:90%; box-shadow:0 20px 60px rgba(0,0,0,0.2); animation:modalIn 0.2s ease-out;">
+            <div id="modalIcon" style="width:56px; height:56px; border-radius:50%; display:flex; align-items:center; justify-content:center; margin:0 auto 16px; font-size:24px;"></div>
+            <p id="modalMessage" style="font-size:15px; color:#1E293B; line-height:1.7; margin:0 0 24px; white-space:pre-line; word-break:keep-all;"></p>
+            <div id="modalInputArea" style="display:none; margin-bottom:20px;">
+                <input id="modalInput" type="password" style="width:100%; padding:12px 16px; border:1px solid #E2E8F0; border-radius:10px; font-size:15px; font-family:'Noto Sans KR',sans-serif; outline:none; box-sizing:border-box; transition:border 0.2s;" onfocus="this.style.borderColor='#3B82F6'" onblur="this.style.borderColor='#E2E8F0'">
+            </div>
+            <div id="modalButtons" style="display:flex; gap:10px; justify-content:center;"></div>
+        </div>
+    </div>
+    <style>
+        @keyframes modalIn { from { opacity:0; transform:scale(0.95) translateY(10px); } to { opacity:1; transform:scale(1) translateY(0); } }
+    </style>
+
+    <script>
+        // ===== Custom Modal Functions =====
+        function showModal(message, type, callback) {
+            const modal = document.getElementById('customModal');
+            const msgEl = document.getElementById('modalMessage');
+            const iconEl = document.getElementById('modalIcon');
+            const btnArea = document.getElementById('modalButtons');
+            const inputArea = document.getElementById('modalInputArea');
+            const inputEl = document.getElementById('modalInput');
+
+            msgEl.textContent = message;
+            inputArea.style.display = 'none';
+            inputEl.value = '';
+
+            // Icon by type
+            if (type === 'success') {
+                iconEl.style.background = '#ECFDF5';
+                iconEl.innerHTML = '<span style="color:#10B981;">&#10003;</span>';
+            } else if (type === 'error') {
+                iconEl.style.background = '#FEF2F2';
+                iconEl.innerHTML = '<span style="color:#EF4444;">&#10007;</span>';
+            } else if (type === 'confirm') {
+                iconEl.style.background = '#FFF7ED';
+                iconEl.innerHTML = '<span style="color:#F59E0B;">&#9888;</span>';
+            } else if (type === 'prompt') {
+                iconEl.style.background = '#EFF6FF';
+                iconEl.innerHTML = '<span style="color:#3B82F6;">&#128274;</span>';
+                inputArea.style.display = '';
+            } else {
+                iconEl.style.background = '#EFF6FF';
+                iconEl.innerHTML = '<span style="color:#3B82F6;">&#8505;</span>';
+            }
+
+            // Buttons
+            if (type === 'confirm') {
+                btnArea.innerHTML = '<button id="modalCancelBtn" style="flex:1;padding:12px;border-radius:10px;font-size:14px;font-weight:600;cursor:pointer;font-family:Noto Sans KR,sans-serif;background:#F1F5F9;color:#64748B;border:none;">취소</button><button id="modalOkBtn" style="flex:1;padding:12px;border-radius:10px;font-size:14px;font-weight:600;cursor:pointer;font-family:Noto Sans KR,sans-serif;background:#3B82F6;color:#fff;border:none;">확인</button>';
+                document.getElementById('modalCancelBtn').onclick = function() { modal.style.display='none'; if(callback) callback(false); };
+                document.getElementById('modalOkBtn').onclick = function() { modal.style.display='none'; if(callback) callback(true); };
+            } else if (type === 'prompt') {
+                btnArea.innerHTML = '<button id="modalCancelBtn" style="flex:1;padding:12px;border-radius:10px;font-size:14px;font-weight:600;cursor:pointer;font-family:Noto Sans KR,sans-serif;background:#F1F5F9;color:#64748B;border:none;">취소</button><button id="modalOkBtn" style="flex:1;padding:12px;border-radius:10px;font-size:14px;font-weight:600;cursor:pointer;font-family:Noto Sans KR,sans-serif;background:#3B82F6;color:#fff;border:none;">확인</button>';
+                document.getElementById('modalCancelBtn').onclick = function() { modal.style.display='none'; if(callback) callback(null); };
+                document.getElementById('modalOkBtn').onclick = function() { modal.style.display='none'; if(callback) callback(inputEl.value); };
+                setTimeout(function() { inputEl.focus(); }, 100);
+            } else {
+                btnArea.innerHTML = '<button id="modalOkBtn" style="min-width:120px;padding:12px 36px;border-radius:10px;font-size:14px;font-weight:600;cursor:pointer;font-family:Noto Sans KR,sans-serif;background:#3B82F6;color:#fff;border:none;">확인</button>';
+                document.getElementById('modalOkBtn').onclick = function() { modal.style.display='none'; if(callback) callback(); };
+            }
+
+            modal.style.display = 'flex';
+
+            // Enter key support
+            modal.onkeydown = function(e) {
+                if (e.key === 'Enter') {
+                    document.getElementById('modalOkBtn').click();
+                }
+            };
+        }
+
+        // Convenience wrappers
+        function showAlert(msg, callback, type) { showModal(msg, type || 'info', callback); }
+        function showSuccess(msg, callback) { showModal(msg, 'success', callback); }
+        function showError(msg, callback) { showModal(msg, 'error', callback); }
+        function showConfirm(msg, callback) { showModal(msg, 'confirm', callback); }
+        function showPrompt(msg, callback) { showModal(msg, 'prompt', callback); }
+    </script>
+
+    <!-- ===== Netlify Functions API ===== -->
+    <script>
+        // 보고서 저장 (Netlify Functions + localStorage 백업)
+        window.saveReport = async function(companyName, pw, reportData) {
+            // 항상 localStorage에도 저장 (백업)
+            localStorage.setItem('rpt_pw_' + companyName, pw);
+            localStorage.setItem('rpt_data_' + companyName, JSON.stringify(reportData));
+
+            try {
+                await fetch('/.netlify/functions/save-report', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ companyName, password: pw, data: reportData })
+                });
+            } catch(e) {
+                console.warn('서버 저장 실패, localStorage만 사용:', e);
+            }
+        };
+
+        // 보고서 조회 (Netlify Functions 우선, localStorage 폴백)
+        window.loadReport = async function(companyName) {
+            try {
+                const res = await fetch('/.netlify/functions/load-report?company=' + encodeURIComponent(companyName));
+                if (res.ok) {
+                    const result = await res.json();
+                    if (result && result.password) return result;
+                }
+            } catch(e) {
+                console.warn('서버 조회 실패, localStorage로 폴백:', e);
+            }
+            // localStorage 폴백
+            const pw = localStorage.getItem('rpt_pw_' + companyName);
+            const data = localStorage.getItem('rpt_data_' + companyName);
+            if (pw || data) {
+                return { password: pw, data: data ? JSON.parse(data) : null };
+            }
+            return null;
+        };
+    </script>
+
     <script>
         // AI 맞춤견적 서비스 준비중 알림
         function showComingSoon() {
@@ -1031,14 +1152,15 @@
         }
 
         function adminLoginForEdit() {
-            const pw = prompt('관리자 비밀번호를 입력하세요:');
-            if (pw !== ADMIN_PASSWORD) {
-                alert('비밀번호가 올바르지 않습니다.');
-                return;
-            }
-            adminAuthenticated = true;
-            isAdminViewing = true;
-            updateEditButtonVisibility();
+            showPrompt('관리자 비밀번호를 입력하세요:', function(pw) {
+                if (!pw || pw !== ADMIN_PASSWORD) {
+                    if (pw !== null) showError('비밀번호가 올바르지 않습니다.');
+                    return;
+                }
+                adminAuthenticated = true;
+                isAdminViewing = true;
+                updateEditButtonVisibility();
+            });
         }
 
         function switchTab(tab) {
@@ -1059,14 +1181,21 @@
                 }
             } else {
                 if (!adminAuthenticated) {
-                    const pw = prompt('관리자 비밀번호를 입력하세요:');
-                    if (pw !== ADMIN_PASSWORD) {
-                        alert('비밀번호가 올바르지 않습니다.');
-                        return;
-                    }
-                    adminAuthenticated = true;
-                    isAdminViewing = true;
-                    updateEditButtonVisibility();
+                    showPrompt('관리자 비밀번호를 입력하세요:', function(pw) {
+                        if (!pw || pw !== ADMIN_PASSWORD) {
+                            if (pw !== null) showError('비밀번호가 올바르지 않습니다.');
+                            return;
+                        }
+                        adminAuthenticated = true;
+                        isAdminViewing = true;
+                        updateEditButtonVisibility();
+                        tabCreate.classList.add('active');
+                        tabView.classList.remove('active');
+                        accessSection.style.display = 'none';
+                        reportView.classList.remove('active');
+                        createSection.classList.add('active');
+                    });
+                    return;
                 }
                 tabCreate.classList.add('active');
                 tabView.classList.remove('active');
@@ -1081,25 +1210,42 @@
 
         function editCurrentReport() {
             if (!adminAuthenticated) {
-                const pw = prompt('관리자 비밀번호를 입력하세요:');
-                if (pw !== ADMIN_PASSWORD) {
-                    alert('비밀번호가 올바르지 않습니다.');
-                    return;
-                }
-                adminAuthenticated = true;
-                isAdminViewing = true;
-                updateEditButtonVisibility();
-            }
-
-            const companyName = document.getElementById('rptCompanyName').textContent.trim();
-            const savedData = localStorage.getItem('rpt_data_' + companyName);
-            if (!savedData) {
-                alert('저장된 보고서 데이터를 찾을 수 없습니다.');
+                showPrompt('관리자 비밀번호를 입력하세요:', function(pw) {
+                    if (!pw || pw !== ADMIN_PASSWORD) {
+                        if (pw !== null) showError('비밀번호가 올바르지 않습니다.');
+                        return;
+                    }
+                    adminAuthenticated = true;
+                    isAdminViewing = true;
+                    updateEditButtonVisibility();
+                    doEditCurrentReport();
+                });
                 return;
             }
+            doEditCurrentReport();
+        }
 
-            const data = JSON.parse(savedData);
-            const savedPw = localStorage.getItem('rpt_pw_' + companyName) || '';
+        async function doEditCurrentReport() {
+            const companyName = document.getElementById('rptCompanyName').textContent.trim();
+
+            // Firebase 우선, localStorage 폴백
+            let data, savedPw;
+            if (window.loadReport) {
+                const result = await window.loadReport(companyName);
+                if (result && result.data) {
+                    data = result.data;
+                    savedPw = result.password || '';
+                }
+            }
+            if (!data) {
+                const localData = localStorage.getItem('rpt_data_' + companyName);
+                if (!localData) {
+                    showError('저장된 보고서 데이터를 찾을 수 없습니다.');
+                    return;
+                }
+                data = JSON.parse(localData);
+                savedPw = localStorage.getItem('rpt_pw_' + companyName) || '';
+            }
             editingCompanyName = companyName;
 
             // Switch to create tab
@@ -1263,31 +1409,45 @@
         }
 
         // Access form - password is set by admin during report creation
-        document.getElementById('accessForm').addEventListener('submit', function(e) {
+        document.getElementById('accessForm').addEventListener('submit', async function(e) {
             e.preventDefault();
             const company = document.getElementById('accessCompany').value.trim();
             const password = document.getElementById('accessPassword').value.trim();
-            // Check stored password or fallback to demo access
-            const storedPw = localStorage.getItem('rpt_pw_' + company);
+
+            // Firebase 우선 조회, localStorage 폴백
+            let storedPw = null;
+            let reportData = null;
+            if (window.loadReport) {
+                const result = await window.loadReport(company);
+                if (result) {
+                    storedPw = result.password;
+                    reportData = result.data;
+                }
+            }
+            if (!storedPw) {
+                storedPw = localStorage.getItem('rpt_pw_' + company);
+            }
+
             const isValid = storedPw ? (password === storedPw) : (company === password);
             if (company && isValid) {
-                isAdminViewing = false; // 일반 사용자 조회 → 수정 버튼 숨김
+                isAdminViewing = false;
                 updateEditButtonVisibility();
                 document.getElementById('accessSection').style.display = 'none';
                 document.getElementById('reportView').classList.add('active');
                 document.getElementById('rptCompanyName').textContent = company;
 
-                // Load saved report data if exists
-                const savedData = localStorage.getItem('rpt_data_' + company);
-                if (savedData) {
-                    loadSavedReport(JSON.parse(savedData));
+                if (!reportData) {
+                    const localData = localStorage.getItem('rpt_data_' + company);
+                    if (localData) reportData = JSON.parse(localData);
+                }
+                if (reportData) {
+                    loadSavedReport(reportData);
                 } else {
                     generateReportTable();
                 }
 
                 animateRadarChart('both');
                 startRadarRepeat();
-                // Exposure chart: use cafe growth chart if data exists, otherwise default
                 if (!window._cafeGrowthDrawn) animateExposureChart();
                 startExposureRepeat();
                 animateCompare();
@@ -1296,7 +1456,7 @@
                 startContentBarRepeat();
                 applySectionVisibility();
             } else {
-                alert('업체명 또는 비밀번호가 올바르지 않습니다.\n전달받은 비밀번호를 확인해주세요.');
+                showError('업체명 또는 비밀번호가 올바르지 않습니다.\n전달받은 비밀번호를 확인해주세요.');
             }
         });
 
@@ -2342,7 +2502,7 @@
 
         function addKeywordRow() {
             const container = document.getElementById('keywordInputs');
-            if (container.children.length >= 5) { alert('키워드는 최대 5개까지 추가할 수 있습니다.'); return; }
+            if (container.children.length >= 5) { showAlert('키워드는 최대 5개까지 추가할 수 있습니다.'); return; }
             const div = document.createElement('div');
             div.className = 'form-row-3';
             div.style.marginBottom = '10px';
@@ -2365,7 +2525,7 @@
             e.preventDefault();
             const companyName = document.getElementById('createCafeName').value.trim();
             const pw = document.getElementById('createPassword').value.trim();
-            if (!companyName || !pw) { alert('업체명과 비밀번호를 입력하세요.'); return; }
+            if (!companyName || !pw) { showError('업체명과 비밀번호를 입력하세요.'); return; }
 
             // Collect all form data
             const platform = document.getElementById('createPlatform').value;
@@ -2444,17 +2604,20 @@
                 radarGap, exposureGap, radarWithout, radarWith, exposureOurs, exposureComp, estimate
             };
 
-            localStorage.setItem('rpt_pw_' + companyName, pw);
-            localStorage.setItem('rpt_data_' + companyName, JSON.stringify(reportData));
+            // Firebase + localStorage 동시 저장
+            if (window.saveReport) {
+                window.saveReport(companyName, pw, reportData);
+            } else {
+                localStorage.setItem('rpt_pw_' + companyName, pw);
+                localStorage.setItem('rpt_data_' + companyName, JSON.stringify(reportData));
+            }
 
             const isEdit = !!editingCompanyName;
             editingCompanyName = null;
             document.getElementById('createFormTitle').textContent = '보고서 작성';
 
             if (isEdit) {
-                // After edit: switch to view and show updated report
-                isAdminViewing = true; // 관리자가 수정 후 보는 것
-                alert('보고서가 수정되었습니다.');
+                isAdminViewing = true;
                 document.getElementById('createSection').classList.remove('active');
                 document.getElementById('reportView').classList.add('active');
                 document.getElementById('tabView').classList.add('active');
@@ -2476,8 +2639,9 @@
                 applySectionVisibility();
                 updateEditButtonVisibility();
                 document.getElementById('reportView').scrollIntoView({ behavior: 'smooth', block: 'start' });
+                showSuccess('보고서가 수정되었습니다.');
             } else {
-                alert('보고서가 저장되었습니다.\n\n조회 정보:\n업체명: ' + companyName + '\n비밀번호: ' + pw);
+                showSuccess('보고서가 저장되었습니다.\n\n조회 정보:\n업체명: ' + companyName + '\n비밀번호: ' + pw);
             }
         });
 
@@ -2619,13 +2783,13 @@
         function parseSheetData() {
             const input = document.getElementById('sheetPasteInput').value.trim();
             if (!input) {
-                alert('붙여넣을 데이터가 없습니다.');
+                showAlert('붙여넣을 데이터가 없습니다.');
                 return;
             }
 
             const lines = input.split('\n').filter(line => line.trim());
             if (lines.length === 0) {
-                alert('유효한 데이터가 없습니다.');
+                showAlert('유효한 데이터가 없습니다.');
                 return;
             }
 
@@ -2650,15 +2814,17 @@
             renderCreateTablePage(totalPages);
             document.getElementById('sheetPasteArea').style.display = 'none';
             document.getElementById('sheetPasteInput').value = '';
-            alert(`${lines.length}개의 작업 내역이 추가되었습니다. (현재 총 ${createRowCount}건)`);
+            showSuccess(`${lines.length}개의 작업 내역이 추가되었습니다. (현재 총 ${createRowCount}건)`);
         }
 
         function clearCreateTable() {
-            if (!confirm('작업 내역을 모두 초기화하시겠습니까?')) return;
-            document.getElementById('createTableBody').innerHTML = '';
-            createRowCount = 0;
-            createRowIdCounter = 0;
-            addCreateRow();
+            showConfirm('작업 내역을 모두 초기화하시겠습니까?', function(yes) {
+                if (!yes) return;
+                document.getElementById('createTableBody').innerHTML = '';
+                createRowCount = 0;
+                createRowIdCounter = 0;
+                addCreateRow();
+            });
         }
 
         // ===== Auto Analyze from URLs =====
@@ -2674,7 +2840,7 @@
             // Also check platform link input
             const platformLink = document.getElementById('createPlatformLink').value.trim();
             if (urls.length === 0 && !platformLink) {
-                alert('플랫폼 링크 또는 작업 내역에 URL을 먼저 입력해주세요.');
+                showAlert('플랫폼 링크 또는 작업 내역에 URL을 먼저 입력해주세요.');
                 return;
             }
 
@@ -2788,7 +2954,7 @@
                 if (rankEl) rankEl.value = Math.floor(2 + Math.random() * 12);
             }
 
-            alert('자동 분석이 완료되었습니다!\nKPI, 키워드가 자동으로 채워졌습니다.\n\nAI 분석 코멘트는 아래 "자동 분석" 버튼을 눌러 생성하세요.');
+            showSuccess('자동 분석이 완료되었습니다!\nKPI, 키워드가 자동으로 채워졌습니다.\n\nAI 분석 코멘트는 아래 "자동 분석" 버튼을 눌러 생성하세요.');
         }
 
         // ===== Generate AI Comment =====
