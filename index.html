@@ -22,7 +22,7 @@
                 <li><a href="#reviews">고객후기</a></li>
                 <li><a href="#process">진행프로세스</a></li>
                 <li><a href="report.html" style="position:relative;">결과보고서<span class="partner-badge">제휴사 전용</span></a></li>
-                <li><a href="estimate.html" class="nav-cta">AI 맞춤견적</a></li>
+                <li><a href="#" class="nav-cta" onclick="event.preventDefault();showComingSoon();">AI 맞춤견적</a></li>
             </ul>
             <button class="mobile-menu" id="mobileMenu" aria-label="메뉴"><span></span><span></span><span></span></button>
         </div>
@@ -37,7 +37,7 @@
                 <h1 class="hero-title">매출을 만드는 마케팅<br><span class="gradient-text">AI가 분석하고 설계</span>합니다</h1>
                 <p class="hero-sub">네이버카페 · 블로그 · 유튜브 · 인스타 · 언론홍보 등<br>브랜드에 맞는 마케팅 전략을 AI가 분석하고 맞춤 설계합니다.</p>
                 <div class="hero-buttons">
-                    <a href="estimate.html" class="btn btn-primary btn-lg">AI 맞춤 견적 받기</a>
+                    <a href="#" class="btn btn-primary btn-lg" onclick="event.preventDefault();showComingSoon();">AI 맞춤 견적 받기</a>
                     <a href="http://pf.kakao.com/_xonYQn" class="btn btn-kakao btn-lg" target="_blank" rel="noopener">카카오톡 상담</a>
                 </div>
             </div>
@@ -234,7 +234,7 @@
                     <p class="package-desc">브랜드 인지도 시작</p>
                     <div class="package-includes-row">블로그 체험단 + 인스타 마케팅</div>
                     <div class="package-benefit">검색 노출 + 브랜드 인지도 동시 확보</div>
-                    <a href="estimate.html" class="btn btn-outline package-btn">패키지 견적 받기</a>
+                    <a href="#" class="btn btn-outline package-btn" onclick="event.preventDefault();showComingSoon();">패키지 견적 받기</a>
                 </div>
                 <div class="package-card featured animate-on-scroll">
                     <div class="package-popular">BEST</div>
@@ -243,7 +243,7 @@
                     <p class="package-desc">검색 + SNS 동시 확장</p>
                     <div class="package-includes-row">블로그 체험단 + 인스타 마케팅 + 숏폼 제작</div>
                     <div class="package-benefit">검색 + SNS + 영상 트리플 시너지</div>
-                    <a href="estimate.html" class="btn btn-primary package-btn">패키지 견적 받기</a>
+                    <a href="#" class="btn btn-primary package-btn" onclick="event.preventDefault();showComingSoon();">패키지 견적 받기</a>
                 </div>
                 <div class="package-card animate-on-scroll">
                     <div class="package-badge">PREMIUM</div>
@@ -251,7 +251,7 @@
                     <p class="package-desc">브랜드 신뢰도 상승</p>
                     <div class="package-includes-row">블로그 대행 + 유튜브 + 인스타 + 언론홍보</div>
                     <div class="package-benefit">신뢰도 + 검색 + 영상 올인원</div>
-                    <a href="estimate.html" class="btn btn-outline package-btn">패키지 견적 받기</a>
+                    <a href="#" class="btn btn-outline package-btn" onclick="event.preventDefault();showComingSoon();">패키지 견적 받기</a>
                 </div>
             </div>
         </div>
@@ -382,7 +382,7 @@
                         <div class="ai-feat">오각형 데이터 리포트</div>
                         <div class="ai-feat">PDF 제안서 자동 생성</div>
                     </div>
-                    <a href="estimate.html" class="btn btn-primary btn-lg">무료 AI 견적 받기</a>
+                    <a href="#" class="btn btn-primary btn-lg" onclick="event.preventDefault();showComingSoon();">무료 AI 견적 받기</a>
                 </div>
                 <div class="ai-estimate-right">
                     <div class="ai-mock-screen">
@@ -425,7 +425,7 @@
                 <div class="footer-links">
                     <div class="footer-col"><h4>서비스</h4><a href="#services">카페활성화</a><a href="#services">블로그 체험단/대행</a><a href="#services">유튜브/인스타 대행</a></div>
                     <div class="footer-col"><h4>제작</h4><a href="#services">롱폼/숏폼 제작</a><a href="#services">사이트 제작</a><a href="#services">언론 홍보</a></div>
-                    <div class="footer-col"><h4>바로가기</h4><a href="estimate.html">AI 견적서</a><a href="report.html">결과보고서</a><a href="#reviews">고객 후기</a></div>
+                    <div class="footer-col"><h4>바로가기</h4><a href="#" onclick="event.preventDefault();showComingSoon();">AI 견적서</a><a href="report.html">결과보고서</a><a href="#reviews">고객 후기</a></div>
                 </div>
             </div>
             <div class="footer-bottom"><p>&copy; 2026 THEBEST Marketing. All rights reserved.</p></div>
@@ -438,6 +438,32 @@
     </a>
 
     <script src="main.js"></script>
+    <script>
+    // AI 맞춤견적 서비스 준비중 알림
+    function showComingSoon() {
+        // 이미 모달이 있으면 제거
+        const existing = document.querySelector('.coming-soon-overlay');
+        if (existing) existing.remove();
+
+        const overlay = document.createElement('div');
+        overlay.className = 'coming-soon-overlay';
+        overlay.style.cssText = 'position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,0.5);display:flex;align-items:center;justify-content:center;z-index:99999;backdrop-filter:blur(4px);';
+        overlay.innerHTML = `
+            <div style="background:#fff;border-radius:20px;padding:40px 48px;text-align:center;max-width:420px;width:90%;box-shadow:0 20px 60px rgba(0,0,0,0.2);animation:fadeInUp 0.3s ease;">
+                <div style="width:64px;height:64px;background:#EFF6FF;border-radius:50%;display:flex;align-items:center;justify-content:center;margin:0 auto 20px;">
+                    <span style="font-size:28px;">🚀</span>
+                </div>
+                <h3 style="font-size:22px;font-weight:800;color:#1E293B;margin:0 0 8px;">서비스 준비중</h3>
+                <p style="font-size:15px;color:#64748B;line-height:1.6;margin:0 0 24px;">AI 맞춤견적 서비스를 준비하고 있습니다.<br>조금만 기다려주세요!</p>
+                <button onclick="this.closest('.coming-soon-overlay').remove();" style="background:#0066CC;color:#fff;border:none;padding:12px 36px;border-radius:10px;font-size:15px;font-weight:700;cursor:pointer;font-family:'Noto Sans KR',sans-serif;transition:background 0.2s;" onmouseover="this.style.background='#0052a3'" onmouseout="this.style.background='#0066CC'">확인</button>
+            </div>
+        `;
+        overlay.addEventListener('click', function(e) {
+            if (e.target === overlay) overlay.remove();
+        });
+        document.body.appendChild(overlay);
+    }
+    </script>
     <script>
     // Exposure Calculator - per-service custom metrics
     const expData = {
