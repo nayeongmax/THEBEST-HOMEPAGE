@@ -686,8 +686,8 @@
                     </div>
                 </div>
 
-                <!-- Edit Button -->
-                <div style="text-align:center; margin-top:24px; padding:20px 0;">
+                <!-- Edit Button (운영자 전용 - 관리자 인증 후에만 표시) -->
+                <div id="editButtonArea" style="text-align:center; margin-top:24px; padding:20px 0; display:none;">
                     <button type="button" class="btn btn-primary" onclick="editCurrentReport()" style="padding:14px 40px; font-size:0.95rem;">보고서 수정하기</button>
                 </div>
 
@@ -1017,6 +1017,11 @@
         const ADMIN_PASSWORD = 'thebest2026';
         let adminAuthenticated = false;
 
+        function updateEditButtonVisibility() {
+            const btn = document.getElementById('editButtonArea');
+            if (btn) btn.style.display = adminAuthenticated ? '' : 'none';
+        }
+
         function switchTab(tab) {
             const tabView = document.getElementById('tabView');
             const tabCreate = document.getElementById('tabCreate');
@@ -1039,6 +1044,7 @@
                         return;
                     }
                     adminAuthenticated = true;
+                    updateEditButtonVisibility();
                 }
                 tabCreate.classList.add('active');
                 tabView.classList.remove('active');
@@ -1059,6 +1065,7 @@
                     return;
                 }
                 adminAuthenticated = true;
+                updateEditButtonVisibility();
             }
 
             const companyName = document.getElementById('rptCompanyName').textContent.trim();
@@ -2441,6 +2448,7 @@
                 animateContentBars();
                 startContentBarRepeat();
                 applySectionVisibility();
+                updateEditButtonVisibility();
                 document.getElementById('reportView').scrollIntoView({ behavior: 'smooth', block: 'start' });
             } else {
                 alert('보고서가 저장되었습니다.\n\n조회 정보:\n업체명: ' + companyName + '\n비밀번호: ' + pw);
