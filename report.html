@@ -339,6 +339,12 @@
         .type-post { background: rgba(59,130,246,0.12); color: var(--rpt-primary-dark, var(--primary-dark)); }
         .type-comment { background: rgba(29,78,216,0.1); color: #1D4ED8; }
         .work-table a { color: var(--rpt-primary, var(--primary)); text-decoration: underline; text-underline-offset: 2px; }
+        .worklog-pagination { display:flex; align-items:center; justify-content:center; gap:6px; margin-top:16px; flex-wrap:wrap; }
+        .worklog-pagination button { min-width:36px; height:36px; border:1px solid var(--border); background:#fff; border-radius:8px; font-size:0.82rem; font-weight:600; cursor:pointer; color:var(--text-light); transition:all 0.2s; font-family:var(--font); }
+        .worklog-pagination button:hover { border-color:var(--rpt-primary, var(--primary)); color:var(--rpt-primary, var(--primary)); }
+        .worklog-pagination button.active { background:var(--rpt-primary, var(--primary)); color:#fff; border-color:var(--rpt-primary, var(--primary)); }
+        .worklog-pagination button:disabled { opacity:0.4; cursor:default; }
+        .worklog-pagination .page-info { font-size:0.8rem; color:var(--text-muted); margin:0 8px; }
         .table-wrapper {
             max-height: 500px; overflow-y: auto;
             border: 1px solid var(--border); border-radius: var(--radius-sm);
@@ -679,6 +685,7 @@
                                 <tbody id="reportTableBody"></tbody>
                             </table>
                         </div>
+                        <div class="worklog-pagination" id="worklogPagination"></div>
                     </div>
                 </div>
 
@@ -890,10 +897,15 @@
                                     <tbody id="createTableBody"></tbody>
                                 </table>
                             </div>
-                            <button type="button" class="btn-add-row" onclick="addCreateRow()">
-                                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
-                                행 추가
-                            </button>
+                            <div class="worklog-pagination" id="createTablePagination"></div>
+                            <div style="display:flex; gap:8px; align-items:center; margin-top:8px;">
+                                <button type="button" class="btn-add-row" onclick="addCreateRow()">
+                                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+                                    행 추가
+                                </button>
+                                <button type="button" class="btn-add-row" onclick="addCreateRows10()">+10행 추가</button>
+                                <button type="button" class="btn-add-row" onclick="addCreateRows50()">+50행 추가</button>
+                            </div>
                         </div>
 
                         <div class="create-actions">
@@ -1412,13 +1424,11 @@
                 });
             }
 
-            // Update work log table
-            const tbody = document.getElementById('reportTableBody');
+            // Update work log table with pagination
             if (data.workLog && data.workLog.length > 0) {
-                tbody.innerHTML = '';
-                data.workLog.forEach((row, i) => {
-                    tbody.innerHTML += `<tr><td>${i + 1}</td><td>${row.date || ''}</td><td><a href="${row.url || '#'}" target="_blank">${row.url || ''}</a></td></tr>`;
-                });
+                window._workLogData = data.workLog;
+                window._workLogPage = 1;
+                renderWorkLogPage(1);
             } else {
                 generateReportTable();
             }
@@ -1459,6 +1469,49 @@
                 sectionToggles.content = data.toggles.content !== false;
                 sectionToggles.worklog = data.toggles.worklog !== false;
             }
+        }
+
+        // ===== Work Log Pagination =====
+        const WORKLOG_PER_PAGE = 30;
+
+        function renderWorkLogPage(page) {
+            const data = window._workLogData || [];
+            const totalPages = Math.ceil(data.length / WORKLOG_PER_PAGE) || 1;
+            page = Math.max(1, Math.min(page, totalPages));
+            window._workLogPage = page;
+
+            const start = (page - 1) * WORKLOG_PER_PAGE;
+            const end = Math.min(start + WORKLOG_PER_PAGE, data.length);
+            const tbody = document.getElementById('reportTableBody');
+            tbody.innerHTML = '';
+            for (let i = start; i < end; i++) {
+                const row = data[i];
+                tbody.innerHTML += `<tr><td>${i + 1}</td><td>${row.date || ''}</td><td><a href="${row.url || '#'}" target="_blank">${row.url || ''}</a></td></tr>`;
+            }
+
+            // Pagination controls
+            const pagDiv = document.getElementById('worklogPagination');
+            if (totalPages <= 1) { pagDiv.innerHTML = `<span class="page-info">총 ${data.length}건</span>`; return; }
+
+            let html = `<button onclick="renderWorkLogPage(1)" ${page===1?'disabled':''}>&#171;</button>`;
+            html += `<button onclick="renderWorkLogPage(${page-1})" ${page===1?'disabled':''}>&#8249;</button>`;
+
+            // Show page numbers with ellipsis
+            const maxButtons = 7;
+            let startPage = Math.max(1, page - 3);
+            let endPage = Math.min(totalPages, startPage + maxButtons - 1);
+            if (endPage - startPage < maxButtons - 1) startPage = Math.max(1, endPage - maxButtons + 1);
+
+            if (startPage > 1) { html += `<button onclick="renderWorkLogPage(1)">1</button>`; if (startPage > 2) html += `<span class="page-info">...</span>`; }
+            for (let p = startPage; p <= endPage; p++) {
+                html += `<button onclick="renderWorkLogPage(${p})" class="${p===page?'active':''}">${p}</button>`;
+            }
+            if (endPage < totalPages) { if (endPage < totalPages - 1) html += `<span class="page-info">...</span>`; html += `<button onclick="renderWorkLogPage(${totalPages})">${totalPages}</button>`; }
+
+            html += `<button onclick="renderWorkLogPage(${page+1})" ${page===totalPages?'disabled':''}>&#8250;</button>`;
+            html += `<button onclick="renderWorkLogPage(${totalPages})" ${page===totalPages?'disabled':''}>&#187;</button>`;
+            html += `<span class="page-info">총 ${data.length}건 (${page}/${totalPages})</span>`;
+            pagDiv.innerHTML = html;
         }
 
         // ===== Cafe Activity Periods =====
@@ -1522,7 +1575,9 @@
 
         // ===== Create Form Logic =====
         let createRowCount = 0;
-        let createRowIdCounter = 0; // Unique ID counter (never decreases)
+        let createRowIdCounter = 0;
+        let createTablePage = 1;
+        const CREATE_PER_PAGE = 30;
 
         function addCreateRow() {
             createRowIdCounter++;
@@ -1533,16 +1588,37 @@
             tr.innerHTML = `
                 <td class="row-num">${rowNum}</td>
                 <td><input type="text" name="rowDate" placeholder="2026-01-06" style="width:100px;"></td>
-                <td><input type="url" name="rowUrl" placeholder="URL 입력"></td>
+                <td><input type="text" name="rowUrl" placeholder="URL 입력"></td>
                 <td><button type="button" class="btn-remove-row" onclick="removeCreateRow('createRow-${createRowIdCounter}')">&times;</button></td>
             `;
             tbody.appendChild(tr);
             createRowCount = tbody.querySelectorAll('tr').length;
+            // Jump to last page so the new row is visible
+            const totalPages = Math.ceil(createRowCount / CREATE_PER_PAGE);
+            renderCreateTablePage(totalPages);
+        }
+
+        function addCreateRows10() { for (let i = 0; i < 10; i++) { createRowIdCounter++; appendCreateRowSilent(); } finalizeCreateRows(); }
+        function addCreateRows50() { for (let i = 0; i < 50; i++) { createRowIdCounter++; appendCreateRowSilent(); } finalizeCreateRows(); }
+
+        function appendCreateRowSilent() {
+            const tbody = document.getElementById('createTableBody');
+            const rowNum = tbody.querySelectorAll('tr').length + 1;
+            const tr = document.createElement('tr');
+            tr.id = 'createRow-' + createRowIdCounter;
+            tr.innerHTML = `<td class="row-num">${rowNum}</td><td><input type="text" name="rowDate" placeholder="2026-01-06" style="width:100px;"></td><td><input type="text" name="rowUrl" placeholder="URL 입력"></td><td><button type="button" class="btn-remove-row" onclick="removeCreateRow('createRow-${createRowIdCounter}')">&times;</button></td>`;
+            tbody.appendChild(tr);
+        }
+
+        function finalizeCreateRows() {
+            createRowCount = document.getElementById('createTableBody').querySelectorAll('tr').length;
+            const totalPages = Math.ceil(createRowCount / CREATE_PER_PAGE);
+            renderCreateTablePage(totalPages);
         }
 
         function removeCreateRow(rowId) {
             const row = document.getElementById(rowId);
-            if (row) { row.remove(); renumberCreateRows(); }
+            if (row) { row.remove(); renumberCreateRows(); renderCreateTablePage(createTablePage); }
         }
 
         function renumberCreateRows() {
@@ -1552,6 +1628,33 @@
                 numCell.textContent = index + 1;
             });
             createRowCount = rows.length;
+        }
+
+        function renderCreateTablePage(page) {
+            const rows = document.getElementById('createTableBody').querySelectorAll('tr');
+            const total = rows.length;
+            const totalPages = Math.ceil(total / CREATE_PER_PAGE) || 1;
+            page = Math.max(1, Math.min(page, totalPages));
+            createTablePage = page;
+
+            const start = (page - 1) * CREATE_PER_PAGE;
+            const end = start + CREATE_PER_PAGE;
+            rows.forEach((row, i) => { row.style.display = (i >= start && i < end) ? '' : 'none'; });
+
+            const pagDiv = document.getElementById('createTablePagination');
+            if (totalPages <= 1) { pagDiv.innerHTML = `<span class="page-info">총 ${total}건</span>`; return; }
+
+            let html = `<button type="button" onclick="renderCreateTablePage(1)" ${page===1?'disabled':''}>&#171;</button>`;
+            html += `<button type="button" onclick="renderCreateTablePage(${page-1})" ${page===1?'disabled':''}>&#8249;</button>`;
+            const maxB = 7; let sp = Math.max(1, page - 3); let ep = Math.min(totalPages, sp + maxB - 1);
+            if (ep - sp < maxB - 1) sp = Math.max(1, ep - maxB + 1);
+            if (sp > 1) { html += `<button type="button" onclick="renderCreateTablePage(1)">1</button>`; if (sp > 2) html += `<span class="page-info">...</span>`; }
+            for (let p = sp; p <= ep; p++) html += `<button type="button" onclick="renderCreateTablePage(${p})" class="${p===page?'active':''}">${p}</button>`;
+            if (ep < totalPages) { if (ep < totalPages - 1) html += `<span class="page-info">...</span>`; html += `<button type="button" onclick="renderCreateTablePage(${totalPages})">${totalPages}</button>`; }
+            html += `<button type="button" onclick="renderCreateTablePage(${page+1})" ${page===totalPages?'disabled':''}>&#8250;</button>`;
+            html += `<button type="button" onclick="renderCreateTablePage(${totalPages})" ${page===totalPages?'disabled':''}>&#187;</button>`;
+            html += `<span class="page-info">총 ${total}건 (${page}/${totalPages})</span>`;
+            pagDiv.innerHTML = html;
         }
 
         function addKeywordRow() {
@@ -1779,7 +1882,7 @@
                 if (cols.length < 1 || !cols[0].trim()) return;
 
                 addCreateRow();
-                const row = document.getElementById('createRow-' + createRowCount);
+                const row = document.getElementById('createRow-' + createRowIdCounter);
                 if (!row) return;
 
                 const dateInput = row.querySelector('input[name="rowDate"]');
@@ -1790,6 +1893,8 @@
             });
 
             renumberCreateRows();
+            const totalPages = Math.ceil(createRowCount / CREATE_PER_PAGE);
+            renderCreateTablePage(totalPages);
             document.getElementById('sheetPasteArea').style.display = 'none';
             document.getElementById('sheetPasteInput').value = '';
             alert(`${lines.length}개의 작업 내역이 추가되었습니다. (현재 총 ${createRowCount}건)`);
@@ -1799,6 +1904,7 @@
             if (!confirm('작업 내역을 모두 초기화하시겠습니까?')) return;
             document.getElementById('createTableBody').innerHTML = '';
             createRowCount = 0;
+            createRowIdCounter = 0;
             addCreateRow();
         }
 
