@@ -1879,7 +1879,7 @@
             return ['q1','q2','q3','q4'].some(q => ca[q] && ca[q].grade && ca[q].score);
         }
 
-        function drawCafeGrowthChart(cafeData) {
+        function drawCafeGrowthChart(cafeData, reportDates) {
             window._cafeGrowthDrawn = true;
             window._cafeGrowthData = cafeData;
             const canvas = document.getElementById('exposureChart');
@@ -1921,6 +1921,31 @@
                 ctx.stroke();
             }
 
+            // Generate date-based labels from report period
+            function generateDateLabels(count) {
+                if (!reportDates || !reportDates.startDate || !reportDates.endDate) {
+                    return null;
+                }
+                const start = new Date(reportDates.startDate);
+                const end = new Date(reportDates.endDate);
+                const labels = [];
+                const d = new Date(start);
+                while (d <= end && labels.length < count * 2) {
+                    const y = d.getFullYear();
+                    const m = d.getMonth();
+                    const mid = new Date(y, m, 15);
+                    if (mid >= start && mid <= end) {
+                        labels.push('~' + y + '.' + String(m+1).padStart(2,'0') + '.15.');
+                    }
+                    const last = new Date(y, m+1, 0);
+                    if (last >= start && last <= end) {
+                        labels.push('~' + y + '.' + String(m+1).padStart(2,'0') + '.' + String(last.getDate()).padStart(2,'0') + '.');
+                    }
+                    d.setMonth(d.getMonth() + 1);
+                }
+                return labels.length >= count ? labels.slice(0, count) : null;
+            }
+
             // Collect data points (supports array or old object format)
             const quarters = [];
             if (Array.isArray(cafeData)) {
@@ -1945,6 +1970,12 @@
                         });
                     }
                 });
+            }
+
+            // Apply date-based labels if available
+            const dateLabels = generateDateLabels(quarters.length);
+            if (dateLabels) {
+                quarters.forEach((q, i) => { q.label = dateLabels[i]; });
             }
 
             if (quarters.length === 0) return;
@@ -2087,7 +2118,7 @@
             if (exposureRepeatTimer) clearInterval(exposureRepeatTimer);
             exposureRepeatTimer = setInterval(() => {
                 if (window._cafeGrowthDrawn && window._cafeGrowthData) {
-                    drawCafeGrowthChart(window._cafeGrowthData);
+                    drawCafeGrowthChart(window._cafeGrowthData, window._cafeGrowthDates);
                 } else {
                     animateExposureChart();
                 }
@@ -2297,9 +2328,15 @@
                 }
             }
 
-            // Apply cafe activity to growth chart
+            // Apply cafe activity to growth chart (반드시 animateExposureChart 전에 설정)
+            window._cafeGrowthDrawn = false;
+            window._cafeGrowthDates = { startDate: data.startDate, endDate: data.endDate };
             if (data.cafeActivity && hasCafeActivityData(data.cafeActivity)) {
-                drawCafeGrowthChart(data.cafeActivity);
+                window._cafeGrowthDrawn = true;
+                window._cafeGrowthData = data.cafeActivity;
+                // 기존 exposure 애니메이션 중단 후 카페 차트 그리기
+                if (exposureAnimId) { cancelAnimationFrame(exposureAnimId); exposureAnimId = null; }
+                drawCafeGrowthChart(data.cafeActivity, window._cafeGrowthDates);
             }
 
             // Display bonus content
@@ -2627,7 +2664,7 @@
                 animateRadarChart('both');
                 startRadarRepeat();
                 if (reportData.cafeActivity && hasCafeActivityData(reportData.cafeActivity)) {
-                    drawCafeGrowthChart(reportData.cafeActivity);
+                    drawCafeGrowthChart(reportData.cafeActivity, { startDate: reportData.startDate, endDate: reportData.endDate });
                 } else {
                     animateExposureChart();
                 }
