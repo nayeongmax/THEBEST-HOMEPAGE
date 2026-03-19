@@ -1078,65 +1078,35 @@
         function showPrompt(msg, callback) { showModal(msg, 'prompt', callback); }
     </script>
 
-    <!-- ===== Firebase SDK ===== -->
-    <script type="module">
-        import { initializeApp } from 'https://www.gstatic.com/firebasejs/11.6.0/firebase-app.js';
-        import { getFirestore, doc, setDoc, getDoc } from 'https://www.gstatic.com/firebasejs/11.6.0/firebase-firestore.js';
-
-        // Firebase 설정 - 본인의 Firebase 프로젝트 설정으로 교체하세요
-        const firebaseConfig = {
-            apiKey: "AIzaSyDummy-placeholder",
-            authDomain: "thebest-marketing.firebaseapp.com",
-            projectId: "thebest-marketing",
-            storageBucket: "thebest-marketing.appspot.com",
-            messagingSenderId: "000000000000",
-            appId: "1:000000000000:web:0000000000000000"
-        };
-
-        let db = null;
-        let firebaseReady = false;
-
-        try {
-            const app = initializeApp(firebaseConfig);
-            db = getFirestore(app);
-            firebaseReady = true;
-            console.log('Firebase connected');
-        } catch(e) {
-            console.warn('Firebase 미설정 - localStorage만 사용합니다.', e);
-        }
-
-        // 보고서 저장 (Firebase + localStorage)
+    <!-- ===== Netlify Functions API ===== -->
+    <script>
+        // 보고서 저장 (Netlify Functions + localStorage 백업)
         window.saveReport = async function(companyName, pw, reportData) {
             // 항상 localStorage에도 저장 (백업)
             localStorage.setItem('rpt_pw_' + companyName, pw);
             localStorage.setItem('rpt_data_' + companyName, JSON.stringify(reportData));
 
-            if (firebaseReady && db) {
-                try {
-                    await setDoc(doc(db, 'reports', companyName), {
-                        password: pw,
-                        data: JSON.stringify(reportData),
-                        updatedAt: new Date().toISOString()
-                    });
-                    console.log('Firebase 저장 완료:', companyName);
-                } catch(e) {
-                    console.warn('Firebase 저장 실패, localStorage만 사용:', e);
-                }
+            try {
+                await fetch('/.netlify/functions/save-report', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ companyName, password: pw, data: reportData })
+                });
+            } catch(e) {
+                console.warn('서버 저장 실패, localStorage만 사용:', e);
             }
         };
 
-        // 보고서 조회 (Firebase 우선, localStorage 폴백)
+        // 보고서 조회 (Netlify Functions 우선, localStorage 폴백)
         window.loadReport = async function(companyName) {
-            if (firebaseReady && db) {
-                try {
-                    const docSnap = await getDoc(doc(db, 'reports', companyName));
-                    if (docSnap.exists()) {
-                        const d = docSnap.data();
-                        return { password: d.password, data: JSON.parse(d.data) };
-                    }
-                } catch(e) {
-                    console.warn('Firebase 조회 실패, localStorage로 폴백:', e);
+            try {
+                const res = await fetch('/.netlify/functions/load-report?company=' + encodeURIComponent(companyName));
+                if (res.ok) {
+                    const result = await res.json();
+                    if (result && result.password) return result;
                 }
+            } catch(e) {
+                console.warn('서버 조회 실패, localStorage로 폴백:', e);
             }
             // localStorage 폴백
             const pw = localStorage.getItem('rpt_pw_' + companyName);
