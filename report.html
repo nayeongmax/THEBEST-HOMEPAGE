@@ -467,6 +467,31 @@
                             <div class="info-pair"><span class="ip-label">서비스</span><span class="ip-value">카페활성화 (게시글 + 댓글)</span></div>
                             <div class="info-pair"><span class="ip-label">보고서</span><span class="ip-value">월간 보고서 (1/6 ~ 2/6)</span></div>
                         </div>
+                        <!-- 견적 정보 표시 -->
+                        <div id="estInfoDisplay" style="display:none; margin-top:16px; padding-top:16px; border-top:1px solid var(--border);">
+                            <div style="display:flex; gap:12px; flex-wrap:wrap;">
+                                <div class="est-badge" style="flex:1; min-width:120px; text-align:center; background:#f0f7ff; padding:12px; border-radius:10px;">
+                                    <div style="font-size:0.72rem; color:var(--text-muted); margin-bottom:4px;">게시글</div>
+                                    <div style="font-size:1.1rem; font-weight:700; color:var(--primary);" id="estPostDisplay">-</div>
+                                </div>
+                                <div class="est-badge" style="flex:1; min-width:120px; text-align:center; background:#f0f7ff; padding:12px; border-radius:10px;">
+                                    <div style="font-size:0.72rem; color:var(--text-muted); margin-bottom:4px;">댓글</div>
+                                    <div style="font-size:1.1rem; font-weight:700; color:var(--primary);" id="estCommentDisplay">-</div>
+                                </div>
+                                <div class="est-badge" style="flex:1; min-width:120px; text-align:center; background:#f0f7ff; padding:12px; border-radius:10px;">
+                                    <div style="font-size:0.72rem; color:var(--text-muted); margin-bottom:4px;">검색조회</div>
+                                    <div style="font-size:1.1rem; font-weight:700; color:var(--primary);" id="estSearchDisplay">-</div>
+                                </div>
+                                <div class="est-badge" style="flex:1; min-width:120px; text-align:center; background:#f0f7ff; padding:12px; border-radius:10px;">
+                                    <div style="font-size:0.72rem; color:var(--text-muted); margin-bottom:4px;">앱구동</div>
+                                    <div style="font-size:1.1rem; font-weight:700; color:var(--primary);" id="estAppDisplay">-</div>
+                                </div>
+                                <div class="est-badge" style="flex:1; min-width:120px; text-align:center; background:#f0f7ff; padding:12px; border-radius:10px;">
+                                    <div style="font-size:0.72rem; color:var(--text-muted); margin-bottom:4px;">게시글 조회수</div>
+                                    <div style="font-size:1.1rem; font-weight:700; color:var(--primary);" id="estPostViewsDisplay">-</div>
+                                </div>
+                            </div>
+                        </div>
                     </div>
                 </div>
 
@@ -638,11 +663,12 @@
                         <h3>작업 진행 로그</h3>
                     </div>
                     <div class="rpt-section-body">
+                        <div id="worklogTotalCount" style="font-size:0.85rem; font-weight:700; color:var(--primary); margin-bottom:10px;"></div>
                         <div class="table-wrapper">
                             <table class="work-table">
                                 <thead>
                                     <tr>
-                                        <th style="width:45px;">순번</th>
+                                        <th style="width:50px; white-space:nowrap;">순번</th>
                                         <th style="width:110px;">날짜</th>
                                         <th>URL</th>
                                     </tr>
@@ -732,6 +758,37 @@
                                 <span>~</span>
                                 <input type="date" id="createEndDate">
                             </div>
+                        </div>
+
+                        <!-- 견적 정보 -->
+                        <h4 class="form-section-title">견적 정보</h4>
+                        <div class="form-row" style="margin-bottom:8px;">
+                            <div class="form-group">
+                                <label>게시글 수</label>
+                                <input type="number" id="estPostCount" placeholder="예: 374" min="0">
+                            </div>
+                            <div class="form-group">
+                                <label>댓글 수</label>
+                                <input type="number" id="estCommentCount" placeholder="예: 500" min="0">
+                            </div>
+                        </div>
+                        <div class="form-row" style="margin-bottom:8px;">
+                            <div class="form-group">
+                                <label>검색조회 수</label>
+                                <input type="number" id="estSearchCount" placeholder="예: 10000" min="0">
+                            </div>
+                            <div class="form-group">
+                                <label>앱구동 수</label>
+                                <input type="number" id="estAppCount" placeholder="예: 200" min="0">
+                            </div>
+                        </div>
+                        <div class="form-row" style="margin-bottom:16px;">
+                            <div class="form-group">
+                                <label>게시글 조회수</label>
+                                <input type="number" id="estPostViews" placeholder="예: 150" min="0">
+                                <p style="font-size:0.72rem; color:var(--text-muted); margin-top:4px;">* 보고서에 고정 표시됩니다</p>
+                            </div>
+                            <div class="form-group"></div>
                         </div>
 
                         <div class="form-group">
@@ -1109,6 +1166,16 @@
             // Fill bonus content
             if (data.bonusContent) {
                 document.getElementById('createBonusContent').value = data.bonusContent;
+            }
+
+            // Fill estimate data
+            if (data.estimate) {
+                const fill = (id, val) => { const el = document.getElementById(id); if (el && val) el.value = val; };
+                fill('estPostCount', data.estimate.posts);
+                fill('estCommentCount', data.estimate.comments);
+                fill('estSearchCount', data.estimate.searches);
+                fill('estAppCount', data.estimate.app);
+                fill('estPostViews', data.estimate.postViews);
             }
 
             // Fill AI comment
@@ -2083,6 +2150,27 @@
                 if (bonusDisplay) bonusDisplay.textContent = data.bonusContent;
             }
 
+            // Display estimate info
+            if (data.estimate) {
+                const est = data.estimate;
+                const estSection = document.getElementById('estInfoDisplay');
+                const hasAny = est.posts || est.comments || est.searches || est.app || est.postViews;
+                if (estSection && hasAny) {
+                    estSection.style.display = '';
+                    if (est.posts) document.getElementById('estPostDisplay').textContent = Number(est.posts).toLocaleString() + '건';
+                    if (est.comments) document.getElementById('estCommentDisplay').textContent = Number(est.comments).toLocaleString() + '건';
+                    if (est.searches) document.getElementById('estSearchDisplay').textContent = Number(est.searches).toLocaleString() + '회';
+                    if (est.app) document.getElementById('estAppDisplay').textContent = Number(est.app).toLocaleString() + '회';
+                    if (est.postViews) document.getElementById('estPostViewsDisplay').textContent = Number(est.postViews).toLocaleString() + '회';
+                }
+            }
+
+            // Display work log total count
+            const totalEl = document.getElementById('worklogTotalCount');
+            if (totalEl && data.workLog) {
+                totalEl.textContent = '게시글 총 ' + data.workLog.length + '건';
+            }
+
             // Apply section toggles
             if (data.toggles) {
                 sectionToggles.marketing = data.toggles.marketing !== false;
@@ -2102,6 +2190,10 @@
             const totalPages = Math.ceil(data.length / WORKLOG_PER_PAGE) || 1;
             page = Math.max(1, Math.min(page, totalPages));
             window._workLogPage = page;
+
+            // Update total count display
+            const totalEl = document.getElementById('worklogTotalCount');
+            if (totalEl) totalEl.textContent = '게시글 총 ' + data.length + '건';
 
             const start = (page - 1) * WORKLOG_PER_PAGE;
             const end = Math.min(start + WORKLOG_PER_PAGE, data.length);
@@ -2345,10 +2437,19 @@
             const exposureOurs = parseInt(document.getElementById('exposureOursRange')?.value) || 65;
             const exposureComp = parseInt(document.getElementById('exposureCompRange')?.value) || 42;
 
+            // Estimate data
+            const estimate = {
+                posts: document.getElementById('estPostCount')?.value || '',
+                comments: document.getElementById('estCommentCount')?.value || '',
+                searches: document.getElementById('estSearchCount')?.value || '',
+                app: document.getElementById('estAppCount')?.value || '',
+                postViews: document.getElementById('estPostViews')?.value || ''
+            };
+
             const reportData = {
                 companyName, platform, serviceType, startDate, endDate, teamName, platformLink,
                 kpiData, keywords, workLog, aiComment, bonusContent, cafeActivity, toggles,
-                radarGap, exposureGap, radarWithout, radarWith, exposureOurs, exposureComp
+                radarGap, exposureGap, radarWithout, radarWith, exposureOurs, exposureComp, estimate
             };
 
             localStorage.setItem('rpt_pw_' + companyName, pw);
