@@ -560,11 +560,11 @@
                 <div class="rpt-section">
                     <div class="rpt-section-header">
                         <div class="rpt-section-num">3</div>
-                        <h3>노출 및 유입 증가 그래프</h3>
+                        <h3>유입 증가 그래프</h3>
                     </div>
                     <div class="rpt-section-body">
                         <div class="exposure-chart">
-                            <canvas id="exposureChart" width="850" height="280"></canvas>
+                            <canvas id="exposureChart" width="850" height="320"></canvas>
                         </div>
                     </div>
                 </div>
@@ -780,35 +780,44 @@
                             <div style="display:flex; justify-content:space-between; align-items:center;">
                                 <h4 class="form-section-title" style="margin-bottom:0; border:none; padding:0;">카페 활동내역 입력</h4>
                             </div>
-                            <p style="font-size:0.75rem; color:var(--text-muted); margin-bottom:12px; margin-top:8px;">* 카페 관리 > 활동내역에서 작성일 이전 2분기 데이터를 입력하세요. 카페등급도 입력해주세요.</p>
-                            <div class="form-row-3" style="margin-bottom:8px;">
-                                <div class="form-group"><label>카페 등급</label><input type="text" id="cafeGrade" placeholder="예: 열매1단계"></div>
-                                <div class="form-group"><label>1분기 기간</label><input type="text" id="cafePeriod1" readonly></div>
-                                <div class="form-group"><label>2분기 기간</label><input type="text" id="cafePeriod2" readonly></div>
+                            <p style="font-size:0.75rem; color:var(--text-muted); margin-bottom:12px; margin-top:8px;">* 각 분기별 카페 등급과 등급 점수를 입력하세요. 유입 증가 그래프에 자동 반영됩니다.</p>
+                            <div style="display:grid; grid-template-columns:auto 1fr 1fr; gap:8px 12px; align-items:center; margin-bottom:12px;">
+                                <div style="font-size:0.75rem; font-weight:600; color:var(--text-muted);">분기</div>
+                                <div style="font-size:0.75rem; font-weight:600; color:var(--text-muted);">등급</div>
+                                <div style="font-size:0.75rem; font-weight:600; color:var(--text-muted);">등급 점수</div>
+
+                                <div style="font-size:0.82rem; font-weight:600; color:var(--primary);">1분기</div>
+                                <select id="cafeGradeQ1" style="padding:8px 12px; border:1px solid var(--border); border-radius:8px; font-size:0.82rem;">
+                                    <option value="">선택</option>
+                                    <option value="씨앗">씨앗</option><option value="새싹">새싹</option><option value="잎새">잎새</option>
+                                    <option value="가지">가지</option><option value="열매">열매</option><option value="나무">나무</option>
+                                </select>
+                                <input type="number" id="cafeScoreQ1" placeholder="예: 1971" min="0" style="padding:8px 12px; border:1px solid var(--border); border-radius:8px; font-size:0.82rem;">
+
+                                <div style="font-size:0.82rem; font-weight:600; color:var(--primary);">2분기</div>
+                                <select id="cafeGradeQ2" style="padding:8px 12px; border:1px solid var(--border); border-radius:8px; font-size:0.82rem;">
+                                    <option value="">선택</option>
+                                    <option value="씨앗">씨앗</option><option value="새싹">새싹</option><option value="잎새">잎새</option>
+                                    <option value="가지">가지</option><option value="열매">열매</option><option value="나무">나무</option>
+                                </select>
+                                <input type="number" id="cafeScoreQ2" placeholder="예: 1170" min="0" style="padding:8px 12px; border:1px solid var(--border); border-radius:8px; font-size:0.82rem;">
+
+                                <div style="font-size:0.82rem; font-weight:600; color:var(--primary);">3분기</div>
+                                <select id="cafeGradeQ3" style="padding:8px 12px; border:1px solid var(--border); border-radius:8px; font-size:0.82rem;">
+                                    <option value="">선택</option>
+                                    <option value="씨앗">씨앗</option><option value="새싹">새싹</option><option value="잎새">잎새</option>
+                                    <option value="가지">가지</option><option value="열매">열매</option><option value="나무">나무</option>
+                                </select>
+                                <input type="number" id="cafeScoreQ3" placeholder="예: 2684" min="0" style="padding:8px 12px; border:1px solid var(--border); border-radius:8px; font-size:0.82rem;">
+
+                                <div style="font-size:0.82rem; font-weight:600; color:var(--primary);">4분기</div>
+                                <select id="cafeGradeQ4" style="padding:8px 12px; border:1px solid var(--border); border-radius:8px; font-size:0.82rem;">
+                                    <option value="">선택</option>
+                                    <option value="씨앗">씨앗</option><option value="새싹">새싹</option><option value="잎새">잎새</option>
+                                    <option value="가지">가지</option><option value="열매">열매</option><option value="나무">나무</option>
+                                </select>
+                                <input type="number" id="cafeScoreQ4" placeholder="예: 37946" min="0" style="padding:8px 12px; border:1px solid var(--border); border-radius:8px; font-size:0.82rem;">
                             </div>
-                            <p style="font-size:0.72rem; color:var(--primary); font-weight:600; margin-bottom:8px;">1분기 데이터</p>
-                            <div class="form-row-3" style="margin-bottom:8px;">
-                                <div class="form-group"><label>게시글 수</label><input type="number" id="cafePost1" placeholder="0" min="0"></div>
-                                <div class="form-group"><label>댓글 수</label><input type="number" id="cafeComment1" placeholder="0" min="0"></div>
-                                <div class="form-group"><label>좋아요 수</label><input type="number" id="cafeLike1" placeholder="0" min="0"></div>
-                            </div>
-                            <div class="form-row-3" style="margin-bottom:14px;">
-                                <div class="form-group"><label>검색 조회 수</label><input type="number" id="cafeSearch1" placeholder="0" min="0"></div>
-                                <div class="form-group"><label>조회 멤버 수</label><input type="number" id="cafeMember1" placeholder="0" min="0"></div>
-                                <div class="form-group"></div>
-                            </div>
-                            <p style="font-size:0.72rem; color:var(--primary); font-weight:600; margin-bottom:8px;">2분기 데이터</p>
-                            <div class="form-row-3" style="margin-bottom:8px;">
-                                <div class="form-group"><label>게시글 수</label><input type="number" id="cafePost2" placeholder="0" min="0"></div>
-                                <div class="form-group"><label>댓글 수</label><input type="number" id="cafeComment2" placeholder="0" min="0"></div>
-                                <div class="form-group"><label>좋아요 수</label><input type="number" id="cafeLike2" placeholder="0" min="0"></div>
-                            </div>
-                            <div class="form-row-3" style="margin-bottom:14px;">
-                                <div class="form-group"><label>검색 조회 수</label><input type="number" id="cafeSearch2" placeholder="0" min="0"></div>
-                                <div class="form-group"><label>조회 멤버 수</label><input type="number" id="cafeMember2" placeholder="0" min="0"></div>
-                                <div class="form-group"></div>
-                            </div>
-                            <button type="button" class="btn btn-primary" style="padding:10px 24px; font-size:0.82rem; margin-bottom:10px;" onclick="applyCafeActivity()">활동내역 → KPI 자동 반영</button>
                         </div>
 
                         <div style="display:flex; justify-content:space-between; align-items:center;">
@@ -826,22 +835,44 @@
                             </label>
                         </div>
                         <div style="border-bottom:1px solid var(--border); margin-bottom:16px;"></div>
-                        <div class="form-row" style="margin-bottom:16px;">
-                            <div class="form-group">
-                                <label>레이더차트 비교 차이</label>
-                                <select id="radarGapSize">
-                                    <option value="소">소 (차이 작음)</option>
-                                    <option value="중" selected>중 (보통)</option>
-                                    <option value="대">대 (차이 큼)</option>
-                                </select>
+                        <div style="margin-bottom:16px;">
+                            <div class="form-row" style="margin-bottom:10px;">
+                                <div class="form-group">
+                                    <label>레이더차트 비교 차이</label>
+                                    <select id="radarGapSize" onchange="onRadarGapChange()">
+                                        <option value="소">소 — 미실행 20~30 / 실행 40~50</option>
+                                        <option value="중" selected>중 — 미실행 18~28 / 실행 50~60</option>
+                                        <option value="대">대 — 미실행 15~25 / 실행 62~75</option>
+                                    </select>
+                                </div>
+                                <div class="form-group">
+                                    <label>경쟁사 대비 노출지수 차이</label>
+                                    <select id="exposureGapSize" onchange="onExposureGapChange()">
+                                        <option value="소">소 — 우리 40~55 / 경쟁 20~35</option>
+                                        <option value="중" selected>중 — 우리 55~70 / 경쟁 35~50</option>
+                                        <option value="대">대 — 우리 70~85 / 경쟁 25~45</option>
+                                    </select>
+                                </div>
                             </div>
-                            <div class="form-group">
-                                <label>경쟁사 대비 노출지수 차이</label>
-                                <select id="exposureGapSize">
-                                    <option value="소">소 (차이 작음)</option>
-                                    <option value="중" selected>중 (보통)</option>
-                                    <option value="대">대 (차이 큼)</option>
-                                </select>
+                            <div class="form-row" style="margin-bottom:10px;">
+                                <div class="form-group">
+                                    <label style="font-size:0.72rem; color:var(--text-muted);">미실행 평균 <span id="radarWithoutVal" style="color:var(--primary); font-weight:700;">24</span></label>
+                                    <input type="range" id="radarWithoutRange" min="15" max="30" value="24" style="width:100%;" oninput="document.getElementById('radarWithoutVal').textContent=this.value">
+                                </div>
+                                <div class="form-group">
+                                    <label style="font-size:0.72rem; color:var(--text-muted);">실행 평균 <span id="radarWithVal" style="color:var(--primary); font-weight:700;">55</span></label>
+                                    <input type="range" id="radarWithRange" min="40" max="80" value="55" style="width:100%;" oninput="document.getElementById('radarWithVal').textContent=this.value">
+                                </div>
+                            </div>
+                            <div class="form-row" style="margin-bottom:10px;">
+                                <div class="form-group">
+                                    <label style="font-size:0.72rem; color:var(--text-muted);">우리 노출지수 <span id="exposureOursVal" style="color:var(--primary); font-weight:700;">65</span></label>
+                                    <input type="range" id="exposureOursRange" min="40" max="85" value="65" style="width:100%;" oninput="document.getElementById('exposureOursVal').textContent=this.value">
+                                </div>
+                                <div class="form-group">
+                                    <label style="font-size:0.72rem; color:var(--text-muted);">경쟁사 노출지수 <span id="exposureCompVal" style="color:var(--primary); font-weight:700;">42</span></label>
+                                    <input type="range" id="exposureCompRange" min="20" max="50" value="42" style="width:100%;" oninput="document.getElementById('exposureCompVal').textContent=this.value">
+                                </div>
                             </div>
                         </div>
 
@@ -853,7 +884,7 @@
                             </label>
                         </div>
                         <div style="border-bottom:1px solid var(--border); margin-bottom:16px;"></div>
-                        <p style="font-size:0.75rem; color:var(--text-muted); margin-bottom:12px;">* 작업기간 기준으로 2주 단위 기간이 자동 생성됩니다. 노출수와 유입 클릭수를 입력하세요.</p>
+                        <p style="font-size:0.75rem; color:var(--text-muted); margin-bottom:12px;">* 카페 활동내역의 분기별 등급/점수 데이터가 자동으로 반영됩니다.</p>
                         <div id="exposurePeriodsContainer"></div>
 
                         <div style="display:flex; justify-content:space-between; align-items:center; margin-top:20px;">
@@ -1093,24 +1124,17 @@
                 });
             }
 
-            // Fill cafe activity
+            // Fill cafe activity (4 quarters)
             if (data.cafeActivity) {
                 const ca = data.cafeActivity;
-                if (document.getElementById('cafeGrade')) document.getElementById('cafeGrade').value = ca.grade || '';
-                if (ca.q1) {
-                    if (document.getElementById('cafePost1')) document.getElementById('cafePost1').value = ca.q1.posts || '';
-                    if (document.getElementById('cafeComment1')) document.getElementById('cafeComment1').value = ca.q1.comments || '';
-                    if (document.getElementById('cafeLike1')) document.getElementById('cafeLike1').value = ca.q1.likes || '';
-                    if (document.getElementById('cafeSearch1')) document.getElementById('cafeSearch1').value = ca.q1.searches || '';
-                    if (document.getElementById('cafeMember1')) document.getElementById('cafeMember1').value = ca.q1.members || '';
-                }
-                if (ca.q2) {
-                    if (document.getElementById('cafePost2')) document.getElementById('cafePost2').value = ca.q2.posts || '';
-                    if (document.getElementById('cafeComment2')) document.getElementById('cafeComment2').value = ca.q2.comments || '';
-                    if (document.getElementById('cafeLike2')) document.getElementById('cafeLike2').value = ca.q2.likes || '';
-                    if (document.getElementById('cafeSearch2')) document.getElementById('cafeSearch2').value = ca.q2.searches || '';
-                    if (document.getElementById('cafeMember2')) document.getElementById('cafeMember2').value = ca.q2.members || '';
-                }
+                ['Q1','Q2','Q3','Q4'].forEach(q => {
+                    if (ca[q.toLowerCase()]) {
+                        const gradeEl = document.getElementById('cafeGrade' + q);
+                        const scoreEl = document.getElementById('cafeScore' + q);
+                        if (gradeEl) gradeEl.value = ca[q.toLowerCase()].grade || '';
+                        if (scoreEl) scoreEl.value = ca[q.toLowerCase()].score || '';
+                    }
+                });
             }
 
             // Fill AI comment
@@ -1127,11 +1151,33 @@
                 document.getElementById('toggleWorkLogSection').checked = data.toggles.worklog !== false;
             }
 
-            // Fill radar/exposure gap
-            if (data.radarGap) document.getElementById('radarGapSize').value = data.radarGap;
-            if (data.exposureGap) document.getElementById('exposureGapSize').value = data.exposureGap;
+            // Fill radar/exposure gap and slider values
+            if (data.radarGap) {
+                document.getElementById('radarGapSize').value = data.radarGap;
+                onRadarGapChange();
+            }
+            if (data.exposureGap) {
+                document.getElementById('exposureGapSize').value = data.exposureGap;
+                onExposureGapChange();
+            }
+            if (data.radarWithout !== undefined) {
+                const wr = document.getElementById('radarWithoutRange');
+                if (wr) { wr.value = data.radarWithout; document.getElementById('radarWithoutVal').textContent = data.radarWithout; }
+            }
+            if (data.radarWith !== undefined) {
+                const wi = document.getElementById('radarWithRange');
+                if (wi) { wi.value = data.radarWith; document.getElementById('radarWithVal').textContent = data.radarWith; }
+            }
+            if (data.exposureOurs !== undefined) {
+                const or = document.getElementById('exposureOursRange');
+                if (or) { or.value = data.exposureOurs; document.getElementById('exposureOursVal').textContent = data.exposureOurs; }
+            }
+            if (data.exposureComp !== undefined) {
+                const cr = document.getElementById('exposureCompRange');
+                if (cr) { cr.value = data.exposureComp; document.getElementById('exposureCompVal').textContent = data.exposureComp; }
+            }
 
-            // Fill exposure periods
+            // Fill exposure periods (legacy support)
             if (data.startDate || data.endDate) {
                 generateExposurePeriods();
                 setTimeout(function() {
@@ -1201,7 +1247,8 @@
 
                 animateRadarChart('both');
                 startRadarRepeat();
-                animateExposureChart();
+                // Exposure chart: use cafe growth chart if data exists, otherwise default
+                if (!window._cafeGrowthDrawn) animateExposureChart();
                 startExposureRepeat();
                 animateCompare();
                 startCompareRepeat();
@@ -1219,15 +1266,58 @@
         const radarLabels = ['노출 확산력', '검색 노출력', '콘텐츠 반응', '브랜드 인지', '전환 가능성'];
         // 소/중/대 프리셋
         const radarGapPresets = {
-            '소': { without: [28, 22, 25, 30, 20], with: [45, 42, 48, 50, 40] },
-            '중': { without: [25, 20, 22, 28, 18], with: [55, 52, 60, 58, 50] },
-            '대': { without: [22, 18, 20, 25, 15], with: [68, 62, 75, 72, 65] }
+            '소': { withoutRange: [20, 30], withRange: [40, 50], withoutDefault: 25, withDefault: 45 },
+            '중': { withoutRange: [18, 28], withRange: [50, 60], withoutDefault: 24, withDefault: 55 },
+            '대': { withoutRange: [15, 25], withRange: [62, 75], withoutDefault: 20, withDefault: 68 }
         };
         const exposureGapPresets = {
-            '소': { ours: 52, comp: 40 },
-            '중': { ours: 65, comp: 42 },
-            '대': { ours: 80, comp: 45 }
+            '소': { oursRange: [40, 55], compRange: [20, 35], oursDefault: 46, compDefault: 23 },
+            '중': { oursRange: [55, 70], compRange: [35, 50], oursDefault: 65, compDefault: 42 },
+            '대': { oursRange: [70, 85], compRange: [25, 45], oursDefault: 80, compDefault: 35 }
         };
+
+        function generateRadarValues(avg, count) {
+            const offsets = [-3, -5, 2, 4, -2];
+            return offsets.slice(0, count).map(o => Math.max(5, Math.min(95, avg + o)));
+        }
+
+        function onRadarGapChange() {
+            const size = document.getElementById('radarGapSize').value;
+            const p = radarGapPresets[size];
+            const wr = document.getElementById('radarWithoutRange');
+            const wi = document.getElementById('radarWithRange');
+            wr.min = p.withoutRange[0]; wr.max = p.withoutRange[1]; wr.value = p.withoutDefault;
+            wi.min = p.withRange[0]; wi.max = p.withRange[1]; wi.value = p.withDefault;
+            document.getElementById('radarWithoutVal').textContent = p.withoutDefault;
+            document.getElementById('radarWithVal').textContent = p.withDefault;
+        }
+
+        function onExposureGapChange() {
+            const size = document.getElementById('exposureGapSize').value;
+            const p = exposureGapPresets[size];
+            const or = document.getElementById('exposureOursRange');
+            const cr = document.getElementById('exposureCompRange');
+            or.min = p.oursRange[0]; or.max = p.oursRange[1]; or.value = p.oursDefault;
+            cr.min = p.compRange[0]; cr.max = p.compRange[1]; cr.value = p.compDefault;
+            document.getElementById('exposureOursVal').textContent = p.oursDefault;
+            document.getElementById('exposureCompVal').textContent = p.compDefault;
+        }
+
+        function getRadarData() {
+            const withoutAvg = parseInt(document.getElementById('radarWithoutRange')?.value) || 24;
+            const withAvg = parseInt(document.getElementById('radarWithRange')?.value) || 55;
+            return {
+                without: generateRadarValues(withoutAvg, 5),
+                with: generateRadarValues(withAvg, 5)
+            };
+        }
+
+        function getExposureData() {
+            return {
+                ours: parseInt(document.getElementById('exposureOursRange')?.value) || 65,
+                comp: parseInt(document.getElementById('exposureCompRange')?.value) || 42
+            };
+        }
         let dataWithout = [25, 18, 15, 20, 12];
         let dataWith = [62, 55, 68, 50, 58];
         let currentRadarMode = 'both';
@@ -1563,6 +1653,145 @@
             ctx.fillText('유입 클릭', W - 85, 22);
         }
 
+        // ===== Cafe Grade Growth Chart (이미지 스타일) =====
+        const cafeGradeLevels = ['씨앗', '새싹', '잎새', '가지', '열매', '나무'];
+        const cafeGradeColors = ['#F5D442', '#F5A623', '#E8584A', '#8B5CF6', '#3B82F6', '#10B981'];
+
+        function hasCafeActivityData(ca) {
+            if (!ca) return false;
+            return ['q1','q2','q3','q4'].some(q => ca[q] && ca[q].grade && ca[q].score);
+        }
+
+        function drawCafeGrowthChart(cafeData) {
+            window._cafeGrowthDrawn = true;
+            window._cafeGrowthData = cafeData;
+            const canvas = document.getElementById('exposureChart');
+            const ctx = canvas.getContext('2d');
+            const W = canvas.width, H = canvas.height;
+            ctx.clearRect(0, 0, W, H);
+
+            const pad = { top: 30, right: 40, bottom: 45, left: 120 };
+            const cW = W - pad.left - pad.right;
+            const cH = H - pad.top - pad.bottom;
+
+            // Grade level Y positions (씨앗=bottom, 나무=top)
+            const levelCount = cafeGradeLevels.length;
+            const levelH = cH / levelCount;
+
+            // Draw grade level bands on left side
+            for (let i = 0; i < levelCount; i++) {
+                const y = pad.top + (levelCount - 1 - i) * levelH;
+                // Background band
+                ctx.fillStyle = cafeGradeColors[i] + '18';
+                ctx.fillRect(pad.left, y, cW, levelH);
+                // Left color bar
+                ctx.fillStyle = cafeGradeColors[i];
+                ctx.beginPath();
+                ctx.roundRect(12, y + 4, 95, levelH - 8, 6);
+                ctx.fill();
+                // Label
+                ctx.font = '700 12px "Noto Sans KR"';
+                ctx.fillStyle = '#fff';
+                ctx.textAlign = 'center';
+                ctx.fillText(cafeGradeLevels[i], 60, y + levelH / 2 + 4);
+            }
+
+            // Grid lines
+            ctx.strokeStyle = 'rgba(0,0,0,0.06)';
+            ctx.lineWidth = 1;
+            for (let i = 0; i <= levelCount; i++) {
+                const y = pad.top + i * levelH;
+                ctx.beginPath();
+                ctx.moveTo(pad.left, y);
+                ctx.lineTo(W - pad.right, y);
+                ctx.stroke();
+            }
+
+            // Collect quarter data
+            const quarters = [];
+            ['q1','q2','q3','q4'].forEach((q, idx) => {
+                if (cafeData[q] && cafeData[q].grade && cafeData[q].score) {
+                    quarters.push({
+                        label: (idx + 1) + '분기',
+                        grade: cafeData[q].grade,
+                        score: parseInt(cafeData[q].score) || 0,
+                        gradeIndex: cafeGradeLevels.indexOf(cafeData[q].grade)
+                    });
+                }
+            });
+
+            if (quarters.length === 0) return;
+
+            // X positions
+            const n = quarters.length;
+
+            // Draw X labels
+            ctx.textAlign = 'center';
+            ctx.font = '600 12px "Noto Sans KR"';
+            ctx.fillStyle = '#555';
+            quarters.forEach((q, i) => {
+                const x = pad.left + cW * i / Math.max(n - 1, 1);
+                ctx.fillText(q.label, x, H - 10);
+            });
+
+            // Calculate Y for each point (grade level center + fractional offset based on score within grade)
+            function getY(gradeIdx, score) {
+                // Base Y at center of grade level
+                const baseY = pad.top + (levelCount - 1 - gradeIdx) * levelH + levelH / 2;
+                // Slight upward offset for higher scores (within ±levelH/4)
+                const scoreNorm = Math.min(score / 50000, 1);
+                return baseY - scoreNorm * levelH * 0.3;
+            }
+
+            // Draw connecting line
+            ctx.beginPath();
+            ctx.strokeStyle = '#8BC34A';
+            ctx.lineWidth = 3;
+            quarters.forEach((q, i) => {
+                const x = pad.left + cW * i / Math.max(n - 1, 1);
+                const y = getY(q.gradeIndex, q.score);
+                i === 0 ? ctx.moveTo(x, y) : ctx.lineTo(x, y);
+            });
+            ctx.stroke();
+
+            // Draw points and labels
+            quarters.forEach((q, i) => {
+                const x = pad.left + cW * i / Math.max(n - 1, 1);
+                const y = getY(q.gradeIndex, q.score);
+
+                // Dot
+                ctx.beginPath();
+                ctx.arc(x, y, 6, 0, Math.PI * 2);
+                ctx.fillStyle = '#8BC34A';
+                ctx.fill();
+                ctx.strokeStyle = '#fff';
+                ctx.lineWidth = 2;
+                ctx.stroke();
+
+                // Label box
+                const label = q.grade + '\n' + q.score.toLocaleString();
+                const lines = label.split('\n');
+                const boxW = Math.max(ctx.measureText(lines[0]).width, ctx.measureText(lines[1]).width) + 16;
+                const boxH = 36;
+                const boxX = x - boxW / 2;
+                const boxY = y - boxH - 14;
+
+                // Background
+                ctx.fillStyle = '#8BC34A';
+                ctx.beginPath();
+                ctx.roundRect(boxX, boxY, boxW, boxH, 6);
+                ctx.fill();
+
+                // Text
+                ctx.font = '700 10px "Noto Sans KR"';
+                ctx.fillStyle = '#fff';
+                ctx.textAlign = 'center';
+                ctx.fillText(lines[0], x, boxY + 14);
+                ctx.font = '600 10px Poppins';
+                ctx.fillText(lines[1], x, boxY + 28);
+            });
+        }
+
         // ===== Generate exposure period inputs from date =====
         function generateExposurePeriods() {
             const startDate = document.getElementById('createStartDate').value;
@@ -1621,7 +1850,11 @@
         function startExposureRepeat() {
             if (exposureRepeatTimer) clearInterval(exposureRepeatTimer);
             exposureRepeatTimer = setInterval(() => {
-                animateExposureChart();
+                if (window._cafeGrowthDrawn && window._cafeGrowthData) {
+                    drawCafeGrowthChart(window._cafeGrowthData);
+                } else {
+                    animateExposureChart();
+                }
             }, 10000);
         }
 
@@ -1798,30 +2031,39 @@
                 }
             }
 
-            // Apply radar gap size
-            if (data.radarGap) {
+            // Apply radar gap size (use custom slider values if available)
+            if (data.radarWithout !== undefined && data.radarWith !== undefined) {
+                dataWithout = generateRadarValues(data.radarWithout, 5);
+                dataWith = generateRadarValues(data.radarWith, 5);
+            } else if (data.radarGap) {
                 const preset = radarGapPresets[data.radarGap];
                 if (preset) {
-                    dataWithout = preset.without;
-                    dataWith = preset.with;
+                    dataWithout = generateRadarValues(preset.withoutDefault, 5);
+                    dataWith = generateRadarValues(preset.withDefault, 5);
                 }
             }
 
-            // Apply exposure gap size
-            if (data.exposureGap) {
-                const ep = exposureGapPresets[data.exposureGap];
-                if (ep) {
+            // Apply exposure gap size (use custom slider values if available)
+            {
+                let oursVal, compVal;
+                if (data.exposureOurs !== undefined && data.exposureComp !== undefined) {
+                    oursVal = data.exposureOurs;
+                    compVal = data.exposureComp;
+                } else if (data.exposureGap) {
+                    const ep = exposureGapPresets[data.exposureGap];
+                    if (ep) { oursVal = ep.oursDefault; compVal = ep.compDefault; }
+                }
+                if (oursVal !== undefined) {
                     const oursBar = document.getElementById('compareOurs');
                     const compBar = document.getElementById('compareComp');
-                    if (oursBar) { oursBar.style.width = ep.ours + '%'; oursBar.textContent = ep.ours; oursBar.parentElement.nextElementSibling.textContent = ep.ours; }
-                    if (compBar) { compBar.style.width = ep.comp + '%'; compBar.textContent = ep.comp; compBar.parentElement.nextElementSibling.textContent = ep.comp; }
+                    if (oursBar) { oursBar.style.width = oursVal + '%'; oursBar.textContent = oursVal; oursBar.parentElement.nextElementSibling.textContent = oursVal; }
+                    if (compBar) { compBar.style.width = compVal + '%'; compBar.textContent = compVal; compBar.parentElement.nextElementSibling.textContent = compVal; }
                 }
             }
 
-            // Apply exposure periods to chart
-            if (data.exposurePeriods && data.exposurePeriods.length > 0) {
-                window._exposurePeriodData = data.exposurePeriods;
-                drawExposureChartFromData(data.exposurePeriods);
+            // Apply cafe activity to growth chart
+            if (data.cafeActivity && hasCafeActivityData(data.cafeActivity)) {
+                drawCafeGrowthChart(data.cafeActivity);
             }
 
             // Apply section toggles
@@ -1877,63 +2119,9 @@
             pagDiv.innerHTML = html;
         }
 
-        // ===== Cafe Activity Periods =====
+        // ===== Cafe Activity (simplified - no longer needs period calculation) =====
         function calculateCafePeriods() {
-            const dateInput = document.getElementById('createStartDate').value || new Date().toISOString().split('T')[0];
-            const d = new Date(dateInput);
-            const year = d.getFullYear();
-            const month = d.getMonth(); // 0-indexed
-
-            // Previous month, two half-month periods
-            const prevMonth = month === 0 ? 11 : month - 1;
-            const prevYear = month === 0 ? year - 1 : year;
-            const yy = String(prevYear).slice(2);
-            const mm = String(prevMonth + 1).padStart(2, '0');
-
-            const lastDay = new Date(prevYear, prevMonth + 1, 0).getDate();
-            const period1 = yy + '/' + mm + '/01 ~ ' + yy + '/' + mm + '/15';
-            const period2 = yy + '/' + mm + '/16 ~ ' + yy + '/' + mm + '/' + lastDay;
-
-            document.getElementById('cafePeriod1').value = period1;
-            document.getElementById('cafePeriod2').value = period2;
-        }
-
-        function applyCafeActivity() {
-            const q1 = {
-                posts: parseInt(document.getElementById('cafePost1').value) || 0,
-                comments: parseInt(document.getElementById('cafeComment1').value) || 0,
-                likes: parseInt(document.getElementById('cafeLike1').value) || 0,
-                searches: parseInt(document.getElementById('cafeSearch1').value) || 0,
-                members: parseInt(document.getElementById('cafeMember1').value) || 0
-            };
-            const q2 = {
-                posts: parseInt(document.getElementById('cafePost2').value) || 0,
-                comments: parseInt(document.getElementById('cafeComment2').value) || 0,
-                likes: parseInt(document.getElementById('cafeLike2').value) || 0,
-                searches: parseInt(document.getElementById('cafeSearch2').value) || 0,
-                members: parseInt(document.getElementById('cafeMember2').value) || 0
-            };
-
-            // Sum both quarters into KPI
-            const totalPosts = q1.posts + q2.posts;
-            const totalComments = q1.comments + q2.comments;
-            const totalLikes = q1.likes + q2.likes;
-            const totalSearches = q1.searches + q2.searches;
-            const totalMembers = q1.members + q2.members;
-            const exposure = totalSearches;
-            const engagement = totalPosts > 0 ? ((totalComments + totalLikes) / totalPosts).toFixed(1) : '0';
-
-            // Update KPI fields (make sure they're for 카페)
-            updateKPIFields();
-            const fill = (id, val) => { const el = document.getElementById(id); if (el) el.value = val; };
-            fill('createPostCount', totalPosts);
-            fill('createCommentCount', totalComments);
-            fill('createExposure', exposure);
-            fill('createVisits', totalMembers);
-            fill('createEngagement', engagement);
-            fill('createMemberGrowth', Math.abs(q2.members - q1.members));
-
-            alert('카페 활동내역이 KPI에 반영되었습니다.\n\n게시글: ' + totalPosts + '건 / 댓글: ' + totalComments + '건\n검색조회: ' + totalSearches.toLocaleString() + '회 / 조회멤버: ' + totalMembers + '명');
+            // No-op: periods are no longer used, quarters are entered directly
         }
 
         // ===== Create Form Logic =====
@@ -2083,13 +2271,12 @@
             // AI comment
             const aiComment = document.getElementById('createAIComment').value;
 
-            // Cafe activity data
+            // Cafe activity data (4 quarters with grade + score)
             const cafeActivity = {
-                grade: document.getElementById('cafeGrade')?.value || '',
-                period1: document.getElementById('cafePeriod1')?.value || '',
-                period2: document.getElementById('cafePeriod2')?.value || '',
-                q1: { posts: document.getElementById('cafePost1')?.value, comments: document.getElementById('cafeComment1')?.value, likes: document.getElementById('cafeLike1')?.value, searches: document.getElementById('cafeSearch1')?.value, members: document.getElementById('cafeMember1')?.value },
-                q2: { posts: document.getElementById('cafePost2')?.value, comments: document.getElementById('cafeComment2')?.value, likes: document.getElementById('cafeLike2')?.value, searches: document.getElementById('cafeSearch2')?.value, members: document.getElementById('cafeMember2')?.value }
+                q1: { grade: document.getElementById('cafeGradeQ1')?.value || '', score: document.getElementById('cafeScoreQ1')?.value || '' },
+                q2: { grade: document.getElementById('cafeGradeQ2')?.value || '', score: document.getElementById('cafeScoreQ2')?.value || '' },
+                q3: { grade: document.getElementById('cafeGradeQ3')?.value || '', score: document.getElementById('cafeScoreQ3')?.value || '' },
+                q4: { grade: document.getElementById('cafeGradeQ4')?.value || '', score: document.getElementById('cafeScoreQ4')?.value || '' }
             };
 
             // Section toggles
@@ -2101,24 +2288,18 @@
                 worklog: document.getElementById('toggleWorkLogSection').checked
             };
 
-            // Radar & exposure gap settings
+            // Radar & exposure gap settings (with custom slider values)
             const radarGap = document.getElementById('radarGapSize').value;
             const exposureGap = document.getElementById('exposureGapSize').value;
-
-            // Exposure chart period data
-            const exposurePeriods = [];
-            document.querySelectorAll('#exposurePeriodsContainer .exp-period-row').forEach(row => {
-                exposurePeriods.push({
-                    label: row.querySelector('.exp-period-label')?.textContent || '',
-                    exposure: row.querySelector('input[name="expExposure"]')?.value || '0',
-                    clicks: row.querySelector('input[name="expClicks"]')?.value || '0'
-                });
-            });
+            const radarWithout = parseInt(document.getElementById('radarWithoutRange')?.value) || 24;
+            const radarWith = parseInt(document.getElementById('radarWithRange')?.value) || 55;
+            const exposureOurs = parseInt(document.getElementById('exposureOursRange')?.value) || 65;
+            const exposureComp = parseInt(document.getElementById('exposureCompRange')?.value) || 42;
 
             const reportData = {
                 companyName, platform, serviceType, startDate, endDate, teamName, platformLink,
                 kpiData, keywords, workLog, aiComment, cafeActivity, toggles,
-                radarGap, exposureGap, exposurePeriods
+                radarGap, exposureGap, radarWithout, radarWith, exposureOurs, exposureComp
             };
 
             localStorage.setItem('rpt_pw_' + companyName, pw);
@@ -2139,8 +2320,8 @@
                 loadSavedReport(reportData);
                 animateRadarChart('both');
                 startRadarRepeat();
-                if (reportData.exposurePeriods && reportData.exposurePeriods.length > 0) {
-                    drawExposureChartFromData(reportData.exposurePeriods);
+                if (reportData.cafeActivity && hasCafeActivityData(reportData.cafeActivity)) {
+                    drawCafeGrowthChart(reportData.cafeActivity);
                 } else {
                     animateExposureChart();
                 }
@@ -2480,7 +2661,7 @@
             const comments = kpiValues.createCommentCount || 0;
             const engagement = kpiValues.createEngagement || 0;
             const memberGrowth = kpiValues.createMemberGrowth || 0;
-            const cafeGrade = document.getElementById('cafeGrade')?.value || '';
+            const cafeGrade = document.getElementById('cafeGradeQ4')?.value || document.getElementById('cafeGradeQ3')?.value || document.getElementById('cafeGradeQ2')?.value || document.getElementById('cafeGradeQ1')?.value || '';
 
             // Build keyword-enhanced analysis
             const kwList = userKeywords ? userKeywords.split(/[,，\s]+/).filter(k => k) : [];
