@@ -813,7 +813,45 @@
                         <p style="font-size:0.75rem; color:var(--text-muted); margin-bottom:16px; margin-top:8px;">* 아래 작업 내역에 URL을 입력한 후 "자동 분석" 버튼을 누르면 KPI, 키워드가 자동으로 채워집니다</p>
                         <div id="kpiFieldsContainer"></div>
 
-                        <div style="display:flex; justify-content:space-between; align-items:center;">
+                        <!-- 마케팅 성과 분석 설정 -->
+                        <div style="display:flex; justify-content:space-between; align-items:center; margin-top:20px;">
+                            <h4 class="form-section-title" style="margin-bottom:0; border:none; padding:0;">마케팅 성과 분석</h4>
+                            <label style="font-size:0.8rem; color:var(--text-light); display:flex; align-items:center; gap:6px; cursor:pointer;">
+                                <input type="checkbox" id="toggleMarketingSection" checked> 보고서에 포함
+                            </label>
+                        </div>
+                        <div style="border-bottom:1px solid var(--border); margin-bottom:16px;"></div>
+                        <div class="form-row" style="margin-bottom:16px;">
+                            <div class="form-group">
+                                <label>레이더차트 비교 차이</label>
+                                <select id="radarGapSize">
+                                    <option value="소">소 (차이 작음)</option>
+                                    <option value="중" selected>중 (보통)</option>
+                                    <option value="대">대 (차이 큼)</option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label>경쟁사 대비 노출지수 차이</label>
+                                <select id="exposureGapSize">
+                                    <option value="소">소 (차이 작음)</option>
+                                    <option value="중" selected>중 (보통)</option>
+                                    <option value="대">대 (차이 큼)</option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <!-- 유입 증가 그래프 설정 -->
+                        <div style="display:flex; justify-content:space-between; align-items:center; margin-top:20px;">
+                            <h4 class="form-section-title" style="margin-bottom:0; border:none; padding:0;">유입 증가 그래프</h4>
+                            <label style="font-size:0.8rem; color:var(--text-light); display:flex; align-items:center; gap:6px; cursor:pointer;">
+                                <input type="checkbox" id="toggleExposureSection" checked> 보고서에 포함
+                            </label>
+                        </div>
+                        <div style="border-bottom:1px solid var(--border); margin-bottom:16px;"></div>
+                        <p style="font-size:0.75rem; color:var(--text-muted); margin-bottom:12px;">* 작업기간 기준으로 2주 단위 기간이 자동 생성됩니다. 노출수와 유입 클릭수를 입력하세요.</p>
+                        <div id="exposurePeriodsContainer"></div>
+
+                        <div style="display:flex; justify-content:space-between; align-items:center; margin-top:20px;">
                             <h4 class="form-section-title" style="margin-bottom:0; border:none; padding:0;">키워드 분석 (자동 분석)</h4>
                             <label style="font-size:0.8rem; color:var(--text-light); display:flex; align-items:center; gap:6px; cursor:pointer;">
                                 <input type="checkbox" id="toggleKeywordSection" checked> 보고서에 포함
@@ -1022,8 +1060,19 @@
 
         // ===== Radar Chart =====
         const radarLabels = ['노출 확산력', '검색 노출력', '콘텐츠 반응', '브랜드 인지', '전환 가능성'];
-        const dataWithout = [25, 18, 15, 20, 12]; // 마케팅 미실행
-        const dataWith = [62, 55, 68, 50, 58];    // 마케팅 실행
+        // 소/중/대 프리셋
+        const radarGapPresets = {
+            '소': { without: [35, 30, 28, 32, 25], with: [52, 48, 50, 45, 42] },
+            '중': { without: [25, 18, 15, 20, 12], with: [62, 55, 68, 50, 58] },
+            '대': { without: [15, 10, 8, 12, 7], with: [78, 72, 82, 68, 75] }
+        };
+        const exposureGapPresets = {
+            '소': { ours: 65, comp: 55 },
+            '중': { ours: 78, comp: 52 },
+            '대': { ours: 92, comp: 38 }
+        };
+        let dataWithout = [25, 18, 15, 20, 12];
+        let dataWith = [62, 55, 68, 50, 58];
         let currentRadarMode = 'both';
         let radarAnimId = null;
         let radarRepeatTimer = null;
@@ -1287,6 +1336,129 @@
             exposureAnimId = requestAnimationFrame(step);
         }
 
+        // ===== Draw exposure chart from custom period data =====
+        function drawExposureChartFromData(periods) {
+            const canvas = document.getElementById('exposureChart');
+            const ctx = canvas.getContext('2d');
+            const W = canvas.width, H = canvas.height;
+            const pad = { top: 30, right: 30, bottom: 50, left: 70 };
+            const cW = W - pad.left - pad.right;
+            const cH = H - pad.top - pad.bottom;
+
+            const labels = periods.map(p => p.label);
+            const exposureData = periods.map(p => Number(p.exposure) || 0);
+            const clickData = periods.map(p => Number(p.clicks) || 0);
+            const maxVal = Math.max(...exposureData, ...clickData, 1000) * 1.15;
+            const n = periods.length;
+
+            ctx.clearRect(0, 0, W, H);
+
+            // Grid
+            ctx.strokeStyle = 'rgba(59,130,246,0.1)'; ctx.lineWidth = 1;
+            for (let i = 0; i <= 4; i++) {
+                const y = pad.top + cH * (1 - i / 4);
+                ctx.beginPath(); ctx.moveTo(pad.left, y); ctx.lineTo(W - pad.right, y); ctx.stroke();
+                ctx.font = '600 11px Poppins'; ctx.fillStyle = '#999'; ctx.textAlign = 'right';
+                ctx.fillText(Math.round(maxVal * i / 4).toLocaleString(), pad.left - 10, y + 4);
+            }
+
+            // X labels
+            ctx.textAlign = 'center'; ctx.font = '500 10px "Noto Sans KR"'; ctx.fillStyle = '#555';
+            labels.forEach((l, i) => {
+                const x = pad.left + cW * i / Math.max(n - 1, 1);
+                ctx.fillText(l, x, H - 8);
+            });
+
+            // Bars
+            const barW = Math.min(40, cW / n * 0.6);
+            labels.forEach((_, i) => {
+                const x = pad.left + cW * i / Math.max(n - 1, 1) - barW / 2;
+                const barH = cH * exposureData[i] / maxVal;
+                const y = pad.top + cH - barH;
+                const grad = ctx.createLinearGradient(x, y, x, y + barH);
+                grad.addColorStop(0, 'rgba(59,130,246,0.7)'); grad.addColorStop(1, 'rgba(59,130,246,0.2)');
+                ctx.fillStyle = grad;
+                ctx.beginPath(); ctx.roundRect(x, y, barW, barH, [4, 4, 0, 0]); ctx.fill();
+                ctx.font = '700 10px Poppins'; ctx.fillStyle = '#3B82F6'; ctx.textAlign = 'center';
+                ctx.fillText(exposureData[i].toLocaleString(), x + barW / 2, y - 8);
+            });
+
+            // Line (clicks)
+            ctx.beginPath(); ctx.strokeStyle = '#555'; ctx.lineWidth = 2;
+            labels.forEach((_, i) => {
+                const x = pad.left + cW * i / Math.max(n - 1, 1);
+                const y = pad.top + cH - cH * clickData[i] / maxVal;
+                i === 0 ? ctx.moveTo(x, y) : ctx.lineTo(x, y);
+            });
+            ctx.stroke();
+            labels.forEach((_, i) => {
+                const x = pad.left + cW * i / Math.max(n - 1, 1);
+                const y = pad.top + cH - cH * clickData[i] / maxVal;
+                ctx.beginPath(); ctx.arc(x, y, 4, 0, Math.PI * 2); ctx.fillStyle = '#555'; ctx.fill();
+                ctx.font = '600 10px Poppins'; ctx.fillText(clickData[i].toLocaleString(), x, y - 12);
+            });
+
+            // Legend
+            ctx.font = '600 11px "Noto Sans KR"';
+            ctx.fillStyle = 'rgba(59,130,246,0.6)'; ctx.fillRect(W - 200, 10, 14, 14);
+            ctx.fillStyle = '#555'; ctx.textAlign = 'left'; ctx.fillText('노출수', W - 180, 22);
+            ctx.beginPath(); ctx.moveTo(W - 110, 17); ctx.lineTo(W - 90, 17); ctx.strokeStyle = '#555'; ctx.lineWidth = 2; ctx.stroke();
+            ctx.fillText('유입 클릭', W - 85, 22);
+        }
+
+        // ===== Generate exposure period inputs from date =====
+        function generateExposurePeriods() {
+            const startDate = document.getElementById('createStartDate').value;
+            const endDate = document.getElementById('createEndDate').value || new Date().toISOString().split('T')[0];
+            const container = document.getElementById('exposurePeriodsContainer');
+
+            // Calculate 2-week periods: each month has ~15th and ~last day
+            const periods = [];
+            let d = new Date(startDate || endDate);
+            const end = new Date(endDate);
+            // Go back 3 months from end date if no start date
+            if (!startDate) { d = new Date(end); d.setMonth(d.getMonth() - 3); }
+
+            while (d <= end) {
+                const y = d.getFullYear();
+                const m = d.getMonth();
+                // First half: ~15th
+                const mid = new Date(y, m, 15);
+                if (mid >= d && mid <= end) {
+                    periods.push('~' + y + '.' + String(m + 1).padStart(2, '0') + '.15');
+                }
+                // Second half: ~last day
+                const last = new Date(y, m + 1, 0);
+                if (last >= d && last <= end) {
+                    periods.push('~' + y + '.' + String(m + 1).padStart(2, '0') + '.' + String(last.getDate()).padStart(2, '0'));
+                }
+                d = new Date(y, m + 1, 1); // Next month
+            }
+
+            // Remove duplicates and sort
+            const unique = [...new Set(periods)];
+
+            // Preserve existing values
+            const existing = {};
+            container.querySelectorAll('.exp-period-row').forEach(row => {
+                const label = row.querySelector('.exp-period-label')?.textContent;
+                const exp = row.querySelector('input[name="expExposure"]')?.value;
+                const clicks = row.querySelector('input[name="expClicks"]')?.value;
+                if (label) existing[label] = { exp, clicks };
+            });
+
+            let html = '<div class="form-row-3" style="margin-bottom:6px;"><div class="form-group"><label style="font-size:0.75rem;">기간</label></div><div class="form-group"><label style="font-size:0.75rem;">노출수</label></div><div class="form-group"><label style="font-size:0.75rem;">유입 클릭</label></div></div>';
+            unique.forEach(label => {
+                const prev = existing[label] || {};
+                html += `<div class="form-row-3 exp-period-row" style="margin-bottom:6px;">
+                    <div class="form-group"><span class="exp-period-label" style="font-size:0.82rem; font-weight:600; color:#1E293B;">${label}</span></div>
+                    <div class="form-group"><input type="number" name="expExposure" placeholder="0" min="0" value="${prev.exp || ''}"></div>
+                    <div class="form-group"><input type="number" name="expClicks" placeholder="0" min="0" value="${prev.clicks || ''}"></div>
+                </div>`;
+            });
+            container.innerHTML = html;
+        }
+
         // Repeat exposure chart every 10 seconds
         let exposureRepeatTimer = null;
         function startExposureRepeat() {
@@ -1388,8 +1560,12 @@
             const kpiCards = document.querySelectorAll('#reportView .kpi-card');
             const kpiKeys = Object.keys(data.kpiData || {});
             const kpiConfig = {
+                'createCafeGrade': { label: '카페 등급', unit: '', icon: '&#127942;', isText: true },
                 'createPostCount': { label: '총 게시글', unit: '건', icon: '&#128221;' },
                 'createCommentCount': { label: '총 댓글', unit: '개', icon: '&#128172;' },
+                'createLikeCount': { label: '좋아요 수', unit: '개', icon: '&#128077;' },
+                'createSearchViews': { label: '검색 조회수', unit: '회', icon: '&#128269;' },
+                'createViewMembers': { label: '조회 멤버', unit: '명', icon: '&#128101;' },
                 'createExposure': { label: '예상 노출', unit: '+', icon: '&#128065;' },
                 'createVisits': { label: '예상 방문', unit: '+', icon: '&#128100;' },
                 'createEngagement': { label: '콘텐츠 참여율', unit: '%', icon: '&#128200;' },
@@ -1414,11 +1590,13 @@
                 kpiGrid.innerHTML = '';
                 kpiKeys.forEach(key => {
                     const cfg = kpiConfig[key] || { label: key, unit: '', icon: '&#128200;' };
-                    const val = Number(data.kpiData[key]);
+                    const raw = data.kpiData[key];
+                    const isText = cfg.isText || isNaN(Number(raw)) || raw === '';
+                    const displayVal = isText ? (raw || '-') : Number(raw).toLocaleString();
                     kpiGrid.innerHTML += `<div class="kpi-card">
                         <div class="kpi-icon">${cfg.icon}</div>
                         <div class="kpi-label">${cfg.label}</div>
-                        <div class="kpi-value">${val.toLocaleString()}</div>
+                        <div class="kpi-value">${displayVal}</div>
                         <div class="kpi-unit">${cfg.unit}</div>
                     </div>`;
                 });
@@ -1463,8 +1641,36 @@
                 }
             }
 
+            // Apply radar gap size
+            if (data.radarGap) {
+                const preset = radarGapPresets[data.radarGap];
+                if (preset) {
+                    dataWithout = preset.without;
+                    dataWith = preset.with;
+                }
+            }
+
+            // Apply exposure gap size
+            if (data.exposureGap) {
+                const ep = exposureGapPresets[data.exposureGap];
+                if (ep) {
+                    const oursBar = document.getElementById('compareOurs');
+                    const compBar = document.getElementById('compareComp');
+                    if (oursBar) { oursBar.style.width = ep.ours + '%'; oursBar.textContent = ep.ours; oursBar.parentElement.nextElementSibling.textContent = ep.ours; }
+                    if (compBar) { compBar.style.width = ep.comp + '%'; compBar.textContent = ep.comp; compBar.parentElement.nextElementSibling.textContent = ep.comp; }
+                }
+            }
+
+            // Apply exposure periods to chart
+            if (data.exposurePeriods && data.exposurePeriods.length > 0) {
+                window._exposurePeriodData = data.exposurePeriods;
+                drawExposureChartFromData(data.exposurePeriods);
+            }
+
             // Apply section toggles
             if (data.toggles) {
+                sectionToggles.marketing = data.toggles.marketing !== false;
+                sectionToggles.exposure = data.toggles.exposure !== false;
                 sectionToggles.keyword = data.toggles.keyword !== false;
                 sectionToggles.content = data.toggles.content !== false;
                 sectionToggles.worklog = data.toggles.worklog !== false;
@@ -1674,6 +1880,10 @@
         // Add initial rows
         addCreateRow();
 
+        // Auto-generate exposure periods when dates change
+        document.getElementById('createStartDate').addEventListener('change', generateExposurePeriods);
+        document.getElementById('createEndDate').addEventListener('change', generateExposurePeriods);
+
         document.getElementById('createForm').addEventListener('submit', function(e) {
             e.preventDefault();
             const companyName = document.getElementById('createCafeName').value.trim();
@@ -1727,14 +1937,31 @@
 
             // Section toggles
             const toggles = {
+                marketing: document.getElementById('toggleMarketingSection').checked,
+                exposure: document.getElementById('toggleExposureSection').checked,
                 keyword: document.getElementById('toggleKeywordSection').checked,
                 content: document.getElementById('toggleContentSection').checked,
                 worklog: document.getElementById('toggleWorkLogSection').checked
             };
 
+            // Radar & exposure gap settings
+            const radarGap = document.getElementById('radarGapSize').value;
+            const exposureGap = document.getElementById('exposureGapSize').value;
+
+            // Exposure chart period data
+            const exposurePeriods = [];
+            document.querySelectorAll('#exposurePeriodsContainer .exp-period-row').forEach(row => {
+                exposurePeriods.push({
+                    label: row.querySelector('.exp-period-label')?.textContent || '',
+                    exposure: row.querySelector('input[name="expExposure"]')?.value || '0',
+                    clicks: row.querySelector('input[name="expClicks"]')?.value || '0'
+                });
+            });
+
             const reportData = {
                 companyName, platform, serviceType, startDate, endDate, teamName, platformLink,
-                kpiData, keywords, workLog, aiComment, cafeActivity, toggles
+                kpiData, keywords, workLog, aiComment, cafeActivity, toggles,
+                radarGap, exposureGap, exposurePeriods
             };
 
             localStorage.setItem('rpt_pw_' + companyName, pw);
@@ -1833,11 +2060,19 @@
         // ===== Section Visibility Toggles =====
         // Store toggle state for report view
         const sectionToggles = {
+            marketing: true,
+            exposure: true,
             keyword: true,
             content: true,
             worklog: true
         };
 
+        document.getElementById('toggleMarketingSection').addEventListener('change', function() {
+            sectionToggles.marketing = this.checked;
+        });
+        document.getElementById('toggleExposureSection').addEventListener('change', function() {
+            sectionToggles.exposure = this.checked;
+        });
         document.getElementById('toggleKeywordSection').addEventListener('change', function() {
             sectionToggles.keyword = this.checked;
         });
@@ -1852,6 +2087,8 @@
         function applySectionVisibility() {
             const sections = document.querySelectorAll('#reportView .rpt-section');
             // Sections: header(0), KPI(1), radar(2), exposure(3), keyword(4), content(5), worklog(6), AI(7)
+            if (sections[2]) sections[2].style.display = sectionToggles.marketing ? '' : 'none';  // 마케팅 성과 분석
+            if (sections[3]) sections[3].style.display = sectionToggles.exposure ? '' : 'none';  // 유입 증가 그래프
             if (sections[4]) sections[4].style.display = sectionToggles.keyword ? '' : 'none';  // 키워드 분석
             if (sections[5]) sections[5].style.display = sectionToggles.content ? '' : 'none';  // 콘텐츠 반응 분석
             if (sections[6]) sections[6].style.display = sectionToggles.worklog ? '' : 'none';  // 작업 진행 로그
