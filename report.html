@@ -620,49 +620,14 @@
                     </div>
                 </div>
 
-                <!-- 5. Content Reaction Analysis -->
-                <div class="rpt-section">
+                <!-- 5. 추가 서비스 / 보너스 -->
+                <div class="rpt-section" id="bonusReportSection">
                     <div class="rpt-section-header">
                         <div class="rpt-section-num">5</div>
-                        <h3>콘텐츠 반응 분석</h3>
+                        <h3>추가 서비스 / 보너스</h3>
                     </div>
                     <div class="rpt-section-body">
-                        <div class="content-metrics">
-                            <div class="cm-card">
-                                <div class="cm-label">평균 조회수</div>
-                                <div class="cm-value">4,200</div>
-                            </div>
-                            <div class="cm-card">
-                                <div class="cm-label">평균 댓글</div>
-                                <div class="cm-value">28</div>
-                            </div>
-                            <div class="cm-card">
-                                <div class="cm-label">평균 좋아요</div>
-                                <div class="cm-value">198</div>
-                            </div>
-                            <div class="cm-card">
-                                <div class="cm-label">공유 수</div>
-                                <div class="cm-value">45</div>
-                            </div>
-                        </div>
-                        <div class="content-bar-chart">
-                            <div class="content-bar-item">
-                                <span class="content-bar-label">게시글 조회</span>
-                                <div class="content-bar-track"><div class="content-bar-fill" style="width:88%">4,200</div></div>
-                            </div>
-                            <div class="content-bar-item">
-                                <span class="content-bar-label">댓글 참여</span>
-                                <div class="content-bar-track"><div class="content-bar-fill" style="width:62%">28</div></div>
-                            </div>
-                            <div class="content-bar-item">
-                                <span class="content-bar-label">좋아요</span>
-                                <div class="content-bar-track"><div class="content-bar-fill" style="width:72%">198</div></div>
-                            </div>
-                            <div class="content-bar-item">
-                                <span class="content-bar-label">공유/저장</span>
-                                <div class="content-bar-track"><div class="content-bar-fill" style="width:38%">45</div></div>
-                            </div>
-                        </div>
+                        <div id="bonusContentDisplay" style="font-size:0.9rem; line-height:1.8; color:#333; white-space:pre-wrap;"></div>
                     </div>
                 </div>
 
@@ -779,44 +744,40 @@
                         <div id="cafeActivitySection" style="display:none; margin-bottom:20px;">
                             <div style="display:flex; justify-content:space-between; align-items:center;">
                                 <h4 class="form-section-title" style="margin-bottom:0; border:none; padding:0;">카페 활동내역 입력</h4>
+                                <button type="button" class="btn-add-row" onclick="addCafeActivityRow()">+ 행 추가</button>
                             </div>
-                            <p style="font-size:0.75rem; color:var(--text-muted); margin-bottom:12px; margin-top:8px;">* 각 분기별 카페 등급과 등급 점수를 입력하세요. 유입 증가 그래프에 자동 반영됩니다.</p>
-                            <div style="display:grid; grid-template-columns:auto 1fr 1fr; gap:8px 12px; align-items:center; margin-bottom:12px;">
-                                <div style="font-size:0.75rem; font-weight:600; color:var(--text-muted);">분기</div>
-                                <div style="font-size:0.75rem; font-weight:600; color:var(--text-muted);">등급</div>
-                                <div style="font-size:0.75rem; font-weight:600; color:var(--text-muted);">등급 점수</div>
-
-                                <div style="font-size:0.82rem; font-weight:600; color:var(--primary);">1분기</div>
-                                <select id="cafeGradeQ1" style="padding:8px 12px; border:1px solid var(--border); border-radius:8px; font-size:0.82rem;">
-                                    <option value="">선택</option>
-                                    <option value="씨앗">씨앗</option><option value="새싹">새싹</option><option value="잎새">잎새</option>
-                                    <option value="가지">가지</option><option value="열매">열매</option><option value="나무">나무</option>
-                                </select>
-                                <input type="number" id="cafeScoreQ1" placeholder="예: 1971" min="0" style="padding:8px 12px; border:1px solid var(--border); border-radius:8px; font-size:0.82rem;">
-
-                                <div style="font-size:0.82rem; font-weight:600; color:var(--primary);">2분기</div>
-                                <select id="cafeGradeQ2" style="padding:8px 12px; border:1px solid var(--border); border-radius:8px; font-size:0.82rem;">
-                                    <option value="">선택</option>
-                                    <option value="씨앗">씨앗</option><option value="새싹">새싹</option><option value="잎새">잎새</option>
-                                    <option value="가지">가지</option><option value="열매">열매</option><option value="나무">나무</option>
-                                </select>
-                                <input type="number" id="cafeScoreQ2" placeholder="예: 1170" min="0" style="padding:8px 12px; border:1px solid var(--border); border-radius:8px; font-size:0.82rem;">
-
-                                <div style="font-size:0.82rem; font-weight:600; color:var(--primary);">3분기</div>
-                                <select id="cafeGradeQ3" style="padding:8px 12px; border:1px solid var(--border); border-radius:8px; font-size:0.82rem;">
-                                    <option value="">선택</option>
-                                    <option value="씨앗">씨앗</option><option value="새싹">새싹</option><option value="잎새">잎새</option>
-                                    <option value="가지">가지</option><option value="열매">열매</option><option value="나무">나무</option>
-                                </select>
-                                <input type="number" id="cafeScoreQ3" placeholder="예: 2684" min="0" style="padding:8px 12px; border:1px solid var(--border); border-radius:8px; font-size:0.82rem;">
-
-                                <div style="font-size:0.82rem; font-weight:600; color:var(--primary);">4분기</div>
-                                <select id="cafeGradeQ4" style="padding:8px 12px; border:1px solid var(--border); border-radius:8px; font-size:0.82rem;">
-                                    <option value="">선택</option>
-                                    <option value="씨앗">씨앗</option><option value="새싹">새싹</option><option value="잎새">잎새</option>
-                                    <option value="가지">가지</option><option value="열매">열매</option><option value="나무">나무</option>
-                                </select>
-                                <input type="number" id="cafeScoreQ4" placeholder="예: 37946" min="0" style="padding:8px 12px; border:1px solid var(--border); border-radius:8px; font-size:0.82rem;">
+                            <p style="font-size:0.75rem; color:var(--text-muted); margin-bottom:12px; margin-top:8px;">* 각 분기별 카페 등급과 등급 점수를 입력하세요. 유입 증가 그래프에 자동 반영됩니다. (등급 예: 씨앗1단계, 새싹3단계, 나무4단계, 숲)</p>
+                            <div id="cafeActivityRows">
+                                <div style="display:grid; grid-template-columns:50px 1fr 1fr 30px; gap:8px 12px; align-items:center; margin-bottom:6px;">
+                                    <div style="font-size:0.72rem; font-weight:600; color:var(--text-muted);">분기</div>
+                                    <div style="font-size:0.72rem; font-weight:600; color:var(--text-muted);">등급</div>
+                                    <div style="font-size:0.72rem; font-weight:600; color:var(--text-muted);">등급 점수</div>
+                                    <div></div>
+                                </div>
+                                <div class="cafe-activity-row" style="display:grid; grid-template-columns:50px 1fr 1fr 30px; gap:8px 12px; align-items:center; margin-bottom:6px;">
+                                    <div style="font-size:0.82rem; font-weight:600; color:var(--primary);">1분기</div>
+                                    <input type="text" class="cafeGradeInput" placeholder="예: 씨앗4단계" style="padding:8px 12px; border:1px solid var(--border); border-radius:8px; font-size:0.82rem;">
+                                    <input type="number" class="cafeScoreInput" placeholder="예: 1971" min="0" style="padding:8px 12px; border:1px solid var(--border); border-radius:8px; font-size:0.82rem;">
+                                    <div></div>
+                                </div>
+                                <div class="cafe-activity-row" style="display:grid; grid-template-columns:50px 1fr 1fr 30px; gap:8px 12px; align-items:center; margin-bottom:6px;">
+                                    <div style="font-size:0.82rem; font-weight:600; color:var(--primary);">2분기</div>
+                                    <input type="text" class="cafeGradeInput" placeholder="예: 새싹1단계" style="padding:8px 12px; border:1px solid var(--border); border-radius:8px; font-size:0.82rem;">
+                                    <input type="number" class="cafeScoreInput" placeholder="예: 1170" min="0" style="padding:8px 12px; border:1px solid var(--border); border-radius:8px; font-size:0.82rem;">
+                                    <div></div>
+                                </div>
+                                <div class="cafe-activity-row" style="display:grid; grid-template-columns:50px 1fr 1fr 30px; gap:8px 12px; align-items:center; margin-bottom:6px;">
+                                    <div style="font-size:0.82rem; font-weight:600; color:var(--primary);">3분기</div>
+                                    <input type="text" class="cafeGradeInput" placeholder="예: 새싹3단계" style="padding:8px 12px; border:1px solid var(--border); border-radius:8px; font-size:0.82rem;">
+                                    <input type="number" class="cafeScoreInput" placeholder="예: 2684" min="0" style="padding:8px 12px; border:1px solid var(--border); border-radius:8px; font-size:0.82rem;">
+                                    <div></div>
+                                </div>
+                                <div class="cafe-activity-row" style="display:grid; grid-template-columns:50px 1fr 1fr 30px; gap:8px 12px; align-items:center; margin-bottom:6px;">
+                                    <div style="font-size:0.82rem; font-weight:600; color:var(--primary);">4분기</div>
+                                    <input type="text" class="cafeGradeInput" placeholder="예: 새싹5단계" style="padding:8px 12px; border:1px solid var(--border); border-radius:8px; font-size:0.82rem;">
+                                    <input type="number" class="cafeScoreInput" placeholder="예: 37946" min="0" style="padding:8px 12px; border:1px solid var(--border); border-radius:8px; font-size:0.82rem;">
+                                    <div></div>
+                                </div>
                             </div>
                         </div>
 
@@ -912,21 +873,25 @@
                             </div>
                         </div>
 
-                        <div style="display:flex; justify-content:space-between; align-items:center; margin-top:20px;">
-                            <h4 class="form-section-title" style="margin-bottom:0; border:none; padding:0;">콘텐츠 반응 분석</h4>
-                            <label style="font-size:0.8rem; color:var(--text-light); display:flex; align-items:center; gap:6px; cursor:pointer;">
-                                <input type="checkbox" id="toggleContentSection" checked> 보고서에 포함
-                            </label>
-                        </div>
-                        <div style="border-bottom:1px solid var(--border); margin-bottom:16px;"></div>
+                        <div style="border-bottom:1px solid var(--border); margin:16px 0;"></div>
 
                         <h4 class="form-section-title">추가 정보</h4>
                         <div class="form-group">
-                            <label>추가 서비스 / 보너스 내용</label>
+                            <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:6px;">
+                                <label style="margin:0;">추가 서비스 / 보너스 내용</label>
+                                <label style="font-size:0.8rem; color:var(--text-light); display:flex; align-items:center; gap:6px; cursor:pointer;">
+                                    <input type="checkbox" id="toggleBonusSection" checked> 보고서에 포함
+                                </label>
+                            </div>
                             <textarea id="createBonusContent" placeholder="추가 게시글 120개 이상 (300,000원 상당)"></textarea>
                         </div>
                         <div class="form-group">
-                            <label>AI 분석 코멘트</label>
+                            <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:6px;">
+                                <label style="margin:0;">AI 분석 코멘트</label>
+                                <label style="font-size:0.8rem; color:var(--text-light); display:flex; align-items:center; gap:6px; cursor:pointer;">
+                                    <input type="checkbox" id="toggleAISection" checked> 보고서에 포함
+                                </label>
+                            </div>
                             <div style="display:flex; gap:8px; margin-bottom:10px; flex-wrap:wrap;">
                                 <input type="text" id="aiKeywordInput" placeholder="키워드 입력 (예: 카페활성화, 맛집)" style="flex:1; min-width:200px;">
                                 <button type="button" class="btn btn-primary" style="padding:8px 18px; font-size:0.82rem; white-space:nowrap;" onclick="generateAIComment()">자동 분석</button>
@@ -1124,17 +1089,26 @@
                 });
             }
 
-            // Fill cafe activity (4 quarters)
-            if (data.cafeActivity) {
-                const ca = data.cafeActivity;
-                ['Q1','Q2','Q3','Q4'].forEach(q => {
-                    if (ca[q.toLowerCase()]) {
-                        const gradeEl = document.getElementById('cafeGrade' + q);
-                        const scoreEl = document.getElementById('cafeScore' + q);
-                        if (gradeEl) gradeEl.value = ca[q.toLowerCase()].grade || '';
-                        if (scoreEl) scoreEl.value = ca[q.toLowerCase()].score || '';
+            // Fill cafe activity (dynamic rows)
+            if (data.cafeActivity && Array.isArray(data.cafeActivity)) {
+                const rows = document.querySelectorAll('#cafeActivityRows .cafe-activity-row');
+                data.cafeActivity.forEach((item, i) => {
+                    if (i >= rows.length) addCafeActivityRow();
+                });
+                const allRows = document.querySelectorAll('#cafeActivityRows .cafe-activity-row');
+                data.cafeActivity.forEach((item, i) => {
+                    if (allRows[i]) {
+                        const gradeEl = allRows[i].querySelector('.cafeGradeInput');
+                        const scoreEl = allRows[i].querySelector('.cafeScoreInput');
+                        if (gradeEl) gradeEl.value = item.grade || '';
+                        if (scoreEl) scoreEl.value = item.score || '';
                     }
                 });
+            }
+
+            // Fill bonus content
+            if (data.bonusContent) {
+                document.getElementById('createBonusContent').value = data.bonusContent;
             }
 
             // Fill AI comment
@@ -1147,8 +1121,9 @@
                 document.getElementById('toggleMarketingSection').checked = data.toggles.marketing !== false;
                 document.getElementById('toggleExposureSection').checked = data.toggles.exposure !== false;
                 document.getElementById('toggleKeywordSection').checked = data.toggles.keyword !== false;
-                document.getElementById('toggleContentSection').checked = data.toggles.content !== false;
+                document.getElementById('toggleBonusSection').checked = data.toggles.bonus !== false;
                 document.getElementById('toggleWorkLogSection').checked = data.toggles.worklog !== false;
+                document.getElementById('toggleAISection').checked = data.toggles.ai !== false;
             }
 
             // Fill radar/exposure gap and slider values
@@ -1654,11 +1629,28 @@
         }
 
         // ===== Cafe Grade Growth Chart (이미지 스타일) =====
-        const cafeGradeLevels = ['씨앗', '새싹', '잎새', '가지', '열매', '나무'];
-        const cafeGradeColors = ['#F5D442', '#F5A623', '#E8584A', '#8B5CF6', '#3B82F6', '#10B981'];
+        // 등급 체계: 씨앗1~5, 새싹1~5, 잎새1~5, 가지1~5, 열매1~5, 나무1~4, 숲
+        const cafeGradeMain = ['씨앗', '새싹', '잎새', '가지', '열매', '나무'];
+        const cafeGradeColors = ['#F5D442', '#8BC34A', '#4CAF50', '#00BCD4', '#3B82F6', '#10B981'];
+
+        // Parse grade text like "씨앗4단계", "새싹1단계", "숲" → numeric position (0~30)
+        function parseGradeLevel(gradeText) {
+            if (!gradeText) return -1;
+            const text = gradeText.trim();
+            if (text === '숲') return 30; // max level
+            for (let i = 0; i < cafeGradeMain.length; i++) {
+                if (text.startsWith(cafeGradeMain[i])) {
+                    const rest = text.replace(cafeGradeMain[i], '').replace('단계', '').trim();
+                    const sub = parseInt(rest) || 1;
+                    return i * 5 + Math.min(sub, 5) - 1;
+                }
+            }
+            return -1;
+        }
 
         function hasCafeActivityData(ca) {
             if (!ca) return false;
+            if (Array.isArray(ca)) return ca.some(item => item.grade && item.score);
             return ['q1','q2','q3','q4'].some(q => ca[q] && ca[q].grade && ca[q].score);
         }
 
@@ -1675,25 +1667,22 @@
             const cH = H - pad.top - pad.bottom;
 
             // Grade level Y positions (씨앗=bottom, 나무=top)
-            const levelCount = cafeGradeLevels.length;
+            const levelCount = cafeGradeMain.length;
             const levelH = cH / levelCount;
 
             // Draw grade level bands on left side
             for (let i = 0; i < levelCount; i++) {
                 const y = pad.top + (levelCount - 1 - i) * levelH;
-                // Background band
                 ctx.fillStyle = cafeGradeColors[i] + '18';
                 ctx.fillRect(pad.left, y, cW, levelH);
-                // Left color bar
                 ctx.fillStyle = cafeGradeColors[i];
                 ctx.beginPath();
                 ctx.roundRect(12, y + 4, 95, levelH - 8, 6);
                 ctx.fill();
-                // Label
                 ctx.font = '700 12px "Noto Sans KR"';
                 ctx.fillStyle = '#fff';
                 ctx.textAlign = 'center';
-                ctx.fillText(cafeGradeLevels[i], 60, y + levelH / 2 + 4);
+                ctx.fillText(cafeGradeMain[i], 60, y + levelH / 2 + 4);
             }
 
             // Grid lines
@@ -1707,23 +1696,36 @@
                 ctx.stroke();
             }
 
-            // Collect quarter data
+            // Collect data points (supports array or old object format)
             const quarters = [];
-            ['q1','q2','q3','q4'].forEach((q, idx) => {
-                if (cafeData[q] && cafeData[q].grade && cafeData[q].score) {
-                    quarters.push({
-                        label: (idx + 1) + '분기',
-                        grade: cafeData[q].grade,
-                        score: parseInt(cafeData[q].score) || 0,
-                        gradeIndex: cafeGradeLevels.indexOf(cafeData[q].grade)
-                    });
-                }
-            });
+            if (Array.isArray(cafeData)) {
+                cafeData.forEach((item, idx) => {
+                    if (item.grade && item.score) {
+                        quarters.push({
+                            label: (idx + 1) + '분기',
+                            grade: item.grade,
+                            score: parseInt(item.score) || 0,
+                            levelPos: parseGradeLevel(item.grade)
+                        });
+                    }
+                });
+            } else {
+                ['q1','q2','q3','q4'].forEach((q, idx) => {
+                    if (cafeData[q] && cafeData[q].grade && cafeData[q].score) {
+                        quarters.push({
+                            label: (idx + 1) + '분기',
+                            grade: cafeData[q].grade,
+                            score: parseInt(cafeData[q].score) || 0,
+                            levelPos: parseGradeLevel(cafeData[q].grade)
+                        });
+                    }
+                });
+            }
 
             if (quarters.length === 0) return;
 
-            // X positions
             const n = quarters.length;
+            const maxLevel = 30; // 숲 = 30
 
             // Draw X labels
             ctx.textAlign = 'center';
@@ -1734,30 +1736,37 @@
                 ctx.fillText(q.label, x, H - 10);
             });
 
-            // Calculate Y for each point (grade level center + fractional offset based on score within grade)
-            function getY(gradeIdx, score) {
-                // Base Y at center of grade level
-                const baseY = pad.top + (levelCount - 1 - gradeIdx) * levelH + levelH / 2;
-                // Slight upward offset for higher scores (within ±levelH/4)
-                const scoreNorm = Math.min(score / 50000, 1);
-                return baseY - scoreNorm * levelH * 0.3;
+            // Calculate Y from grade position (0~30 mapped to chart height)
+            function getY(levelPos) {
+                const ratio = Math.max(0, Math.min(levelPos / maxLevel, 1));
+                return pad.top + cH * (1 - ratio);
             }
 
-            // Draw connecting line
-            ctx.beginPath();
-            ctx.strokeStyle = '#8BC34A';
-            ctx.lineWidth = 3;
-            quarters.forEach((q, i) => {
-                const x = pad.left + cW * i / Math.max(n - 1, 1);
-                const y = getY(q.gradeIndex, q.score);
-                i === 0 ? ctx.moveTo(x, y) : ctx.lineTo(x, y);
-            });
-            ctx.stroke();
+            // Draw connecting line with curve
+            if (quarters.length > 1) {
+                ctx.beginPath();
+                ctx.strokeStyle = '#8BC34A';
+                ctx.lineWidth = 3;
+                const points = quarters.map((q, i) => ({
+                    x: pad.left + cW * i / Math.max(n - 1, 1),
+                    y: getY(q.levelPos)
+                }));
+
+                ctx.moveTo(points[0].x, points[0].y);
+                for (let i = 1; i < points.length; i++) {
+                    const cp1x = (points[i - 1].x + points[i].x) / 2;
+                    const cp1y = points[i - 1].y;
+                    const cp2x = (points[i - 1].x + points[i].x) / 2;
+                    const cp2y = points[i].y;
+                    ctx.bezierCurveTo(cp1x, cp1y, cp2x, cp2y, points[i].x, points[i].y);
+                }
+                ctx.stroke();
+            }
 
             // Draw points and labels
             quarters.forEach((q, i) => {
                 const x = pad.left + cW * i / Math.max(n - 1, 1);
-                const y = getY(q.gradeIndex, q.score);
+                const y = getY(q.levelPos);
 
                 // Dot
                 ctx.beginPath();
@@ -1769,26 +1778,28 @@
                 ctx.stroke();
 
                 // Label box
-                const label = q.grade + '\n' + q.score.toLocaleString();
-                const lines = label.split('\n');
-                const boxW = Math.max(ctx.measureText(lines[0]).width, ctx.measureText(lines[1]).width) + 16;
+                ctx.font = '700 10px "Noto Sans KR"';
+                const gradeTxt = q.grade;
+                const scoreTxt = q.score.toLocaleString();
+                const tw1 = ctx.measureText(gradeTxt).width;
+                ctx.font = '600 10px Poppins';
+                const tw2 = ctx.measureText(scoreTxt).width;
+                const boxW = Math.max(tw1, tw2) + 20;
                 const boxH = 36;
                 const boxX = x - boxW / 2;
                 const boxY = y - boxH - 14;
 
-                // Background
                 ctx.fillStyle = '#8BC34A';
                 ctx.beginPath();
                 ctx.roundRect(boxX, boxY, boxW, boxH, 6);
                 ctx.fill();
 
-                // Text
                 ctx.font = '700 10px "Noto Sans KR"';
                 ctx.fillStyle = '#fff';
                 ctx.textAlign = 'center';
-                ctx.fillText(lines[0], x, boxY + 14);
+                ctx.fillText(gradeTxt, x, boxY + 14);
                 ctx.font = '600 10px Poppins';
-                ctx.fillText(lines[1], x, boxY + 28);
+                ctx.fillText(scoreTxt, x, boxY + 28);
             });
         }
 
@@ -2066,13 +2077,20 @@
                 drawCafeGrowthChart(data.cafeActivity);
             }
 
+            // Display bonus content
+            if (data.bonusContent) {
+                const bonusDisplay = document.getElementById('bonusContentDisplay');
+                if (bonusDisplay) bonusDisplay.textContent = data.bonusContent;
+            }
+
             // Apply section toggles
             if (data.toggles) {
                 sectionToggles.marketing = data.toggles.marketing !== false;
                 sectionToggles.exposure = data.toggles.exposure !== false;
                 sectionToggles.keyword = data.toggles.keyword !== false;
-                sectionToggles.content = data.toggles.content !== false;
+                sectionToggles.bonus = data.toggles.bonus !== false;
                 sectionToggles.worklog = data.toggles.worklog !== false;
+                sectionToggles.ai = data.toggles.ai !== false;
             }
         }
 
@@ -2122,6 +2140,33 @@
         // ===== Cafe Activity (simplified - no longer needs period calculation) =====
         function calculateCafePeriods() {
             // No-op: periods are no longer used, quarters are entered directly
+        }
+
+        function addCafeActivityRow() {
+            const container = document.getElementById('cafeActivityRows');
+            const rows = container.querySelectorAll('.cafe-activity-row');
+            const num = rows.length + 1;
+            const row = document.createElement('div');
+            row.className = 'cafe-activity-row';
+            row.style.cssText = 'display:grid; grid-template-columns:50px 1fr 1fr 30px; gap:8px 12px; align-items:center; margin-bottom:6px;';
+            row.innerHTML = `
+                <div style="font-size:0.82rem; font-weight:600; color:var(--primary);">${num}분기</div>
+                <input type="text" class="cafeGradeInput" placeholder="예: 새싹3단계" style="padding:8px 12px; border:1px solid var(--border); border-radius:8px; font-size:0.82rem;">
+                <input type="number" class="cafeScoreInput" placeholder="점수" min="0" style="padding:8px 12px; border:1px solid var(--border); border-radius:8px; font-size:0.82rem;">
+                <button type="button" onclick="removeCafeActivityRow(this)" style="background:none; border:none; color:#e74c3c; font-size:1.1rem; cursor:pointer; padding:0;">✕</button>
+            `;
+            container.appendChild(row);
+        }
+
+        function removeCafeActivityRow(btn) {
+            const container = document.getElementById('cafeActivityRows');
+            const rows = container.querySelectorAll('.cafe-activity-row');
+            if (rows.length <= 1) return; // keep at least 1 row
+            btn.closest('.cafe-activity-row').remove();
+            // Renumber
+            container.querySelectorAll('.cafe-activity-row').forEach((row, i) => {
+                row.querySelector('div').textContent = (i + 1) + '분기';
+            });
         }
 
         // ===== Create Form Logic =====
@@ -2271,21 +2316,25 @@
             // AI comment
             const aiComment = document.getElementById('createAIComment').value;
 
-            // Cafe activity data (4 quarters with grade + score)
-            const cafeActivity = {
-                q1: { grade: document.getElementById('cafeGradeQ1')?.value || '', score: document.getElementById('cafeScoreQ1')?.value || '' },
-                q2: { grade: document.getElementById('cafeGradeQ2')?.value || '', score: document.getElementById('cafeScoreQ2')?.value || '' },
-                q3: { grade: document.getElementById('cafeGradeQ3')?.value || '', score: document.getElementById('cafeScoreQ3')?.value || '' },
-                q4: { grade: document.getElementById('cafeGradeQ4')?.value || '', score: document.getElementById('cafeScoreQ4')?.value || '' }
-            };
+            // Cafe activity data (dynamic rows)
+            const cafeActivity = [];
+            document.querySelectorAll('#cafeActivityRows .cafe-activity-row').forEach(row => {
+                const grade = row.querySelector('.cafeGradeInput')?.value || '';
+                const score = row.querySelector('.cafeScoreInput')?.value || '';
+                if (grade || score) cafeActivity.push({ grade, score });
+            });
+
+            // Bonus content
+            const bonusContent = document.getElementById('createBonusContent').value;
 
             // Section toggles
             const toggles = {
                 marketing: document.getElementById('toggleMarketingSection').checked,
                 exposure: document.getElementById('toggleExposureSection').checked,
                 keyword: document.getElementById('toggleKeywordSection').checked,
-                content: document.getElementById('toggleContentSection').checked,
-                worklog: document.getElementById('toggleWorkLogSection').checked
+                bonus: document.getElementById('toggleBonusSection').checked,
+                worklog: document.getElementById('toggleWorkLogSection').checked,
+                ai: document.getElementById('toggleAISection').checked
             };
 
             // Radar & exposure gap settings (with custom slider values)
@@ -2298,7 +2347,7 @@
 
             const reportData = {
                 companyName, platform, serviceType, startDate, endDate, teamName, platformLink,
-                kpiData, keywords, workLog, aiComment, cafeActivity, toggles,
+                kpiData, keywords, workLog, aiComment, bonusContent, cafeActivity, toggles,
                 radarGap, exposureGap, radarWithout, radarWith, exposureOurs, exposureComp
             };
 
@@ -2430,8 +2479,9 @@
             marketing: true,
             exposure: true,
             keyword: true,
-            content: true,
-            worklog: true
+            bonus: true,
+            worklog: true,
+            ai: true
         };
 
         document.getElementById('toggleMarketingSection').addEventListener('change', function() {
@@ -2443,8 +2493,11 @@
         document.getElementById('toggleKeywordSection').addEventListener('change', function() {
             sectionToggles.keyword = this.checked;
         });
-        document.getElementById('toggleContentSection').addEventListener('change', function() {
-            sectionToggles.content = this.checked;
+        document.getElementById('toggleBonusSection').addEventListener('change', function() {
+            sectionToggles.bonus = this.checked;
+        });
+        document.getElementById('toggleAISection').addEventListener('change', function() {
+            sectionToggles.ai = this.checked;
         });
         document.getElementById('toggleWorkLogSection').addEventListener('change', function() {
             sectionToggles.worklog = this.checked;
@@ -2453,12 +2506,13 @@
         // Apply section visibility when viewing report
         function applySectionVisibility() {
             const sections = document.querySelectorAll('#reportView .rpt-section');
-            // Sections: header(0), KPI(1), radar(2), exposure(3), keyword(4), content(5), worklog(6), AI(7)
+            // Sections: header(0), KPI(1), radar(2), exposure(3), keyword(4), bonus(5), worklog(6), AI(7)
             if (sections[2]) sections[2].style.display = sectionToggles.marketing ? '' : 'none';  // 마케팅 성과 분석
             if (sections[3]) sections[3].style.display = sectionToggles.exposure ? '' : 'none';  // 유입 증가 그래프
             if (sections[4]) sections[4].style.display = sectionToggles.keyword ? '' : 'none';  // 키워드 분석
-            if (sections[5]) sections[5].style.display = sectionToggles.content ? '' : 'none';  // 콘텐츠 반응 분석
+            if (sections[5]) sections[5].style.display = sectionToggles.bonus ? '' : 'none';  // 추가 서비스 / 보너스
             if (sections[6]) sections[6].style.display = sectionToggles.worklog ? '' : 'none';  // 작업 진행 로그
+            if (sections[7]) sections[7].style.display = sectionToggles.ai ? '' : 'none';  // AI 마케팅 분석
         }
 
         // ===== Google Sheets Paste Support =====
@@ -2661,7 +2715,9 @@
             const comments = kpiValues.createCommentCount || 0;
             const engagement = kpiValues.createEngagement || 0;
             const memberGrowth = kpiValues.createMemberGrowth || 0;
-            const cafeGrade = document.getElementById('cafeGradeQ4')?.value || document.getElementById('cafeGradeQ3')?.value || document.getElementById('cafeGradeQ2')?.value || document.getElementById('cafeGradeQ1')?.value || '';
+            const cafeGradeInputs = document.querySelectorAll('#cafeActivityRows .cafeGradeInput');
+            let cafeGrade = '';
+            cafeGradeInputs.forEach(el => { if (el.value) cafeGrade = el.value; });
 
             // Build keyword-enhanced analysis
             const kwList = userKeywords ? userKeywords.split(/[,，\s]+/).filter(k => k) : [];
