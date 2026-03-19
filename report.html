@@ -1016,10 +1016,11 @@
         // Admin password
         const ADMIN_PASSWORD = 'thebest2026';
         let adminAuthenticated = false;
+        let isAdminViewing = false; // 현재 보고서를 운영자가 보고 있는지 여부
 
         function updateEditButtonVisibility() {
             const btn = document.getElementById('editButtonArea');
-            if (btn) btn.style.display = adminAuthenticated ? '' : 'none';
+            if (btn) btn.style.display = isAdminViewing ? '' : 'none';
         }
 
         function switchTab(tab) {
@@ -1035,6 +1036,8 @@
                 createSection.classList.remove('active');
                 if (!reportView.classList.contains('active')) {
                     accessSection.style.display = '';
+                    isAdminViewing = false;
+                    updateEditButtonVisibility();
                 }
             } else {
                 if (!adminAuthenticated) {
@@ -1044,6 +1047,7 @@
                         return;
                     }
                     adminAuthenticated = true;
+                    isAdminViewing = true;
                     updateEditButtonVisibility();
                 }
                 tabCreate.classList.add('active');
@@ -1065,6 +1069,7 @@
                     return;
                 }
                 adminAuthenticated = true;
+                isAdminViewing = true;
                 updateEditButtonVisibility();
             }
 
@@ -1248,6 +1253,8 @@
             const storedPw = localStorage.getItem('rpt_pw_' + company);
             const isValid = storedPw ? (password === storedPw) : (company === password);
             if (company && isValid) {
+                isAdminViewing = false; // 일반 사용자 조회 → 수정 버튼 숨김
+                updateEditButtonVisibility();
                 document.getElementById('accessSection').style.display = 'none';
                 document.getElementById('reportView').classList.add('active');
                 document.getElementById('rptCompanyName').textContent = company;
@@ -2428,6 +2435,7 @@
 
             if (isEdit) {
                 // After edit: switch to view and show updated report
+                isAdminViewing = true; // 관리자가 수정 후 보는 것
                 alert('보고서가 수정되었습니다.');
                 document.getElementById('createSection').classList.remove('active');
                 document.getElementById('reportView').classList.add('active');
