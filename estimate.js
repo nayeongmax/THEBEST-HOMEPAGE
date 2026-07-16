@@ -7,6 +7,20 @@ if (mobileMenu) {
 
 // ===== Service Data with Tiers =====
 const serviceConfig = {
+    'AI답변노출(GEO)': {
+        tiers: [
+            { name: '소규모', price: 550000, desc: 'GEO 기본 세팅 + AI 콘텐츠 10건 최적화' },
+            { name: '중규모', price: 990000, desc: 'GEO 구축 + AI 콘텐츠 30건 + 모니터링' },
+            { name: '대규모', price: 1980000, desc: 'GEO 풀패키지 + AI 콘텐츠 60건 + SEO 연동 + 경쟁사 분석' }
+        ],
+        workItems: [
+            'AI 검색엔진 답변 노출 전략 수립',
+            'GEO 최적화 콘텐츠 제작 및 배포',
+            'ChatGPT·Gemini·Perplexity 노출 모니터링',
+            '구조화 데이터(Schema) 마크업 적용',
+            'AI답변 노출 성과 리포트 제공'
+        ]
+    },
     '카페활성화': {
         tiers: [
             { name: '소규모', price: 330000, desc: '게시글 100개 + 댓글 100개' },
@@ -609,6 +623,7 @@ function generateSmartRecommendation(industry, platforms, budgetAnswer, revenueA
 
     // Platform to service mapping
     const platformServiceMap = {
+        'AI 검색(GEO)': ['AI답변노출(GEO)'],
         '네이버 블로그': ['블로그대행', '블로그체험단'],
         '인스타그램': ['인스타대행', '숏폼제작'],
         '유튜브': ['유튜브대행', '롱폼제작', '숏폼제작'],
@@ -717,6 +732,11 @@ function generateSmartRecommendation(industry, platforms, budgetAnswer, revenueA
 // ===== Generate Platform-Specific Problems =====
 function generatePlatformProblems(platforms, industry) {
     const problemMap = {
+        'AI 검색(GEO)': [
+            'AI 검색(ChatGPT·Gemini·Perplexity) 답변에 브랜드 노출 전무',
+            'GEO(생성형 엔진 최적화) 미적용으로 AI 추천 기회 상실',
+            '구조화 데이터·시맨틱 콘텐츠 부재로 AI 학습 데이터 제외'
+        ],
         '네이버 블로그': [
             '블로그 포스팅 키워드 최적화 미흡으로 검색 노출 저조',
             '경쟁 업체 대비 블로그 콘텐츠 품질 및 발행 빈도 부족',
