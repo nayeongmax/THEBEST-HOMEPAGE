@@ -649,8 +649,13 @@
                 <li><a href="index.html#geo" style="position:relative;">AI답변노출<span class="partner-badge" style="background:linear-gradient(135deg,#C8A96A,#E8D5A0);color:#111;">NEW</span></a></li>
                 <li><a href="index.html#services">서비스</a></li>
                 <li><a href="index.html#packages">패키지</a></li>
+                <li><a href="index.html#exposure-calc">노출계산기</a></li>
+                <li><a href="index.html#cases">성공사례</a></li>
+                <li><a href="index.html#reviews">고객후기</a></li>
+                <li><a href="index.html#process">진행프로세스</a></li>
                 <li><a href="report.html" style="position:relative;">결과보고서<span class="partner-badge">제휴사 전용</span></a></li>
                 <li><a href="intake.html" style="position:relative;">기본정보입력<span class="partner-badge" style="background:linear-gradient(135deg,#4CAF50,#66BB6A);">제휴사 전용</span></a></li>
+                <li><a href="#" class="nav-cta" onclick="event.preventDefault();showComingSoon();">AI 맞춤견적</a></li>
             </ul>
             <button class="mobile-menu" id="mobileMenu" aria-label="메뉴 열기">
                 <span></span><span></span><span></span>
@@ -765,6 +770,29 @@
                                 <input type="text" class="intake-input" id="f_companyName" readonly>
                             </div>
                             <div class="intake-field">
+                                <label class="intake-field-label">업종</label>
+                                <select class="intake-input" id="f_industry" onchange="onIndustryChange()">
+                                    <option value="">업종을 선택하세요</option>
+                                    <option value="병원/의료">병원 / 의료</option>
+                                    <option value="뷰티/미용">뷰티 / 미용</option>
+                                    <option value="요식업/맛집">요식업 / 맛집</option>
+                                    <option value="학원/교육">학원 / 교육</option>
+                                    <option value="법무사/법률">법무사 / 법률</option>
+                                    <option value="숙박/펜션">숙박 / 펜션</option>
+                                    <option value="건강기능식품">건강기능식품</option>
+                                    <option value="여행사">여행사</option>
+                                    <option value="휴대폰업">휴대폰업</option>
+                                    <option value="인테리어/건설">인테리어 / 건설</option>
+                                    <option value="쇼핑몰/이커머스">쇼핑몰 / 이커머스</option>
+                                    <option value="부동산">부동산</option>
+                                    <option value="프랜차이즈">프랜차이즈</option>
+                                    <option value="제조업">제조업</option>
+                                    <option value="IT/스타트업">IT / 스타트업</option>
+                                    <option value="일반회사">일반 회사</option>
+                                    <option value="기타">기타</option>
+                                </select>
+                            </div>
+                            <div class="intake-field">
                                 <label class="intake-field-label">관할지역</label>
                                 <input type="text" class="intake-input" id="f_region" placeholder="예) 서울 강남구">
                             </div>
@@ -776,14 +804,16 @@
                                 <label class="intake-field-label">운영시간</label>
                                 <input type="text" class="intake-input" id="f_operHours" placeholder="예) 09:00 ~ 18:00">
                             </div>
-                            <div class="intake-field">
-                                <label class="intake-field-label">대표자 성함 및 구성</label>
+                            <div class="intake-field" id="ceoNameField">
+                                <label class="intake-field-label" id="ceoNameLabel">대표자 성함</label>
                                 <input type="text" class="intake-input" id="f_ceoName" placeholder="예) 홍길동 대표">
                             </div>
-                            <div class="intake-field">
-                                <label class="intake-field-label">대표 진료과목 또는 서비스</label>
-                                <input type="text" class="intake-input" id="f_mainService" placeholder="예) 내과, 이탈리안 레스토랑 등">
-                            </div>
+                        </div>
+
+                        <!-- 업종별 동적 필드 -->
+                        <div id="industryFields" class="intake-field-grid" style="margin-top:12px;"></div>
+
+                        <div class="intake-field-grid" style="margin-top:12px;">
                             <div class="intake-field full">
                                 <label class="intake-field-label">홈페이지</label>
                                 <input type="text" class="intake-input" id="f_website" placeholder="https://">
@@ -823,34 +853,54 @@
                                 <span class="check-text">AI답변 노출 (GEO)</span>
                             </label>
                             <label class="intake-check-item">
-                                <input type="checkbox" name="currentMkt" value="네이버 블로그">
+                                <input type="checkbox" name="currentMkt" value="카페활성화">
                                 <span class="custom-check">&#10003;</span>
-                                <span class="check-text">네이버 블로그</span>
+                                <span class="check-text">카페활성화</span>
                             </label>
                             <label class="intake-check-item">
-                                <input type="checkbox" name="currentMkt" value="플레이스">
+                                <input type="checkbox" name="currentMkt" value="블로그대행">
                                 <span class="custom-check">&#10003;</span>
-                                <span class="check-text">플레이스</span>
+                                <span class="check-text">블로그대행</span>
+                            </label>
+                            <label class="intake-check-item">
+                                <input type="checkbox" name="currentMkt" value="블로그체험단">
+                                <span class="custom-check">&#10003;</span>
+                                <span class="check-text">블로그체험단</span>
+                            </label>
+                            <label class="intake-check-item">
+                                <input type="checkbox" name="currentMkt" value="유튜브대행">
+                                <span class="custom-check">&#10003;</span>
+                                <span class="check-text">유튜브대행</span>
+                            </label>
+                            <label class="intake-check-item">
+                                <input type="checkbox" name="currentMkt" value="인스타대행">
+                                <span class="custom-check">&#10003;</span>
+                                <span class="check-text">인스타대행</span>
+                            </label>
+                            <label class="intake-check-item">
+                                <input type="checkbox" name="currentMkt" value="숏폼제작">
+                                <span class="custom-check">&#10003;</span>
+                                <span class="check-text">숏폼제작</span>
+                            </label>
+                            <label class="intake-check-item">
+                                <input type="checkbox" name="currentMkt" value="롱폼제작">
+                                <span class="custom-check">&#10003;</span>
+                                <span class="check-text">롱폼제작</span>
+                            </label>
+                            <label class="intake-check-item">
+                                <input type="checkbox" name="currentMkt" value="사이트제작">
+                                <span class="custom-check">&#10003;</span>
+                                <span class="check-text">사이트제작</span>
+                            </label>
+                            <label class="intake-check-item">
+                                <input type="checkbox" name="currentMkt" value="언론홍보">
+                                <span class="custom-check">&#10003;</span>
+                                <span class="check-text">언론홍보</span>
                             </label>
                             <label class="intake-check-item">
                                 <input type="checkbox" name="currentMkt" value="플레이스 SEO">
                                 <span class="custom-check">&#10003;</span>
                                 <span class="check-text">플레이스 SEO</span>
-                            </label>
-                            <label class="intake-check-item">
-                                <input type="checkbox" name="currentMkt" value="유튜브">
-                                <span class="custom-check">&#10003;</span>
-                                <span class="check-text">유튜브</span>
-                            </label>
-                            <label class="intake-check-item">
-                                <input type="checkbox" name="currentMkt" value="인스타그램">
-                                <span class="custom-check">&#10003;</span>
-                                <span class="check-text">인스타그램</span>
-                            </label>
-                            <label class="intake-check-item">
-                                <input type="checkbox" name="currentMkt" value="체험단">
-                                <span class="custom-check">&#10003;</span>
-                                <span class="check-text">체험단</span>
                             </label>
                             <label class="intake-check-item">
                                 <input type="checkbox" name="currentMkt" value="광고 집행 경험 없음">
@@ -929,6 +979,186 @@
     </div>
 
     <script>
+    // ===== showComingSoon (AI견적 링크용) =====
+    function showComingSoon() {
+        const existing = document.querySelector('.coming-soon-overlay');
+        if (existing) existing.remove();
+        const overlay = document.createElement('div');
+        overlay.className = 'coming-soon-overlay';
+        overlay.style.cssText = 'position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,0.5);display:flex;align-items:center;justify-content:center;z-index:99999;backdrop-filter:blur(4px);';
+        overlay.innerHTML = '<div style="background:#fff;border-radius:20px;padding:40px 48px;text-align:center;max-width:420px;width:90%;box-shadow:0 20px 60px rgba(0,0,0,0.2);"><div style="width:64px;height:64px;background:#EFF6FF;border-radius:50%;display:flex;align-items:center;justify-content:center;margin:0 auto 20px;"><span style="font-size:28px;">&#128640;</span></div><h3 style="font-size:22px;font-weight:800;color:#1E293B;margin:0 0 8px;">서비스 준비중</h3><p style="font-size:15px;color:#64748B;line-height:1.6;margin:0 0 24px;">AI 맞춤견적 서비스를 준비하고 있습니다.<br>조금만 기다려주세요!</p><button onclick="this.closest(\'.coming-soon-overlay\').remove();" style="background:#C8A96A;color:#fff;border:none;padding:12px 36px;border-radius:10px;font-size:15px;font-weight:700;cursor:pointer;font-family:\'Noto Sans KR\',sans-serif;">확인</button></div>';
+        overlay.addEventListener('click', function(e) { if (e.target === overlay) overlay.remove(); });
+        document.body.appendChild(overlay);
+    }
+
+    // ===== 업종별 동적 필드 설정 =====
+    const industryFieldConfig = {
+        '병원/의료': {
+            ceoLabel: '원장님 성함 및 구성',
+            ceoPlaceholder: '예) 홍길동 원장 외 2명',
+            fields: [
+                { id: 'ind_1', label: '대표 진료과목', placeholder: '예) 내과, 호흡기내과, 피부과 등' },
+                { id: 'ind_2', label: '의료기관 유형', placeholder: '예) 의원, 병원, 종합병원' }
+            ]
+        },
+        '뷰티/미용': {
+            ceoLabel: '원장님 / 대표자 성함',
+            ceoPlaceholder: '예) 김미소 원장',
+            fields: [
+                { id: 'ind_1', label: '대표 시술 / 서비스', placeholder: '예) 피부관리, 반영구, 네일 등' },
+                { id: 'ind_2', label: '시술 가격대', placeholder: '예) 5만원~30만원대' }
+            ]
+        },
+        '요식업/맛집': {
+            ceoLabel: '대표자 성함',
+            ceoPlaceholder: '예) 홍길동 대표',
+            fields: [
+                { id: 'ind_1', label: '대표 메뉴', placeholder: '예) 수제버거, 파스타, 한정식 등' },
+                { id: 'ind_2', label: '좌석 수 / 매장 규모', placeholder: '예) 40석, 테이블 10개' }
+            ]
+        },
+        '학원/교육': {
+            ceoLabel: '원장님 / 대표자 성함',
+            ceoPlaceholder: '예) 홍길동 원장',
+            fields: [
+                { id: 'ind_1', label: '교육 과목', placeholder: '예) 수학, 영어, 코딩 등' },
+                { id: 'ind_2', label: '대상 학년 / 연령', placeholder: '예) 초등~중등, 성인 등' }
+            ]
+        },
+        '법무사/법률': {
+            ceoLabel: '대표 법무사 / 변호사 성함',
+            ceoPlaceholder: '예) 홍길동 법무사',
+            fields: [
+                { id: 'ind_1', label: '전문 분야', placeholder: '예) 등기, 소송, 상속, 이혼 등' },
+                { id: 'ind_2', label: '주요 취급 업무', placeholder: '예) 부동산등기, 법인설립 등' }
+            ]
+        },
+        '숙박/펜션': {
+            ceoLabel: '대표자 성함',
+            ceoPlaceholder: '예) 홍길동 대표',
+            fields: [
+                { id: 'ind_1', label: '객실 수 / 숙박 유형', placeholder: '예) 10실, 펜션 / 호텔 / 게스트하우스' },
+                { id: 'ind_2', label: '주요 특장점', placeholder: '예) 오션뷰, 수영장, BBQ 등' }
+            ]
+        },
+        '건강기능식품': {
+            ceoLabel: '대표자 성함',
+            ceoPlaceholder: '예) 홍길동 대표',
+            fields: [
+                { id: 'ind_1', label: '대표 제품', placeholder: '예) 유산균, 비타민, 콜라겐 등' },
+                { id: 'ind_2', label: '판매 채널', placeholder: '예) 자사몰, 쿠팡, 스마트스토어 등' }
+            ]
+        },
+        '여행사': {
+            ceoLabel: '대표자 성함',
+            ceoPlaceholder: '예) 홍길동 대표',
+            fields: [
+                { id: 'ind_1', label: '전문 여행 분야', placeholder: '예) 동남아, 유럽, 국내여행 등' },
+                { id: 'ind_2', label: '주요 여행 상품', placeholder: '예) 패키지투어, 자유여행, 허니문 등' }
+            ]
+        },
+        '휴대폰업': {
+            ceoLabel: '대표자 성함',
+            ceoPlaceholder: '예) 홍길동 대표',
+            fields: [
+                { id: 'ind_1', label: '취급 브랜드 / 통신사', placeholder: '예) 삼성, 애플 / SKT, KT, LG U+' },
+                { id: 'ind_2', label: '매장 유형', placeholder: '예) 직영점, 판매점, 온라인 등' }
+            ]
+        },
+        '인테리어/건설': {
+            ceoLabel: '대표자 성함',
+            ceoPlaceholder: '예) 홍길동 대표',
+            fields: [
+                { id: 'ind_1', label: '전문 시공 분야', placeholder: '예) 아파트, 상가, 사무실 인테리어 등' },
+                { id: 'ind_2', label: '시공 가능 지역', placeholder: '예) 수도권, 전국 등' }
+            ]
+        },
+        '쇼핑몰/이커머스': {
+            ceoLabel: '대표자 성함',
+            ceoPlaceholder: '예) 홍길동 대표',
+            fields: [
+                { id: 'ind_1', label: '판매 카테고리', placeholder: '예) 의류, 뷰티, 식품, 전자제품 등' },
+                { id: 'ind_2', label: '판매 채널', placeholder: '예) 자사몰, 스마트스토어, 쿠팡 등' }
+            ]
+        },
+        '부동산': {
+            ceoLabel: '대표 공인중개사 성함',
+            ceoPlaceholder: '예) 홍길동 공인중개사',
+            fields: [
+                { id: 'ind_1', label: '전문 분야', placeholder: '예) 아파트 매매, 상가 임대, 분양 등' },
+                { id: 'ind_2', label: '주요 취급 지역', placeholder: '예) 강남구, 분당, 판교 등' }
+            ]
+        },
+        '프랜차이즈': {
+            ceoLabel: '대표자 성함',
+            ceoPlaceholder: '예) 홍길동 대표',
+            fields: [
+                { id: 'ind_1', label: '브랜드명', placeholder: '예) 브랜드 이름' },
+                { id: 'ind_2', label: '가맹점 수 / 규모', placeholder: '예) 전국 50개 가맹점' }
+            ]
+        },
+        '제조업': {
+            ceoLabel: '대표자 성함',
+            ceoPlaceholder: '예) 홍길동 대표',
+            fields: [
+                { id: 'ind_1', label: '생산 품목', placeholder: '예) 전자부품, 식품, 화장품 등' },
+                { id: 'ind_2', label: 'B2B / B2C 구분', placeholder: '예) B2B 위주, B2C 병행 등' }
+            ]
+        },
+        'IT/스타트업': {
+            ceoLabel: '대표자 성함',
+            ceoPlaceholder: '예) 홍길동 CEO',
+            fields: [
+                { id: 'ind_1', label: '서비스 / 제품명', placeholder: '예) SaaS 플랫폼, 모바일앱 등' },
+                { id: 'ind_2', label: '타겟 고객', placeholder: '예) B2B 중소기업, MZ세대 등' }
+            ]
+        },
+        '일반회사': {
+            ceoLabel: '대표자 성함',
+            ceoPlaceholder: '예) 홍길동 대표',
+            fields: [
+                { id: 'ind_1', label: '사업 분야', placeholder: '예) 컨설팅, 무역, 유통 등' }
+            ]
+        },
+        '기타': {
+            ceoLabel: '대표자 성함',
+            ceoPlaceholder: '예) 홍길동 대표',
+            fields: [
+                { id: 'ind_1', label: '주요 사업 내용', placeholder: '사업 내용을 입력해주세요' }
+            ]
+        }
+    };
+
+    function onIndustryChange() {
+        const industry = document.getElementById('f_industry').value;
+        const container = document.getElementById('industryFields');
+        const ceoLabel = document.getElementById('ceoNameLabel');
+        const ceoInput = document.getElementById('f_ceoName');
+
+        const config = industryFieldConfig[industry];
+
+        if (!config) {
+            container.innerHTML = '';
+            ceoLabel.textContent = '대표자 성함';
+            ceoInput.placeholder = '예) 홍길동 대표';
+            return;
+        }
+
+        ceoLabel.textContent = config.ceoLabel;
+        ceoInput.placeholder = config.ceoPlaceholder;
+
+        container.innerHTML = config.fields.map(f =>
+            `<div class="intake-field full">
+                <label class="intake-field-label">${f.label}</label>
+                <input type="text" class="intake-input industry-dynamic" id="${f.id}" placeholder="${f.placeholder}">
+            </div>`
+        ).join('');
+
+        if (!isEditable) {
+            container.querySelectorAll('input').forEach(inp => inp.setAttribute('readonly', true));
+        }
+    }
+
     // ===== State =====
     let currentMode = '';
     let currentCompany = '';
@@ -1075,7 +1305,7 @@
                         <div class="admin-item-left">
                             <h4>${item.companyName}</h4>
                             <div class="meta">
-                                <span>${item.serviceName || '-'}</span>
+                                <span>${item.industry || '-'}</span>
                                 <span>${created.toLocaleDateString('ko-KR')}</span>
                                 <span class="view-badge ${editable ? 'editable' : 'locked'}">${editable ? '수정 가능' : '잠금'}</span>
                             </div>
@@ -1141,20 +1371,29 @@
     function clearForm() {
         document.getElementById('intakeForm').reset();
         document.querySelectorAll('#intakeForm input[type="checkbox"]').forEach(cb => cb.checked = false);
+        document.getElementById('industryFields').innerHTML = '';
+        document.getElementById('ceoNameLabel').textContent = '대표자 성함';
+        document.getElementById('f_ceoName').placeholder = '예) 홍길동 대표';
     }
 
     function collectFormData() {
         const currentMkt = [];
         document.querySelectorAll('input[name="currentMkt"]:checked').forEach(cb => currentMkt.push(cb.value));
 
+        const industryDynamic = {};
+        document.querySelectorAll('.industry-dynamic').forEach(inp => {
+            industryDynamic[inp.id] = inp.value;
+        });
+
         return {
             purpose: document.getElementById('f_purpose').value,
             companyName: currentCompany,
+            industry: document.getElementById('f_industry').value,
             region: document.getElementById('f_region').value,
             operDays: document.getElementById('f_operDays').value,
             operHours: document.getElementById('f_operHours').value,
             ceoName: document.getElementById('f_ceoName').value,
-            mainService: document.getElementById('f_mainService').value,
+            industryFields: industryDynamic,
             website: document.getElementById('f_website').value,
             blog: document.getElementById('f_blog').value,
             instagram: document.getElementById('f_instagram').value,
@@ -1170,11 +1409,11 @@
     function fillForm(data) {
         if (!data) return;
         document.getElementById('f_purpose').value = data.purpose || '';
+        document.getElementById('f_industry').value = data.industry || '';
         document.getElementById('f_region').value = data.region || '';
         document.getElementById('f_operDays').value = data.operDays || '';
         document.getElementById('f_operHours').value = data.operHours || '';
         document.getElementById('f_ceoName').value = data.ceoName || '';
-        document.getElementById('f_mainService').value = data.mainService || '';
         document.getElementById('f_website').value = data.website || '';
         document.getElementById('f_blog').value = data.blog || '';
         document.getElementById('f_instagram').value = data.instagram || '';
@@ -1184,6 +1423,16 @@
         document.getElementById('f_competitor').value = data.competitor || '';
         document.getElementById('f_startDate').value = data.startDate || '';
 
+        if (data.industry) {
+            onIndustryChange();
+            if (data.industryFields) {
+                Object.entries(data.industryFields).forEach(([id, val]) => {
+                    const el = document.getElementById(id);
+                    if (el) el.value = val;
+                });
+            }
+        }
+
         document.querySelectorAll('input[name="currentMkt"]').forEach(cb => {
             cb.checked = (data.currentMkt || []).includes(cb.value);
         });
@@ -1192,7 +1441,9 @@
     function setFormEditable(editable) {
         const inputs = document.querySelectorAll('#intakeForm .intake-input:not(#f_companyName)');
         inputs.forEach(input => {
-            if (editable) {
+            if (input.tagName === 'SELECT') {
+                input.disabled = !editable;
+            } else if (editable) {
                 input.removeAttribute('readonly');
                 input.removeAttribute('disabled');
             } else {
