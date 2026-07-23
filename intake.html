@@ -808,6 +808,10 @@
                                 <label class="intake-field-label" id="ceoNameLabel">대표자 성함</label>
                                 <input type="text" class="intake-input" id="f_ceoName" placeholder="예) 홍길동 대표">
                             </div>
+                            <div class="intake-field">
+                                <label class="intake-field-label">연락 가능한 연락처</label>
+                                <input type="tel" class="intake-input" id="f_phone" placeholder="예) 010-1234-5678">
+                            </div>
                         </div>
 
                         <!-- 업종별 동적 필드 -->
@@ -1393,6 +1397,7 @@
             operDays: document.getElementById('f_operDays').value,
             operHours: document.getElementById('f_operHours').value,
             ceoName: document.getElementById('f_ceoName').value,
+            phone: document.getElementById('f_phone').value,
             industryFields: industryDynamic,
             website: document.getElementById('f_website').value,
             blog: document.getElementById('f_blog').value,
@@ -1414,6 +1419,7 @@
         document.getElementById('f_operDays').value = data.operDays || '';
         document.getElementById('f_operHours').value = data.operHours || '';
         document.getElementById('f_ceoName').value = data.ceoName || '';
+        document.getElementById('f_phone').value = data.phone || '';
         document.getElementById('f_website').value = data.website || '';
         document.getElementById('f_blog').value = data.blog || '';
         document.getElementById('f_instagram').value = data.instagram || '';
