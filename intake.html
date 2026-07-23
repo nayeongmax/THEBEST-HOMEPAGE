@@ -1,0 +1,1284 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
+    <title>기본정보 및 안내사항 | 더베스트마케팅</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;600;700;800;900&family=Poppins:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
+    <style>
+        .intake-wrap {
+            min-height: 100vh;
+            padding: 100px 0 60px;
+            background: #FAFAF8;
+        }
+        .intake-container {
+            max-width: 780px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        /* Access Screen */
+        .access-screen {
+            max-width: 520px;
+            margin: 0 auto;
+            text-align: center;
+            padding-top: 40px;
+        }
+        .access-logo {
+            font-size: 1.6rem;
+            font-weight: 900;
+            color: var(--dark);
+            margin-bottom: 8px;
+        }
+        .access-logo span { color: var(--primary); }
+        .access-title {
+            font-size: 1.8rem;
+            font-weight: 800;
+            color: var(--dark);
+            margin-bottom: 8px;
+        }
+        .access-desc {
+            font-size: 0.95rem;
+            color: var(--text-light);
+            margin-bottom: 36px;
+            line-height: 1.6;
+        }
+        .access-cards {
+            display: flex;
+            flex-direction: column;
+            gap: 14px;
+        }
+        .access-card {
+            background: #fff;
+            border: 1.5px solid var(--border);
+            border-radius: 16px;
+            padding: 24px;
+            cursor: pointer;
+            transition: var(--transition);
+            display: flex;
+            align-items: center;
+            gap: 16px;
+            text-align: left;
+        }
+        .access-card:hover {
+            border-color: var(--primary);
+            box-shadow: var(--shadow-hover);
+            transform: translateY(-2px);
+        }
+        .access-card-icon {
+            width: 48px;
+            height: 48px;
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.4rem;
+            flex-shrink: 0;
+        }
+        .access-card-icon.new { background: var(--primary); color: #fff; }
+        .access-card-icon.edit { background: var(--bg-warm); color: var(--primary); }
+        .access-card-icon.admin { background: var(--dark); color: var(--primary); }
+        .access-card h4 {
+            font-size: 1rem;
+            font-weight: 700;
+            color: var(--dark);
+            margin-bottom: 2px;
+        }
+        .access-card p {
+            font-size: 0.82rem;
+            color: var(--text-muted);
+        }
+
+        /* Login Form */
+        .login-panel {
+            display: none;
+            margin-top: 20px;
+            background: #fff;
+            border: 1.5px solid var(--border);
+            border-radius: 16px;
+            padding: 28px;
+            text-align: left;
+        }
+        .login-panel.active { display: block; }
+        .login-panel h4 {
+            font-size: 1rem;
+            font-weight: 700;
+            margin-bottom: 16px;
+            color: var(--dark);
+        }
+        .login-row {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 12px;
+        }
+        .login-row input {
+            flex: 1;
+            padding: 10px 14px;
+            border: 1.5px solid var(--border);
+            border-radius: 10px;
+            font-family: var(--font);
+            font-size: 0.9rem;
+            outline: none;
+            transition: var(--transition);
+        }
+        .login-row input:focus { border-color: var(--primary); }
+        .login-btn {
+            padding: 10px 24px;
+            background: var(--primary);
+            color: #fff;
+            border: none;
+            border-radius: 10px;
+            font-family: var(--font);
+            font-size: 0.9rem;
+            font-weight: 700;
+            cursor: pointer;
+            transition: var(--transition);
+            white-space: nowrap;
+        }
+        .login-btn:hover { background: var(--primary-dark); }
+        .login-btn.dark { background: var(--dark); }
+        .login-btn.dark:hover { background: #333; }
+
+        /* Intake Header */
+        .intake-header {
+            text-align: center;
+            margin-bottom: 36px;
+            padding-top: 20px;
+        }
+        .intake-header h1 {
+            font-size: 1.6rem;
+            font-weight: 800;
+            color: var(--dark);
+            margin-bottom: 12px;
+        }
+        .intake-intro {
+            background: #fff;
+            border: 1.5px solid var(--border);
+            border-radius: 16px;
+            padding: 24px 28px;
+            font-size: 0.92rem;
+            color: var(--text-light);
+            line-height: 1.8;
+            text-align: left;
+        }
+        .intake-intro strong { color: var(--dark); }
+
+        /* Form Sections */
+        .intake-section {
+            background: #fff;
+            border: 1.5px solid var(--border);
+            border-radius: 16px;
+            padding: 32px 28px;
+            margin-bottom: 20px;
+        }
+        .intake-section-title {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-size: 1.1rem;
+            font-weight: 800;
+            color: var(--dark);
+            margin-bottom: 24px;
+            padding-bottom: 14px;
+            border-bottom: 2px solid var(--bg-warm);
+        }
+        .intake-section-title .check-icon {
+            width: 26px;
+            height: 26px;
+            background: var(--primary);
+            border-radius: 6px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #fff;
+            font-size: 0.8rem;
+            font-weight: 900;
+        }
+        .intake-q {
+            margin-bottom: 28px;
+        }
+        .intake-q:last-child { margin-bottom: 0; }
+        .intake-q-label {
+            font-size: 0.95rem;
+            font-weight: 700;
+            color: var(--dark);
+            margin-bottom: 6px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        .intake-q-label .q-num {
+            background: var(--primary);
+            color: #fff;
+            font-size: 0.72rem;
+            font-weight: 800;
+            width: 22px;
+            height: 22px;
+            border-radius: 50%;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+        }
+        .intake-q-hint {
+            font-size: 0.82rem;
+            color: var(--text-muted);
+            margin-bottom: 10px;
+            line-height: 1.6;
+        }
+        .intake-input {
+            width: 100%;
+            padding: 11px 16px;
+            border: 1.5px solid var(--border);
+            border-radius: 10px;
+            font-family: var(--font);
+            font-size: 0.9rem;
+            color: var(--text);
+            outline: none;
+            transition: var(--transition);
+            background: #FAFAF8;
+        }
+        .intake-input:focus {
+            border-color: var(--primary);
+            background: #fff;
+        }
+        .intake-input::placeholder { color: #bbb; }
+        textarea.intake-input {
+            min-height: 100px;
+            resize: vertical;
+            line-height: 1.7;
+        }
+        .intake-input[readonly] {
+            background: #F0EDE6;
+            color: #666;
+            cursor: default;
+        }
+        .intake-field-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 12px;
+        }
+        .intake-field {
+            display: flex;
+            flex-direction: column;
+            gap: 4px;
+        }
+        .intake-field.full { grid-column: 1 / -1; }
+        .intake-field-label {
+            font-size: 0.82rem;
+            font-weight: 600;
+            color: var(--text-light);
+        }
+        .intake-field-label::before {
+            content: '- ';
+            color: var(--primary);
+        }
+
+        /* Checkboxes */
+        .intake-check-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+            gap: 8px;
+        }
+        .intake-check-item {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            padding: 10px 14px;
+            background: #FAFAF8;
+            border: 1.5px solid var(--border);
+            border-radius: 10px;
+            cursor: pointer;
+            transition: var(--transition);
+            font-size: 0.88rem;
+            color: var(--text-light);
+        }
+        .intake-check-item:hover { border-color: var(--primary-light); }
+        .intake-check-item input[type="checkbox"] { display: none; }
+        .intake-check-item .custom-check {
+            width: 18px;
+            height: 18px;
+            border: 2px solid var(--border);
+            border-radius: 4px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+            transition: var(--transition);
+            font-size: 0.65rem;
+            color: transparent;
+        }
+        .intake-check-item input:checked ~ .custom-check {
+            background: var(--primary);
+            border-color: var(--primary);
+            color: #fff;
+        }
+        .intake-check-item input:checked ~ .check-text { color: var(--dark); font-weight: 600; }
+
+        /* Guide Section */
+        .guide-section {
+            background: #fff;
+            border: 1.5px solid var(--border);
+            border-radius: 16px;
+            padding: 32px 28px;
+            margin-bottom: 20px;
+        }
+        .guide-item {
+            display: flex;
+            gap: 14px;
+            margin-bottom: 20px;
+            align-items: flex-start;
+        }
+        .guide-item:last-child { margin-bottom: 0; }
+        .guide-num {
+            width: 28px;
+            height: 28px;
+            background: var(--bg-warm);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.78rem;
+            font-weight: 800;
+            color: var(--primary-dark);
+            flex-shrink: 0;
+        }
+        .guide-text h4 {
+            font-size: 0.92rem;
+            font-weight: 700;
+            color: var(--dark);
+            margin-bottom: 4px;
+        }
+        .guide-text p {
+            font-size: 0.84rem;
+            color: var(--text-muted);
+            line-height: 1.6;
+        }
+
+        /* Promo Banner */
+        .promo-banner {
+            background: linear-gradient(135deg, var(--dark) 0%, #2A2A2A 100%);
+            border-radius: 16px;
+            padding: 28px 32px;
+            margin-bottom: 20px;
+            text-align: center;
+        }
+        .promo-banner p {
+            font-size: 0.92rem;
+            color: #ccc;
+            line-height: 1.7;
+            margin-bottom: 8px;
+        }
+        .promo-banner strong { color: var(--primary); }
+        .promo-banner .discount { color: #FF6B6B; font-weight: 800; font-size: 1.1rem; }
+        .promo-banner a {
+            display: inline-block;
+            margin-top: 12px;
+            padding: 10px 28px;
+            background: var(--primary);
+            color: #fff;
+            border-radius: 100px;
+            font-size: 0.85rem;
+            font-weight: 700;
+            transition: var(--transition);
+        }
+        .promo-banner a:hover { background: var(--primary-dark); }
+
+        /* Submit Area */
+        .submit-area {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+        .submit-btn {
+            padding: 14px 60px;
+            background: var(--primary);
+            color: #fff;
+            border: none;
+            border-radius: 100px;
+            font-family: var(--font);
+            font-size: 1rem;
+            font-weight: 800;
+            cursor: pointer;
+            transition: var(--transition);
+            box-shadow: 0 4px 16px rgba(200,169,106,0.3);
+        }
+        .submit-btn:hover { background: var(--primary-dark); transform: translateY(-2px); box-shadow: 0 8px 24px rgba(200,169,106,0.4); }
+        .submit-btn:disabled { opacity: 0.5; cursor: default; transform: none; box-shadow: none; }
+        .edit-deadline {
+            display: inline-block;
+            margin-top: 12px;
+            padding: 8px 20px;
+            background: #FFF3E0;
+            border-radius: 100px;
+            font-size: 0.82rem;
+            font-weight: 600;
+            color: #E65100;
+        }
+        .locked-notice {
+            display: inline-block;
+            margin-top: 12px;
+            padding: 8px 20px;
+            background: #FFEBEE;
+            border-radius: 100px;
+            font-size: 0.82rem;
+            font-weight: 600;
+            color: #C62828;
+        }
+        .back-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            padding: 8px 20px;
+            background: transparent;
+            border: 1.5px solid var(--border);
+            border-radius: 100px;
+            font-family: var(--font);
+            font-size: 0.85rem;
+            font-weight: 600;
+            color: var(--text-light);
+            cursor: pointer;
+            transition: var(--transition);
+            margin-bottom: 20px;
+        }
+        .back-btn:hover { border-color: var(--primary); color: var(--primary); }
+
+        /* Admin Panel */
+        .admin-panel {
+            padding-top: 20px;
+        }
+        .admin-title {
+            font-size: 1.4rem;
+            font-weight: 800;
+            color: var(--dark);
+            margin-bottom: 20px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        .admin-title .badge {
+            background: var(--primary);
+            color: #fff;
+            font-size: 0.72rem;
+            font-weight: 700;
+            padding: 4px 12px;
+            border-radius: 100px;
+        }
+        .admin-list {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+        .admin-item {
+            background: #fff;
+            border: 1.5px solid var(--border);
+            border-radius: 14px;
+            padding: 18px 22px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            cursor: pointer;
+            transition: var(--transition);
+        }
+        .admin-item:hover {
+            border-color: var(--primary);
+            box-shadow: var(--shadow);
+        }
+        .admin-item-left h4 {
+            font-size: 0.95rem;
+            font-weight: 700;
+            color: var(--dark);
+            margin-bottom: 4px;
+        }
+        .admin-item-left .meta {
+            font-size: 0.78rem;
+            color: var(--text-muted);
+            display: flex;
+            gap: 12px;
+        }
+        .admin-item-right {
+            color: var(--primary);
+            font-size: 0.85rem;
+            font-weight: 600;
+        }
+        .admin-empty {
+            text-align: center;
+            padding: 60px 20px;
+            color: var(--text-muted);
+            font-size: 0.95rem;
+        }
+        .view-badge {
+            display: inline-block;
+            padding: 3px 10px;
+            border-radius: 100px;
+            font-size: 0.72rem;
+            font-weight: 700;
+        }
+        .view-badge.editable { background: #E8F5E9; color: #2E7D32; }
+        .view-badge.locked { background: #FFEBEE; color: #C62828; }
+
+        /* Custom Modal */
+        .intake-modal-overlay {
+            position: fixed;
+            top: 0; left: 0;
+            width: 100%; height: 100%;
+            background: rgba(0,0,0,0.45);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 99999;
+            backdrop-filter: blur(4px);
+        }
+        .intake-modal {
+            background: #fff;
+            border-radius: 20px;
+            padding: 36px 40px;
+            max-width: 420px;
+            width: 90%;
+            text-align: center;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.2);
+        }
+        .intake-modal h3 {
+            font-size: 1.1rem;
+            font-weight: 800;
+            color: var(--dark);
+            margin-bottom: 8px;
+        }
+        .intake-modal p {
+            font-size: 0.9rem;
+            color: var(--text-light);
+            line-height: 1.6;
+            margin-bottom: 20px;
+        }
+        .intake-modal button {
+            padding: 10px 32px;
+            border: none;
+            border-radius: 10px;
+            font-family: var(--font);
+            font-size: 0.9rem;
+            font-weight: 700;
+            cursor: pointer;
+        }
+        .intake-modal .modal-ok {
+            background: var(--primary);
+            color: #fff;
+        }
+
+        /* View Mode */
+        .view-value {
+            padding: 11px 16px;
+            background: #F5F3EE;
+            border: 1.5px solid var(--border);
+            border-radius: 10px;
+            font-size: 0.9rem;
+            color: var(--text);
+            line-height: 1.7;
+            min-height: 42px;
+            white-space: pre-wrap;
+        }
+        .view-value:empty::after {
+            content: '-';
+            color: #bbb;
+        }
+        .view-checks {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 6px;
+        }
+        .view-check-tag {
+            padding: 6px 14px;
+            background: var(--bg-warm);
+            border-radius: 100px;
+            font-size: 0.82rem;
+            font-weight: 600;
+            color: var(--primary-dark);
+        }
+
+        /* Password Setup */
+        .pw-setup {
+            background: #FFF8E1;
+            border: 1.5px solid #FFE082;
+            border-radius: 12px;
+            padding: 16px 20px;
+            margin-bottom: 20px;
+        }
+        .pw-setup h4 {
+            font-size: 0.9rem;
+            font-weight: 700;
+            color: #F57F17;
+            margin-bottom: 8px;
+        }
+        .pw-setup p {
+            font-size: 0.82rem;
+            color: #8D6E00;
+            margin-bottom: 10px;
+            line-height: 1.5;
+        }
+        .pw-setup input {
+            width: 100%;
+            max-width: 300px;
+            padding: 10px 14px;
+            border: 1.5px solid #FFE082;
+            border-radius: 10px;
+            font-family: var(--font);
+            font-size: 0.9rem;
+            outline: none;
+        }
+        .pw-setup input:focus { border-color: var(--primary); }
+
+        @media (max-width: 768px) {
+            .intake-wrap { padding: 80px 0 40px; }
+            .intake-section, .guide-section { padding: 24px 18px; }
+            .intake-field-grid { grid-template-columns: 1fr; }
+            .intake-check-grid { grid-template-columns: 1fr; }
+            .access-title { font-size: 1.4rem; }
+            .intake-header h1 { font-size: 1.3rem; }
+            .login-row { flex-direction: column; }
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="navbar scrolled" id="navbar">
+        <div class="nav-container">
+            <a href="index.html" class="logo">THE<span class="logo-bold">BEST</span></a>
+            <ul class="nav-links" id="navLinks">
+                <li><a href="index.html#geo" style="position:relative;">AI답변노출<span class="partner-badge" style="background:linear-gradient(135deg,#C8A96A,#E8D5A0);color:#111;">NEW</span></a></li>
+                <li><a href="index.html#services">서비스</a></li>
+                <li><a href="index.html#packages">패키지</a></li>
+                <li><a href="report.html" style="position:relative;">결과보고서<span class="partner-badge">제휴사 전용</span></a></li>
+            </ul>
+            <button class="mobile-menu" id="mobileMenu" aria-label="메뉴 열기">
+                <span></span><span></span><span></span>
+            </button>
+        </div>
+    </nav>
+
+    <div class="intake-wrap">
+        <div class="intake-container">
+
+            <!-- ===== ACCESS SCREEN ===== -->
+            <div id="accessScreen">
+                <div class="access-screen">
+                    <div class="access-logo">THE<span>BEST</span></div>
+                    <h2 class="access-title">기본정보 및 안내사항</h2>
+                    <p class="access-desc">더베스트마케팅 사업파트너로 함께 해주셔서 감사합니다.<br>작업 시작 전 아래 내용을 작성하여 전달 부탁드립니다.</p>
+
+                    <div class="access-cards">
+                        <div class="access-card" onclick="showLoginPanel('new')">
+                            <div class="access-card-icon new">&#9998;</div>
+                            <div>
+                                <h4>새로 작성하기</h4>
+                                <p>기본정보를 처음 작성합니다</p>
+                            </div>
+                        </div>
+                        <div class="access-card" onclick="showLoginPanel('edit')">
+                            <div class="access-card-icon edit">&#128269;</div>
+                            <div>
+                                <h4>작성한 정보 조회 / 수정</h4>
+                                <p>기존 정보를 확인하거나 수정합니다 (3일 이내)</p>
+                            </div>
+                        </div>
+                        <div class="access-card" onclick="showLoginPanel('admin')">
+                            <div class="access-card-icon admin">&#128274;</div>
+                            <div>
+                                <h4>운영자 열람</h4>
+                                <p>전체 업체 정보를 조회합니다</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- New Panel -->
+                    <div class="login-panel" id="panelNew">
+                        <h4>&#9998; 새로 작성하기</h4>
+                        <div class="login-row">
+                            <input type="text" id="newCompany" placeholder="업체명을 입력하세요">
+                        </div>
+                        <div class="login-row">
+                            <input type="password" id="newPassword" placeholder="비밀번호 설정 (나중에 조회/수정 시 필요)">
+                        </div>
+                        <button class="login-btn" onclick="startNewForm()">작성 시작</button>
+                    </div>
+
+                    <!-- Edit Panel -->
+                    <div class="login-panel" id="panelEdit">
+                        <h4>&#128269; 조회 / 수정</h4>
+                        <div class="login-row">
+                            <input type="text" id="editCompany" placeholder="업체명">
+                            <input type="password" id="editPassword" placeholder="비밀번호">
+                        </div>
+                        <button class="login-btn" onclick="loadExisting()">조회하기</button>
+                    </div>
+
+                    <!-- Admin Panel -->
+                    <div class="login-panel" id="panelAdmin">
+                        <h4>&#128274; 운영자 로그인</h4>
+                        <div class="login-row">
+                            <input type="password" id="adminPassword" placeholder="운영자 비밀번호">
+                        </div>
+                        <button class="login-btn dark" onclick="adminLogin()">로그인</button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- ===== FORM SCREEN ===== -->
+            <div id="formScreen" style="display:none">
+                <button class="back-btn" onclick="goBack()">&#8592; 돌아가기</button>
+
+                <div class="intake-header">
+                    <h1>기본정보 및 안내사항</h1>
+                    <div class="intake-intro">
+                        <strong>더베스트마케팅</strong> 사업파트너로 함께 해주셔서 감사합니다!<br>
+                        작업 시작 전 아래 내용을 작성하여 전달 부탁드립니다.
+                    </div>
+                </div>
+
+                <!-- Password Setup (for new) -->
+                <div class="pw-setup" id="pwSetupArea" style="display:none">
+                    <h4>&#128272; 비밀번호 안내</h4>
+                    <p>설정하신 비밀번호로 3일 이내 조회 및 수정이 가능합니다.<br>비밀번호를 꼭 기억해주세요.</p>
+                </div>
+
+                <form id="intakeForm" onsubmit="return false;">
+
+                <!-- Section 1: 기본 정보 -->
+                <div class="intake-section">
+                    <div class="intake-section-title">
+                        <span class="check-icon">&#10003;</span> 기본 정보
+                    </div>
+
+                    <div class="intake-q">
+                        <div class="intake-q-label"><span class="q-num">1</span> 서비스 이용 목적</div>
+                        <div class="intake-q-hint">EX) 신규 고객 유입 / 예약 및 상담 문의 증가 / 브랜드 인지도 향상 / 특정 키워드 검색 노출 / 홈페이지 유입 증가</div>
+                        <textarea class="intake-input" id="f_purpose" placeholder="서비스 이용 목적을 작성해주세요"></textarea>
+                    </div>
+
+                    <div class="intake-q">
+                        <div class="intake-q-label"><span class="q-num">2</span> 사업체 정보</div>
+                        <div class="intake-field-grid">
+                            <div class="intake-field">
+                                <label class="intake-field-label">업체명</label>
+                                <input type="text" class="intake-input" id="f_companyName" readonly>
+                            </div>
+                            <div class="intake-field">
+                                <label class="intake-field-label">관할지역</label>
+                                <input type="text" class="intake-input" id="f_region" placeholder="예) 서울 강남구">
+                            </div>
+                            <div class="intake-field">
+                                <label class="intake-field-label">운영요일</label>
+                                <input type="text" class="intake-input" id="f_operDays" placeholder="예) 월~금 / 월~토">
+                            </div>
+                            <div class="intake-field">
+                                <label class="intake-field-label">운영시간</label>
+                                <input type="text" class="intake-input" id="f_operHours" placeholder="예) 09:00 ~ 18:00">
+                            </div>
+                            <div class="intake-field">
+                                <label class="intake-field-label">대표자 성함 및 구성</label>
+                                <input type="text" class="intake-input" id="f_ceoName" placeholder="예) 홍길동 대표">
+                            </div>
+                            <div class="intake-field">
+                                <label class="intake-field-label">대표 진료과목 또는 서비스</label>
+                                <input type="text" class="intake-input" id="f_mainService" placeholder="예) 내과, 이탈리안 레스토랑 등">
+                            </div>
+                            <div class="intake-field full">
+                                <label class="intake-field-label">홈페이지</label>
+                                <input type="text" class="intake-input" id="f_website" placeholder="https://">
+                            </div>
+                            <div class="intake-field full">
+                                <label class="intake-field-label">블로그</label>
+                                <input type="text" class="intake-input" id="f_blog" placeholder="블로그 URL">
+                            </div>
+                            <div class="intake-field full">
+                                <label class="intake-field-label">인스타그램</label>
+                                <input type="text" class="intake-input" id="f_instagram" placeholder="인스타그램 URL 또는 @계정">
+                            </div>
+                            <div class="intake-field full">
+                                <label class="intake-field-label">유튜브</label>
+                                <input type="text" class="intake-input" id="f_youtube" placeholder="유튜브 채널 URL">
+                            </div>
+                            <div class="intake-field full">
+                                <label class="intake-field-label">기타 운영 중인 SNS</label>
+                                <input type="text" class="intake-input" id="f_otherSns" placeholder="예) 틱톡, 밴드, 카카오채널 등">
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="intake-q">
+                        <div class="intake-q-label"><span class="q-num">3</span> 원하는 키워드</div>
+                        <div class="intake-q-hint">노출을 원하는 키워드를 작성해주세요. 쉼표(,)로 구분해주시면 됩니다.<br>EX) 만성기침, 기관지확장증, 비결핵항산균, 강남맛집, 강남카페 등</div>
+                        <textarea class="intake-input" id="f_keywords" placeholder="키워드를 입력해주세요"></textarea>
+                    </div>
+
+                    <div class="intake-q">
+                        <div class="intake-q-label"><span class="q-num">4</span> 현재 진행 중인 마케팅</div>
+                        <div class="intake-q-hint">현재 진행 중이거나 경험이 있는 마케팅을 선택해주세요.</div>
+                        <div class="intake-check-grid">
+                            <label class="intake-check-item">
+                                <input type="checkbox" name="currentMkt" value="AI답변 노출 (GEO)">
+                                <span class="custom-check">&#10003;</span>
+                                <span class="check-text">AI답변 노출 (GEO)</span>
+                            </label>
+                            <label class="intake-check-item">
+                                <input type="checkbox" name="currentMkt" value="네이버 블로그">
+                                <span class="custom-check">&#10003;</span>
+                                <span class="check-text">네이버 블로그</span>
+                            </label>
+                            <label class="intake-check-item">
+                                <input type="checkbox" name="currentMkt" value="플레이스">
+                                <span class="custom-check">&#10003;</span>
+                                <span class="check-text">플레이스</span>
+                            </label>
+                            <label class="intake-check-item">
+                                <input type="checkbox" name="currentMkt" value="플레이스 SEO">
+                                <span class="custom-check">&#10003;</span>
+                                <span class="check-text">플레이스 SEO</span>
+                            </label>
+                            <label class="intake-check-item">
+                                <input type="checkbox" name="currentMkt" value="유튜브">
+                                <span class="custom-check">&#10003;</span>
+                                <span class="check-text">유튜브</span>
+                            </label>
+                            <label class="intake-check-item">
+                                <input type="checkbox" name="currentMkt" value="인스타그램">
+                                <span class="custom-check">&#10003;</span>
+                                <span class="check-text">인스타그램</span>
+                            </label>
+                            <label class="intake-check-item">
+                                <input type="checkbox" name="currentMkt" value="체험단">
+                                <span class="custom-check">&#10003;</span>
+                                <span class="check-text">체험단</span>
+                            </label>
+                            <label class="intake-check-item">
+                                <input type="checkbox" name="currentMkt" value="광고 집행 경험 없음">
+                                <span class="custom-check">&#10003;</span>
+                                <span class="check-text">광고 집행 경험 없음</span>
+                            </label>
+                        </div>
+                    </div>
+
+                    <div class="intake-q">
+                        <div class="intake-q-label"><span class="q-num">5</span> 경쟁사 또는 참고 채널</div>
+                        <div class="intake-q-hint">참고하고 싶은 경쟁 업체나 채널(카페, 블로그 등)이 있다면 작성해주세요.</div>
+                        <textarea class="intake-input" id="f_competitor" placeholder="경쟁사 또는 참고 채널을 작성해주세요"></textarea>
+                    </div>
+
+                    <div class="intake-q">
+                        <div class="intake-q-label"><span class="q-num">6</span> 작업 시작 희망일</div>
+                        <input type="date" class="intake-input" id="f_startDate" style="max-width:280px;">
+                    </div>
+                </div>
+
+                <!-- Section 2: 작업 안내사항 -->
+                <div class="guide-section">
+                    <div class="intake-section-title">
+                        <span class="check-icon">&#10003;</span> 작업 안내사항
+                    </div>
+
+                    <div class="guide-item">
+                        <div class="guide-num">1</div>
+                        <div class="guide-text">
+                            <h4>작업 시작 후 키워드 및 방향 변경은 최소화해 주세요.</h4>
+                            <p>작업 중 키워드나 홍보 방향이 자주 변경될 경우 작업결과에 영향을 줄 수 있습니다.</p>
+                        </div>
+                    </div>
+                    <div class="guide-item">
+                        <div class="guide-num">2</div>
+                        <div class="guide-text">
+                            <h4>결과는 자연스럽게 반영됩니다.</h4>
+                            <p>카페 활성화는 실계정으로 활동하며 검색 반영 및 유입은 일정 시간이 필요합니다.</p>
+                        </div>
+                    </div>
+                    <div class="guide-item">
+                        <div class="guide-num">3</div>
+                        <div class="guide-text">
+                            <h4>작업 중 요청사항은 언제든 말씀해 주세요.</h4>
+                            <p>추가 요청이나 수정이 필요한 경우 가능한 범위 내에서 최대한 반영해드립니다.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Promo Banner -->
+                <div class="promo-banner">
+                    <p>여러 플랫폼(<strong>AI답변노출</strong>, 블로그, 유튜브, 릴스제작 등) 마케팅을 하실 경우<br>추가 상품의 경우 <span class="discount">20% 할인</span>을 진행해드리고 있습니다!</p>
+                    <a href="index.html">더베스트 마케팅 홈페이지 접속 &#8594;</a>
+                </div>
+
+                <!-- Submit -->
+                <div class="submit-area">
+                    <button type="button" class="submit-btn" id="submitBtn" onclick="submitIntake()">제출하기</button>
+                    <div id="deadlineInfo"></div>
+                </div>
+
+                </form>
+            </div>
+
+            <!-- ===== ADMIN SCREEN ===== -->
+            <div id="adminScreen" style="display:none">
+                <button class="back-btn" onclick="goBack()">&#8592; 돌아가기</button>
+                <div class="admin-panel">
+                    <div class="admin-title">업체 기본정보 관리 <span class="badge" id="adminCount">0건</span></div>
+                    <div class="admin-list" id="adminList"></div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+    <script>
+    // ===== State =====
+    let currentMode = '';
+    let currentCompany = '';
+    let currentPassword = '';
+    let isEditable = true;
+    let isAdmin = false;
+    const ADMIN_PASSWORD = 'thebest2026';
+
+    // ===== Custom Modal =====
+    function showModal(title, msg, callback) {
+        const overlay = document.createElement('div');
+        overlay.className = 'intake-modal-overlay';
+        overlay.innerHTML = `
+            <div class="intake-modal">
+                <h3>${title}</h3>
+                <p>${msg}</p>
+                <button class="modal-ok" onclick="this.closest('.intake-modal-overlay').remove();${callback ? callback + '()' : ''}">확인</button>
+            </div>
+        `;
+        document.body.appendChild(overlay);
+    }
+
+    // ===== Navigation =====
+    function showLoginPanel(type) {
+        document.querySelectorAll('.login-panel').forEach(p => p.classList.remove('active'));
+        const panel = document.getElementById('panel' + type.charAt(0).toUpperCase() + type.slice(1));
+        if (panel.classList.contains('active')) {
+            panel.classList.remove('active');
+        } else {
+            panel.classList.add('active');
+            const firstInput = panel.querySelector('input');
+            if (firstInput) setTimeout(() => firstInput.focus(), 100);
+        }
+    }
+
+    function goBack() {
+        document.getElementById('formScreen').style.display = 'none';
+        document.getElementById('adminScreen').style.display = 'none';
+        document.getElementById('accessScreen').style.display = '';
+        currentMode = '';
+        currentCompany = '';
+        currentPassword = '';
+        isAdmin = false;
+    }
+
+    // ===== New Form =====
+    function startNewForm() {
+        const company = document.getElementById('newCompany').value.trim();
+        const pw = document.getElementById('newPassword').value.trim();
+        if (!company) { showModal('알림', '업체명을 입력해주세요.'); return; }
+        if (!pw || pw.length < 4) { showModal('알림', '비밀번호를 4자 이상 설정해주세요.'); return; }
+
+        currentMode = 'new';
+        currentCompany = company;
+        currentPassword = pw;
+        isEditable = true;
+
+        clearForm();
+        document.getElementById('f_companyName').value = company;
+        document.getElementById('pwSetupArea').style.display = '';
+        document.getElementById('submitBtn').textContent = '제출하기';
+        document.getElementById('submitBtn').disabled = false;
+        document.getElementById('deadlineInfo').innerHTML = '';
+        setFormEditable(true);
+
+        document.getElementById('accessScreen').style.display = 'none';
+        document.getElementById('formScreen').style.display = '';
+        window.scrollTo(0, 0);
+    }
+
+    // ===== Load Existing =====
+    async function loadExisting() {
+        const company = document.getElementById('editCompany').value.trim();
+        const pw = document.getElementById('editPassword').value.trim();
+        if (!company || !pw) { showModal('알림', '업체명과 비밀번호를 입력해주세요.'); return; }
+
+        try {
+            const res = await fetch(`/.netlify/functions/load-intake?company=${encodeURIComponent(company)}&password=${encodeURIComponent(pw)}`);
+            const json = await res.json();
+
+            if (!res.ok) {
+                showModal('오류', json.error || '조회에 실패했습니다.');
+                return;
+            }
+
+            currentMode = 'edit';
+            currentCompany = company;
+            currentPassword = pw;
+            isEditable = json.editable;
+
+            fillForm(json.data);
+            document.getElementById('f_companyName').value = company;
+            document.getElementById('pwSetupArea').style.display = 'none';
+
+            if (isEditable) {
+                document.getElementById('submitBtn').textContent = '수정 저장하기';
+                document.getElementById('submitBtn').disabled = false;
+                const created = new Date(json.createdAt);
+                const deadline = new Date(created.getTime() + 3 * 24 * 60 * 60 * 1000);
+                document.getElementById('deadlineInfo').innerHTML = `<div class="edit-deadline">&#9200; 수정 가능 기한: ${deadline.toLocaleDateString('ko-KR')} ${deadline.toLocaleTimeString('ko-KR', {hour:'2-digit', minute:'2-digit'})}까지</div>`;
+                setFormEditable(true);
+            } else {
+                document.getElementById('submitBtn').textContent = '수정 기간 만료';
+                document.getElementById('submitBtn').disabled = true;
+                document.getElementById('deadlineInfo').innerHTML = '<div class="locked-notice">&#128274; 수정 기간(3일)이 만료되어 조회만 가능합니다.</div>';
+                setFormEditable(false);
+            }
+
+            document.getElementById('accessScreen').style.display = 'none';
+            document.getElementById('formScreen').style.display = '';
+            window.scrollTo(0, 0);
+        } catch (e) {
+            showModal('오류', '서버 연결에 실패했습니다.');
+        }
+    }
+
+    // ===== Admin =====
+    async function adminLogin() {
+        const pw = document.getElementById('adminPassword').value.trim();
+        if (pw !== ADMIN_PASSWORD) { showModal('오류', '운영자 비밀번호가 일치하지 않습니다.'); return; }
+
+        isAdmin = true;
+
+        try {
+            const res = await fetch(`/.netlify/functions/list-intakes?admin=${encodeURIComponent(pw)}`);
+            const list = await res.json();
+
+            if (!res.ok) {
+                showModal('오류', list.error || '목록 조회에 실패했습니다.');
+                return;
+            }
+
+            document.getElementById('adminCount').textContent = list.length + '건';
+            const container = document.getElementById('adminList');
+
+            if (list.length === 0) {
+                container.innerHTML = '<div class="admin-empty">등록된 업체 정보가 없습니다.</div>';
+            } else {
+                container.innerHTML = list.map(item => {
+                    const created = new Date(item.createdAt);
+                    const diffDays = (new Date() - created) / (1000 * 60 * 60 * 24);
+                    const editable = diffDays <= 3;
+                    return `<div class="admin-item" onclick="adminViewItem('${item.companyName.replace(/'/g, "\\'")}')">
+                        <div class="admin-item-left">
+                            <h4>${item.companyName}</h4>
+                            <div class="meta">
+                                <span>${item.serviceName || '-'}</span>
+                                <span>${created.toLocaleDateString('ko-KR')}</span>
+                                <span class="view-badge ${editable ? 'editable' : 'locked'}">${editable ? '수정 가능' : '잠금'}</span>
+                            </div>
+                        </div>
+                        <div class="admin-item-right">상세 보기 &#8594;</div>
+                    </div>`;
+                }).join('');
+            }
+
+            document.getElementById('accessScreen').style.display = 'none';
+            document.getElementById('adminScreen').style.display = '';
+            window.scrollTo(0, 0);
+        } catch (e) {
+            showModal('오류', '서버 연결에 실패했습니다.');
+        }
+    }
+
+    async function adminViewItem(companyName) {
+        try {
+            const res = await fetch(`/.netlify/functions/load-intake?company=${encodeURIComponent(companyName)}&admin=${encodeURIComponent(ADMIN_PASSWORD)}`);
+            const json = await res.json();
+
+            if (!res.ok) {
+                showModal('오류', json.error || '조회에 실패했습니다.');
+                return;
+            }
+
+            currentMode = 'admin-view';
+            currentCompany = companyName;
+            isEditable = false;
+
+            fillForm(json.data);
+            document.getElementById('f_companyName').value = companyName;
+            document.getElementById('pwSetupArea').style.display = 'none';
+            document.getElementById('submitBtn').style.display = 'none';
+
+            const created = new Date(json.createdAt);
+            const updated = new Date(json.updatedAt);
+            document.getElementById('deadlineInfo').innerHTML = `
+                <div style="font-size:0.82rem;color:var(--text-muted);margin-top:12px;">
+                    작성일: ${created.toLocaleDateString('ko-KR')} ${created.toLocaleTimeString('ko-KR', {hour:'2-digit', minute:'2-digit'})}
+                    &nbsp;|&nbsp; 최종수정: ${updated.toLocaleDateString('ko-KR')} ${updated.toLocaleTimeString('ko-KR', {hour:'2-digit', minute:'2-digit'})}
+                    &nbsp;|&nbsp; <span class="view-badge ${json.editable ? 'editable' : 'locked'}">${json.editable ? '수정 가능 상태' : '수정 잠금 상태'}</span>
+                </div>`;
+
+            setFormEditable(false);
+
+            document.getElementById('adminScreen').style.display = 'none';
+            document.getElementById('formScreen').style.display = '';
+            document.querySelector('.back-btn').onclick = function() {
+                document.getElementById('formScreen').style.display = 'none';
+                document.getElementById('adminScreen').style.display = '';
+                document.getElementById('submitBtn').style.display = '';
+                window.scrollTo(0, 0);
+            };
+            window.scrollTo(0, 0);
+        } catch (e) {
+            showModal('오류', '서버 연결에 실패했습니다.');
+        }
+    }
+
+    // ===== Form Helpers =====
+    function clearForm() {
+        document.getElementById('intakeForm').reset();
+        document.querySelectorAll('#intakeForm input[type="checkbox"]').forEach(cb => cb.checked = false);
+    }
+
+    function collectFormData() {
+        const currentMkt = [];
+        document.querySelectorAll('input[name="currentMkt"]:checked').forEach(cb => currentMkt.push(cb.value));
+
+        return {
+            purpose: document.getElementById('f_purpose').value,
+            companyName: currentCompany,
+            region: document.getElementById('f_region').value,
+            operDays: document.getElementById('f_operDays').value,
+            operHours: document.getElementById('f_operHours').value,
+            ceoName: document.getElementById('f_ceoName').value,
+            mainService: document.getElementById('f_mainService').value,
+            website: document.getElementById('f_website').value,
+            blog: document.getElementById('f_blog').value,
+            instagram: document.getElementById('f_instagram').value,
+            youtube: document.getElementById('f_youtube').value,
+            otherSns: document.getElementById('f_otherSns').value,
+            keywords: document.getElementById('f_keywords').value,
+            currentMkt: currentMkt,
+            competitor: document.getElementById('f_competitor').value,
+            startDate: document.getElementById('f_startDate').value
+        };
+    }
+
+    function fillForm(data) {
+        if (!data) return;
+        document.getElementById('f_purpose').value = data.purpose || '';
+        document.getElementById('f_region').value = data.region || '';
+        document.getElementById('f_operDays').value = data.operDays || '';
+        document.getElementById('f_operHours').value = data.operHours || '';
+        document.getElementById('f_ceoName').value = data.ceoName || '';
+        document.getElementById('f_mainService').value = data.mainService || '';
+        document.getElementById('f_website').value = data.website || '';
+        document.getElementById('f_blog').value = data.blog || '';
+        document.getElementById('f_instagram').value = data.instagram || '';
+        document.getElementById('f_youtube').value = data.youtube || '';
+        document.getElementById('f_otherSns').value = data.otherSns || '';
+        document.getElementById('f_keywords').value = data.keywords || '';
+        document.getElementById('f_competitor').value = data.competitor || '';
+        document.getElementById('f_startDate').value = data.startDate || '';
+
+        document.querySelectorAll('input[name="currentMkt"]').forEach(cb => {
+            cb.checked = (data.currentMkt || []).includes(cb.value);
+        });
+    }
+
+    function setFormEditable(editable) {
+        const inputs = document.querySelectorAll('#intakeForm .intake-input:not(#f_companyName)');
+        inputs.forEach(input => {
+            if (editable) {
+                input.removeAttribute('readonly');
+                input.removeAttribute('disabled');
+            } else {
+                input.setAttribute('readonly', true);
+            }
+        });
+        document.querySelectorAll('input[name="currentMkt"]').forEach(cb => {
+            cb.disabled = !editable;
+        });
+    }
+
+    // ===== Submit =====
+    async function submitIntake() {
+        const data = collectFormData();
+
+        if (!data.purpose && !data.region && !data.keywords) {
+            showModal('알림', '최소한 서비스 이용 목적, 관할지역, 키워드 중 하나는 입력해주세요.');
+            return;
+        }
+
+        const btn = document.getElementById('submitBtn');
+        btn.disabled = true;
+        btn.textContent = '저장 중...';
+
+        try {
+            const res = await fetch('/.netlify/functions/save-intake', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({
+                    companyName: currentCompany,
+                    password: currentPassword,
+                    data: data
+                })
+            });
+
+            const json = await res.json();
+
+            if (!res.ok) {
+                showModal('오류', json.error || '저장에 실패했습니다.');
+                btn.disabled = false;
+                btn.textContent = currentMode === 'new' ? '제출하기' : '수정 저장하기';
+                return;
+            }
+
+            if (currentMode === 'new') {
+                showModal('제출 완료', '기본정보가 성공적으로 제출되었습니다.<br>작성일로부터 3일 이내 수정이 가능합니다.<br><br>믿고 맡겨주신만큼 최선을 다해<br>작업을 하도록 하겠습니다 :)');
+            } else {
+                showModal('수정 완료', '정보가 성공적으로 수정되었습니다.');
+            }
+
+            btn.textContent = '저장 완료 &#10003;';
+            setTimeout(() => {
+                btn.disabled = false;
+                btn.textContent = '수정 저장하기';
+                currentMode = 'edit';
+            }, 2000);
+        } catch (e) {
+            showModal('오류', '서버 연결에 실패했습니다. 잠시 후 다시 시도해주세요.');
+            btn.disabled = false;
+            btn.textContent = currentMode === 'new' ? '제출하기' : '수정 저장하기';
+        }
+    }
+
+    // ===== Mobile Menu =====
+    const mobileMenu = document.getElementById('mobileMenu');
+    const navLinks = document.getElementById('navLinks');
+    if (mobileMenu) {
+        mobileMenu.addEventListener('click', () => navLinks.classList.toggle('active'));
+    }
+
+    // ===== Enter Key Support =====
+    document.querySelectorAll('.login-panel input').forEach(input => {
+        input.addEventListener('keydown', function(e) {
+            if (e.key === 'Enter') {
+                const btn = this.closest('.login-panel').querySelector('button');
+                if (btn) btn.click();
+            }
+        });
+    });
+
+    // ===== Disable Dev Tools =====
+    document.addEventListener('contextmenu', function(e) { e.preventDefault(); });
+    document.addEventListener('keydown', function(e) {
+        if (e.key === 'F12') { e.preventDefault(); return false; }
+        if (e.ctrlKey && e.shiftKey && (e.key === 'I' || e.key === 'i' || e.key === 'J' || e.key === 'j' || e.key === 'C' || e.key === 'c')) { e.preventDefault(); return false; }
+        if (e.ctrlKey && (e.key === 'U' || e.key === 'u' || e.key === 'S' || e.key === 's')) { e.preventDefault(); return false; }
+    });
+    </script>
+</body>
+</html>
