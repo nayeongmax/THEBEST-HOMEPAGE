@@ -24,7 +24,7 @@ export default async (req) => {
                     companyName: blob.key,
                     createdAt: parsed.createdAt,
                     updatedAt: parsed.updatedAt,
-                    serviceName: parsed.data?.serviceName || '-'
+                    industry: parsed.data?.industry || '-'
                 });
             }
         }
